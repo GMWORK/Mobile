@@ -33,4 +33,8 @@ public class PersistencyWebController {
     public ArrayList<Pedido> bajarPedidos() {
         return null;
     }
+
+    public boolean consultarUsuario() {
+        return false;
+    }
 }

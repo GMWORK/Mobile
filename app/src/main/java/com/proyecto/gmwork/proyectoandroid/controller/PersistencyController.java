@@ -4,6 +4,8 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
+import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +14,27 @@ import java.util.Date;
  * Created by mateo on 30/04/15.
  */
 public class PersistencyController {
-    public void hacerLogin(String username, String password) {
+    private PersistencyWebController perWeb;
+    private ClienteDAOController cliDAO;
+
+    public PersistencyController () {
+        if(cliDAO ==null){
+            cliDAO = new ClienteDAOController();
+        }
+    }
+
+    public boolean hacerLogin(String username, String password) {
+        Cliente a = new Cliente();
+        a.setNombre(username);
+        a.setCalle(password);
+
+        cliDAO.addCliente(a);
+      /*  if( perWeb.consultarUsuario()){
+            return true;
+        }else{
+            return false;
+        }*/
+        return false;
     }
 
     public void guardarDatosBajados() {
