@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by Matthew on 05/05/2015.
  */
 @DatabaseTable(tableName = "CATEGORIA")
-public class Categoria {
+public class Categoria  implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField

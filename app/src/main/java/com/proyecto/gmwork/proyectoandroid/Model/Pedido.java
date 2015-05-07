@@ -6,6 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by mateo on 30/04/15.
  */
 @DatabaseTable(tableName = "PEDIDO")
-public class Pedido {
+public class Pedido  implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField

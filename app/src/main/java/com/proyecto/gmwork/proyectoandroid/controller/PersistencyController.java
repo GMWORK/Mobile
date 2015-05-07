@@ -1,12 +1,17 @@
 package com.proyecto.gmwork.proyectoandroid.controller;
 
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,25 +21,25 @@ import java.util.Date;
 public class PersistencyController {
     private PersistencyWebController perWeb;
     private ClienteDAOController cliDAO;
+    private Context con;
 
-    public PersistencyController () {
-        if(cliDAO ==null){
-            cliDAO = new ClienteDAOController();
-        }
+    public PersistencyController (Context context) {
+            con = context;
+            cliDAO = new ClienteDAOController(context);
+
     }
 
-    public boolean hacerLogin(String username, String password) {
+    public boolean hacerLogin(String username, String password) throws SQLException {
         Cliente a = new Cliente();
         a.setNombre(username);
         a.setCalle(password);
 
         cliDAO.addCliente(a);
-      /*  if( perWeb.consultarUsuario()){
+       if(cliDAO.filtrarCliente(a) != null){
             return true;
         }else{
             return false;
-        }*/
-        return false;
+        }
     }
 
     public void guardarDatosBajados() {

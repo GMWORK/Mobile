@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+import com.proyecto.gmwork.proyectoandroid.Model.mapping.OpenLiteHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,15 +25,18 @@ public class ClienteDAOController {
      * @throws SQLException
      */
     private Dao<Cliente, Long> daoCli;
+    private OpenLiteHelper clidao;
+    public ClienteDAOController(Context con) {
+            clidao = new OpenLiteHelper(con);
 
-    public ClienteDAOController() {
 
     }
 
 
     public void addCliente(Cliente cat) {
         try {
-            daoCli.create(cat);
+            clidao.getDAOCliente().create(cat);
+
         } catch (SQLException ex) {
             Log.i("errorSQL", ex.getMessage());
         }
@@ -43,8 +47,9 @@ public class ClienteDAOController {
         return todos;
     }
 
-    public Cliente filtrarCliente(Cliente cat) {
-        return null;
+    public Cliente filtrarCliente(Cliente cat) throws SQLException {
+        Cliente a = clidao.getDAOCliente().queryForEq("nombre",cat.getNombre()).get(0);
+        return a;
     }
 
     public void EditarCliente(Cliente cat) {

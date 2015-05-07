@@ -2,11 +2,14 @@ package com.proyecto.gmwork.proyectoandroid.Model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
+
+import java.io.Serializable;
+
 /**
  * Created by mateo on 30/04/15.
  */
 @DatabaseTable(tableName = "LINIAPRODUCTO")
-public class PedidoProducto {
+public class PedidoProducto implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
