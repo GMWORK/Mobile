@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/am_bt_cli" />
     <GridView
-        
+        android:id="@+id/am_gv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></GridView>
 </RelativeLayout>

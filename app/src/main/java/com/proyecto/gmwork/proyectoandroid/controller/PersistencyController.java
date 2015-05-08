@@ -2,6 +2,8 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,6 +24,8 @@ public class PersistencyController {
     private PersistencyWebController perWeb;
     private ClienteDAOController cliDAO;
     private Context con;
+
+
 
     public PersistencyController (Context context) {
             con = context;
@@ -73,5 +77,11 @@ public class PersistencyController {
         return null;
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 }
