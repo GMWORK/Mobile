@@ -14,18 +14,7 @@ public class GestorPersistencia  extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE CLIENTE(" +
-                "ID INT PRIMARY KEY     NOT NULL," +
-                "NIF    CHAR(10)," +
-                "NOMBRE CHAR(50)  ," +
-                "APELLIDOS  CHAR(50)," +
-                "LONGITUD   DOUBLE," +
-                " LATITUD   DOUBLE" +
-                "CALLE TEXT," +
-                "POBLACION TEXT," +
-                "PROXIMAVISITA DATE," +
-                
-                ");");
+
     }
 
     @Override

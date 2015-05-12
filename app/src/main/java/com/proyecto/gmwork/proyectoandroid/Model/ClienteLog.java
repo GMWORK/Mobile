@@ -1,13 +1,15 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Date;
 
 /**
- * Created by mateo on 08/05/15.
+ * Created by mateo on 11/05/15.
  */
-public class pedidoLog {
+@DatabaseTable(tableName = "ClienteLog")
+public class ClienteLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
@@ -17,7 +19,13 @@ public class pedidoLog {
     @DatabaseField
     private long idCliente;
 
-    public pedidoLog() {
+    public ClienteLog() {
+    }
+
+    public ClienteLog(String operacion, Date fecha, long idCliente) {
+        this.operacion = operacion;
+        this.fecha = fecha;
+        this.idCliente = idCliente;
     }
 
     public String getOperacion() {

@@ -56,4 +56,14 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Prueba"
+        android:id="@+id/Prueba"
+        android:layout_below="@+id/la_btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp" />
+
 </RelativeLayout>

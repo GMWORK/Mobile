@@ -9,11 +9,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+import com.proyecto.gmwork.proyectoandroid.Model.ClienteLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
+import com.proyecto.gmwork.proyectoandroid.Model.ProductoLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
-import com.proyecto.gmwork.proyectoandroid.Model.pedidoLog;
+import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 import com.proyecto.gmwork.proyectoandroid.R;
 
 import java.sql.SQLException;
@@ -44,9 +46,74 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, PedidoProducto.class);
             TableUtils.createTable(connectionSource, Producto.class);
             TableUtils.createTable(connectionSource, Usuario.class);
-            TableUtils.createTable(connectionSource, pedidoLog.class);
-            //trigger
+            TableUtils.createTable(connectionSource, PedidoLog.class);
+            TableUtils.createTable(connectionSource, ClienteLog.class);
+            TableUtils.createTable(connectionSource, ProductoLog.class);
+            database.execSQL("CREATE TRIGGER categoria_UP AFTER UPDATE ON categoria\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "    END;\n" +
+                    "CREATE TRIGGER categoria_IN AFTER INSERT ON categoria\n" +
+                    "                    \"    FOR EACH ROW\\n\" +\n" +
+                    "                    \"    BEGIN\\n\" +\n" +
+                    "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
+                    "                    \"    END;\n"+
+                    "\n" +
+                    "CREATE TRIGGER categoria_D AFTER DELETE ON categoria\n" +
+                    "                    \"    FOR EACH ROW\\n\" +\n" +
+                    "                    \"    BEGIN\\n\" +\n" +
+                    "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
+                    "                    \"    END;\n"+
+                    "\n" +
+                    "CREATE TRIGGER cliente_UP AFTER UPDATE ON cliente\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "    END;\n" +
+                    "CREATE TRIGGER cliente_IN AFTER INSERT ON cliente\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "    END;\n" +
+                    "CREATE TRIGGER cliente_D AFTER DELETE ON cliente\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "    END;\n" +
+                    "CREATE TRIGGER producto_UP AFTER UPDATE ON producto\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;\n" +
+                    "CREATE TRIGGER producto_IN AFTER INSERT ON producto\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;\n" +
+                    "CREATE TRIGGER producto_D AFTER DELETE ON producto\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;\n" +
+                    "CREATE TRIGGER usuario_UP AFTER UPDATE ON usuario\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;"+
+                    "CREATE TRIGGER usuario_IN AFTER INSERT ON usuario\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;"+
+                    "CREATE TRIGGER usuario_D AFTER DELETE ON usuario\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;");
 
+            //trigger
+            /*
             database.execSQL(
                     "\n" +
                     "CREATE TRIGGER pedido_UP AFTER UPDATE ON pedido\n" +
@@ -71,25 +138,37 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     " INSERT INTO pedido_log (operacion, fecha,idPedido) VALUES('insert',  CURRENT_TIMESTAMP ,NEW.id);\n" +
                     "end//"
                     );
-
+*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            /*TableUtils.dropTable(connectionSource, Categoria.class, false);
+            TableUtils.dropTable(connectionSource, Categoria.class, false);
             TableUtils.dropTable(connectionSource, Cliente.class, false);
             TableUtils.dropTable(connectionSource, Pedido.class, false);
             TableUtils.dropTable(connectionSource, PedidoProducto.class, false);
             TableUtils.dropTable(connectionSource, Producto.class, false);
-            TableUtils.dropTable(connectionSource, Usuario.class, false);*/
-          //  TableUtils.dropTable(connectionSource, pedidoLog.class, false);
-          //  database.rawQuery("DROP TRIGGER pedido_UP", null);
-          //  database.rawQuery("DROP TRIGGER pedido_DE",null);
-          //  database.rawQuery("DROP TRIGGER pedido_IN",null);
+            TableUtils.dropTable(connectionSource, Usuario.class, false);
+            TableUtils.dropTable(connectionSource, PedidoLog.class, false);
+            TableUtils.dropTable(connectionSource, ProductoLog.class, false);
+            TableUtils.dropTable(connectionSource, ClienteLog.class, false);
+            database.execSQL("DROP TRIGGER categoria_UP");
+            database.execSQL("DROP TRIGGER categoria_IN");
+            database.execSQL("DROP TRIGGER categoria_D");
+            database.execSQL("DROP TRIGGER cliente_UP");
+            database.execSQL("DROP TRIGGER cliente_IN");
+            database.execSQL("DROP TRIGGER cliente_D");
+            database.execSQL("DROP TRIGGER producto_UP");
+            database.execSQL("DROP TRIGGER producto_IN");
+            database.execSQL("DROP TRIGGER producto_D");
+            database.execSQL("DROP TRIGGER usuario_UP");
+            database.execSQL("DROP TRIGGER usuario_IN");
+            database.execSQL("DROP TRIGGER usuario_D");
             onCreate(database, connectionSource);
         } catch (Exception e) {
             e.printStackTrace();

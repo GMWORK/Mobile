@@ -12,17 +12,52 @@
         android:text="Cliente"
         android:id="@+id/am_bt_cli"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="pedido"
         android:id="@+id/am_bt_pedido"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/am_bt_cli" />
-    <GridView
-        android:id="@+id/am_gv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></GridView>
+        android:layout_height="wrap_content"
+        android:text="Producto"
+        android:id="@+id/btnProducto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_below="@+id/am_bt_cli"
+        android:layout_alignRight="@+id/am_bt_pedido"
+        android:layout_alignEnd="@+id/am_bt_pedido"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear"
+        android:id="@+id/btnCrear"
+        android:layout_below="@+id/editText"
+        android:layout_alignRight="@+id/am_bt_cli"
+        android:layout_alignEnd="@+id/am_bt_cli" />
+
 </RelativeLayout>
