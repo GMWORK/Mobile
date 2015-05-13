@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField
+    private String nif;
+    @DatabaseField
+    private String nombre;
+    @DatabaseField
+    private String apellidos;
+    @DatabaseField
+    private double longitud;
+    @DatabaseField
+    private double latitud;
+    @DatabaseField
+    private String calle;
+    @DatabaseField
+    private String poblacion;
+    @DatabaseField
+    private Date proximaVisita;
+    @ForeignCollectionField
+    private ForeignCollection<Pedido> pedido ;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Usuario usu;-->
+    <TextView
+        android:text="Alta Cliente"
+        android:textSize="30dp"
+        android:id="@+id/ac_tv_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_below="@id/ac_tv_titulo"
+        android:id="@+id/rl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="nif"
+            android:id="@+id/idNif"
+            android:layout_alignBottom="@+id/ac_et_nif"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_nif"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_name"
+            android:layout_above="@+id/idNif"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/rl1"
+        android:id="@+id/rl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="nombre"
+            android:id="@+id/idNombre"
+            android:layout_alignBottom="@+id/ac_et_nombre"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_nombre"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_price"
+            android:layout_above="@+id/idPrecio"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/rl2"
+        android:id="@+id/rl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="apellidos"
+            android:id="@+id/ac_tv_apellidos"
+            android:layout_alignBottom="@+id/ac_et_apellidos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_apellidos"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_price"
+            android:layout_above="@+id/ac_tv_apellidos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/rl3"
+        android:id="@+id/rl4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="poblacion"
+            android:id="@+id/ac_tv_poblacion"
+            android:layout_alignBottom="@+id/ac_et_poblacion"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_poblacion"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_price"
+            android:layout_above="@+id/ac_tv_poblacion"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@id/rl4"
+        android:id="@+id/rl5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Calle"
+            android:id="@+id/ac_tv_calle"
+            android:layout_alignBottom="@+id/ac_et_calle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_calle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_price"
+            android:layout_above="@+id/ac_tv_calle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/rl5"
+        android:id="@+id/rl6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="PVisita"
+            android:id="@+id/ac_tv_pvis"
+            android:layout_alignBottom="@+id/ac_et_Proxima_Visita"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ac_et_Proxima_Visita"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp"
+            android:layout_toLeftOf="@+id/ac_btn_sF"
+            android:layout_toStartOf="@+id/ac_btn_sF" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_price"
+            android:layout_above="@+id/ac_tv_pvis"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Assignar Dia"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/ac_btn_sF" />
+
+    </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar Cliente"
+            android:id="@+id/button"
+            android:layout_below="@+id/rl6"
+            android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

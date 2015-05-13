@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
+import com.proyecto.gmwork.proyectoandroid.Model.mapping.OpenLiteHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ import java.util.List;
  */
 public class PedidoDAOController {
     private Dao<Pedido, Long> daoPe;
+    private OpenLiteHelper clidao;
+
+    public PedidoDAOController() throws SQLException {
+        this.daoPe = clidao.getDAOPedido();
+    }
 
     public void addPedido(Pedido cat) {
         try {
@@ -32,8 +38,10 @@ public class PedidoDAOController {
         return todos;
     }
 
-    public Pedido filtrarPedido(Pedido cat) {
-        return null;
+    public Pedido filtrarPedido(Pedido cat) throws SQLException {
+
+        Pedido client = daoPe.queryForEq("nombre",cat.getId()).get(0);
+        return client;
     }
 
     public void EditarPedido(Pedido cat) {

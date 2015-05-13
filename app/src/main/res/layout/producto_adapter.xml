@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@android:drawable/toast_frame"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pa_tv_nombre"
+        android:text="nombreProducto"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_centerHorizontal="true" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="cantidad"
+    android:id="@+id/textView"
+    android:layout_alignTop="@+id/editText2"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/pa_tv_nombre"
+        android:layout_marginTop="81dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Precio Unidad:"
+        android:id="@+id/pa_tv_pU"
+        android:layout_below="@+id/pa_tv_nombre"
+        android:layout_toLeftOf="@+id/pa_tv_nombre"
+        android:layout_toStartOf="@+id/pa_tv_nombre" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="EtiquetaPrecio"
+        android:id="@+id/pa_tv_precio"
+        android:layout_below="@id/pa_tv_pU"
+        android:layout_toRightOf="@id/pa_tv_pU"
+        android:layout_toEndOf="@id/pa_tv_pU" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="PrecioTotal:"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/editText2"
+        android:layout_toLeftOf="@+id/pa_tv_precio"
+        android:layout_toStartOf="@+id/pa_tv_precio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="precio Total con la cantidad"
+        android:id="@+id/pa_tv_precioTotal"
+        android:layout_below="@+id/editText2"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
+
+</RelativeLayout>

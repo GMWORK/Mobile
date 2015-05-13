@@ -42,14 +42,14 @@ public class ClienteDAOController {
         }
     }
 
-    public List<Cliente> getClientes() throws SQLException {
-        List<Cliente> todos = daoCli.queryForAll();
+    public ArrayList<Cliente> getClientes() throws SQLException {
+        ArrayList<Cliente> todos = (ArrayList<Cliente>) daoCli.queryForAll();
         return todos;
     }
 
     public Cliente filtrarCliente(Cliente cat) throws SQLException {
-        Cliente a = clidao.getDAOCliente().queryForEq("nombre",cat.getNombre()).get(0);
-        return a;
+        Cliente client = clidao.getDAOCliente().queryForEq("nif",cat.getNif()).get(0);
+        return client;
     }
 
     public void EditarCliente(Cliente cat) {
