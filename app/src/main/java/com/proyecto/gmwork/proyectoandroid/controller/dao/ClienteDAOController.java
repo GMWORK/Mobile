@@ -52,6 +52,11 @@ public class ClienteDAOController {
         return client;
     }
 
-    public void EditarCliente(Cliente cat) {
+    public void EditarCliente(Cliente cat) throws SQLException {
+        Cliente client= clidao.getDAOCliente().queryForEq("nif", cat.getNif() ).get(0);
+
+        clidao.getDAOCliente().update(client);
+
+
     }
 }

@@ -32,6 +32,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static  Dao<Cliente, Long> daoCli = null;
     private static  Dao<Pedido, Long> daoPe = null;
     private static  Dao<Usuario, Long> daoUsu = null;
+    private static Dao<Categoria ,Long> daoCat = null;
 
     public OpenLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION,
@@ -217,6 +218,12 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             daoUsu = getDao(Usuario.class);
         }
         return daoUsu;
+
+    }private Dao<Categoria, Long> getDAOCategoria() throws SQLException {
+        if(daoCat == null){
+            daoCat = getDao(Categoria.class);
+        }
+        return daoCat;
 
     }
 }

@@ -17,6 +17,7 @@ import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mateo on 30/04/15.
@@ -58,21 +59,29 @@ public class PersistencyController {
     }
 
     public void removeProducto(String nombre) {
+
     }
 
 
-    public Cliente mostrarClientes() {
-        return null;
+    public List<Cliente> mostrarClientes() throws SQLException {
+        List<Cliente> listDao = cliDAO.getClientes();
+        return listDao;
     }
 
-    public Cliente filtrarCliente(String nombre) {
-        return null;
+    public Cliente filtrarCliente(String nif) throws SQLException {
+        Cliente cli = new Cliente();
+        cli.setNif(nif);
+        cliDAO.filtrarCliente(cli);
+        return cli;
     }
 
     public void editarCliente(String nif, int edad, String nombre, String apellidos, double latitud, double longitud, Date proximaVisita) {
+
+
     }
 
-    public void crearCliente(String nif, int edad, String nombre, String apellidos, double latitud, double longitud, Date proximaVisita) {
+    public void crearCliente(String nif, String nombre, String apellidos,String poblacion, String calle, Date proximaVisita) {
+        Cliente cli = new  Cliente(nif,nombre,apellidos,poblacion,calle,proximaVisita);
     }
 
     public void crearPedido(Date fecha, Cliente cliente, ArrayList<Producto> productos) {
@@ -82,7 +91,7 @@ public class PersistencyController {
     }
 
     public ArrayList<Pedido> mostrarPedido() {
-        return null;
+
     }
 
     private boolean isNetworkAvailable() {
