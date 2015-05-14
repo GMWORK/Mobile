@@ -2,6 +2,7 @@ package com.proyecto.gmwork.proyectoandroid.Model.mapping;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -19,6 +20,8 @@ import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 import com.proyecto.gmwork.proyectoandroid.R;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Created by Matthew on 06/05/2015.
@@ -28,6 +31,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static  Dao<Cliente, Long> daoCli = null;
     private static  Dao<Pedido, Long> daoPe = null;
+    private static  Dao<Usuario, Long> daoUsu = null;
 
     public OpenLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION,
@@ -176,6 +180,23 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         }
 
     }
+    public  void SOS(TreeMap<String, ArrayList> map) throws SQLException {
+
+            for (Object usu:map.get("Usuario")){
+                Usuario usuario = (Usuario) usu;
+                getDAOUsuario().create(usuario);
+
+            }
+        for (Object usu:map.get("Cliente")){
+            Cliente cliente = (Cliente) usu;
+            getDAOCliente().create(cliente);
+
+        }
+        for (Usuario usu : daoUsu.queryForAll())
+        Log.i("Usuarios", usu.getNombre());
+        for (Cliente usu : getDAOCliente().queryForAll())
+            Log.i("Usuarios", usu.getNombre());
+    }
 
     public Dao<Cliente, Long> getDAOCliente() throws SQLException {
         if(daoCli == null){
@@ -189,6 +210,13 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             daoPe = getDao(Pedido.class);
         }
         return daoPe;
+
+    }
+    private Dao<Usuario, Long> getDAOUsuario() throws SQLException {
+        if(daoUsu == null){
+            daoUsu = getDao(Usuario.class);
+        }
+        return daoUsu;
 
     }
 }

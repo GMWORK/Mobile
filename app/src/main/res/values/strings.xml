@@ -8,5 +8,11 @@
     <string name="logout">logout</string>
     <string name="crearPedidoSobreUsuario">Crear Pedido Con Esta Como Plantilla</string>
     <string name="borrar">borrarRegistro</string>
+    <string name="asignar_producto">assignar producto</string>
+    <string name="asignar">Asignar</string>
+    <string name="fecha_entrega">FEntrega</string>
+    <string name="cliente">Cliente</string>
+    <string name="asignar_cliente">Asignar a el Cliente..</string>
+    <string name="asignar_clientes">Asignar a el Cliente..</string>
 
 </resources>

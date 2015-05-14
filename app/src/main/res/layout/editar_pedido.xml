@@ -95,7 +95,7 @@
         <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="Asignar a el Cliente.."
+            android:text="@string/asignar_clientes"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/cp_btn_asCliente" />
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
-            android:text="Assignar Producto"
+            android:text="@string/asignar_producto"
             android:layout_below="@id/cp_lv_productos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

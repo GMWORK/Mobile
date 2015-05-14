@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="nif"
-            android:id="@+id/idNif"
+            android:id="@+id/ac_tv_nif"
             android:layout_alignBottom="@+id/ac_et_nif"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/icon_name"
-            android:layout_above="@+id/idNif"
+            android:layout_above="@+id/ac_tv_nif"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="nombre"
-            android:id="@+id/idNombre"
+            android:id="@+id/ac_tv_nombre"
             android:layout_alignBottom="@+id/ac_et_nombre"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/icon_price"
-            android:layout_above="@+id/idPrecio"
+            android:layout_above="@id/ac_tv_nombre"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

@@ -7,6 +7,7 @@ import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.field.types.DateTimeType;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
@@ -56,6 +57,7 @@ public class Cliente implements Serializable {
         this.latitud = latitud;
         this.calle = calle;
         this.poblacion = poblacion;
+
         this.proximaVisita = proximaVisita;
 
     }
