@@ -28,8 +28,6 @@ public class ClienteDAOController {
     private OpenLiteHelper clidao;
     public ClienteDAOController(Context con) {
             clidao = new OpenLiteHelper(con);
-
-
     }
 
 
@@ -46,17 +44,19 @@ public class ClienteDAOController {
         ArrayList<Cliente> todos = (ArrayList<Cliente>) daoCli.queryForAll();
         return todos;
     }
+    public void removeCliente(String nif) throws SQLException {
 
-    public Cliente filtrarCliente(Cliente cat) throws SQLException {
-        Cliente client = clidao.getDAOCliente().queryForEq("nif",cat.getNif()).get(0);
+        clidao.getDAOCliente().delete(clidao.getDAOCliente().queryForEq("nif",nif));
+    }
+
+    public Cliente filtrarCliente(String nif) throws SQLException {
+        Cliente client = clidao.getDAOCliente().queryForEq("nif",nif).get(0);
         return client;
     }
 
-    public void EditarCliente(Cliente cat) throws SQLException {
-        Cliente client= clidao.getDAOCliente().queryForEq("nif", cat.getNif() ).get(0);
-
-        clidao.getDAOCliente().update(client);
-
-
+    public void EditarCliente(Cliente client) throws SQLException {
+        clidao.getDAOCliente().updateId(client, client.getId());
     }
+
+
 }

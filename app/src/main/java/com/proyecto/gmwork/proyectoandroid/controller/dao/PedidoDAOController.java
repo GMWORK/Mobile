@@ -20,9 +20,11 @@ import java.util.List;
 public class PedidoDAOController {
     private Dao<Pedido, Long> daoPe;
     private OpenLiteHelper clidao;
+    private Context con;
 
-    public PedidoDAOController() throws SQLException {
+    public PedidoDAOController(Context con) throws SQLException {
         this.daoPe = clidao.getDAOPedido();
+        this.con = con;
     }
 
     public void addPedido(Pedido cat) {
@@ -38,12 +40,18 @@ public class PedidoDAOController {
         return todos;
     }
 
-    public Pedido filtrarPedido(Pedido cat) throws SQLException {
+    public Pedido filtrarPedido(int id) throws SQLException {
 
-        Pedido client = daoPe.queryForEq("nombre",cat.getId()).get(0);
+        Pedido client = daoPe.queryForEq("id", id).get(0);
         return client;
     }
 
-    public void EditarPedido(Pedido cat) {
+    public void removePedido(int id) throws SQLException {
+        daoPe.delete(daoPe.queryForEq("id", id));
+
+    }
+
+    public void EditarPedido(Pedido cat) throws SQLException {
+        daoPe.updateId(cat, cat.getId());
     }
 }

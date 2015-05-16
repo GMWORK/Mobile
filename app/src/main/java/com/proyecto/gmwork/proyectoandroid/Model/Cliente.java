@@ -46,6 +46,10 @@ public class Cliente implements Serializable {
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Usuario usu;
 
+    public Cliente() {
+
+    }
+
     public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
         this.nif = nif;
         this.nombre = nombre;

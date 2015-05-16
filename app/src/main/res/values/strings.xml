@@ -14,5 +14,8 @@
     <string name="cliente">Cliente</string>
     <string name="asignar_cliente">Asignar a el Cliente..</string>
     <string name="asignar_clientes">Asignar a el Cliente..</string>
+    <string name="ges_pe">Gestionar Pedidos</string>
+    <string name="ges_cli">Gestionar Clientes</string>
+    <string name="cr">Crear</string>
 
 </resources>

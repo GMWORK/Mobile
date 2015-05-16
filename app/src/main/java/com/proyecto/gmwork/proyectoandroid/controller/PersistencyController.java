@@ -7,12 +7,15 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
+import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Model.mapping.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoDAOController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,13 +28,15 @@ import java.util.List;
 public class PersistencyController {
     private PersistencyWebController perWeb;
     private ClienteDAOController cliDAO;
+    private PedidoDAOController peDAO;
     private Context con;
 
 
 
-    public PersistencyController (Context context) {
+    public PersistencyController (Context context) throws SQLException {
             con = context;
             cliDAO = new ClienteDAOController(context);
+        peDAO= new PedidoDAOController(context);
         perWeb = new PersistencyWebController(con,new OpenLiteHelper(con));
         perWeb.comprovarSOS();
     }
@@ -56,9 +61,11 @@ public class PersistencyController {
     }
 
     public void guardarDatosBajados() {
+
     }
 
-    public void removeProducto(String nombre) {
+    public void removeCliente(String nif) throws SQLException {
+        cliDAO.removeCliente(nif);
 
     }
 
@@ -71,27 +78,42 @@ public class PersistencyController {
     public Cliente filtrarCliente(String nif) throws SQLException {
         Cliente cli = new Cliente();
         cli.setNif(nif);
-        cliDAO.filtrarCliente(cli);
+        cliDAO.filtrarCliente(nif);
         return cli;
     }
 
-    public void editarCliente(String nif, int edad, String nombre, String apellidos, double latitud, double longitud, Date proximaVisita) {
-
+    public void editarCliente(String nif, int edad, String nombre, String apellidos, String  poblacion, String calle, Date proximaVisita) throws SQLException {
+        Cliente client = cliDAO.filtrarCliente(nif);
+        client.setNombre(nombre);
+        client.setApellidos(apellidos);
+        client.setProximaVisita(proximaVisita);
+        client.setPoblacion(poblacion);
+        client.setCalle(calle);
+        cliDAO.EditarCliente(client);
 
     }
 
     public void crearCliente(String nif, String nombre, String apellidos,String poblacion, String calle, Date proximaVisita) {
         Cliente cli = new  Cliente(nif,nombre,apellidos,poblacion,calle,proximaVisita);
+        cliDAO.addCliente(cli);
     }
 
-    public void crearPedido(Date fecha, Cliente cliente, ArrayList<Producto> productos) {
+    public void crearPedido(Date fecha, Cliente cliente, ForeignCollection<PedidoProducto> productos) {
+        Pedido pe = new Pedido();
+
+        pe.setLiniaProducto(productos);
+        pe.setCliente(cliente);
+        pe.setFecha(fecha);
+        peDAO.addPedido(pe);
+
     }
 
-    public void removePedido(long id, String client, Date fecha) {
+    public void removePedido(int id) throws SQLException {
+        peDAO.removePedido(id);
     }
 
-    public ArrayList<Pedido> mostrarPedido() {
-
+    public List<Pedido> mostrarPedido() throws SQLException {
+        return peDAO.getPedidos();
     }
 
     private boolean isNetworkAvailable() {

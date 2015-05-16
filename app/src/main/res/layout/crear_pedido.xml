@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--@DatabaseField(generatedId = true)
-    private long id;
-    @DatabaseField
-    private Date fecha;
-    @DatabaseField
-    private String estado;
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Cliente cliente;
-    @ForeignCollectionField
-    private ForeignCollection<PedidoProducto> liniaProducto;-->
-    <!--android:layout_below="@id/rl5"-->
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.Pedido.UiCrearPedidoView">
+
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="wrap_content"
@@ -42,7 +35,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_price"
             android:layout_above="@id/cp_tv_fEntrega"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -85,7 +77,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_price"
             android:layout_above="@id/cp_tv_pvis"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
