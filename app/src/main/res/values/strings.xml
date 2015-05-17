@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ProyectoAndroid</string>
+    <string name="app_name">GMWORK!</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_error">LoginError</string>
@@ -17,5 +17,7 @@
     <string name="ges_pe">Gestionar Pedidos</string>
     <string name="ges_cli">Gestionar Clientes</string>
     <string name="cr">Crear</string>
+    <string name="cliAVisitar">Seleccionar Clientes a Visitar</string>
+    <string name="seleAVisitaGeo">Visitar clientes mas cercanos</string>
 
 </resources>

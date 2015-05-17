@@ -1,4 +1,4 @@
-package com.proyecto.gmwork.proyectoandroid.Model.mapping;
+package com.proyecto.gmwork.proyectoandroid.Gestor;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +19,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 import com.proyecto.gmwork.proyectoandroid.R;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -29,10 +30,12 @@ import java.util.TreeMap;
 public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "db.lite";
     private static final int DATABASE_VERSION = 1;
-    private static  Dao<Cliente, Long> daoCli = null;
-    private static  Dao<Pedido, Long> daoPe = null;
-    private static  Dao<Usuario, Long> daoUsu = null;
-    private static Dao<Categoria ,Long> daoCat = null;
+    private static Dao<Cliente, Long> daoCli = null;
+    private static Dao<Pedido, Long> daoPe = null;
+    private static Dao<Usuario, Long> daoUsu = null;
+    private static Dao<Categoria, Long> daoCat = null;
+    private static Dao<Producto, Long> daoPro = null;
+
 
     public OpenLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION,
@@ -64,13 +67,13 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "                    \"    FOR EACH ROW\\n\" +\n" +
                     "                    \"    BEGIN\\n\" +\n" +
                     "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
-                    "                    \"    END;\n"+
+                    "                    \"    END;\n" +
                     "\n" +
                     "CREATE TRIGGER categoria_D AFTER DELETE ON categoria\n" +
                     "                    \"    FOR EACH ROW\\n\" +\n" +
                     "                    \"    BEGIN\\n\" +\n" +
                     "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
-                    "                    \"    END;\n"+
+                    "                    \"    END;\n" +
                     "\n" +
                     "CREATE TRIGGER cliente_UP AFTER UPDATE ON cliente\n" +
                     "    FOR EACH ROW\n" +
@@ -106,17 +109,18 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;"+
+                    "     END;" +
                     "CREATE TRIGGER usuario_IN AFTER INSERT ON usuario\n" +
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;"+
+                    "     END;" +
                     "CREATE TRIGGER usuario_D AFTER DELETE ON usuario\n" +
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;");
+
 
             //trigger
             /*
@@ -181,49 +185,80 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         }
 
     }
-    public  void SOS(TreeMap<String, ArrayList> map) throws SQLException {
 
-            for (Object usu:map.get("Usuario")){
-                Usuario usuario = (Usuario) usu;
-                getDAOUsuario().create(usuario);
+    public void SOS(TreeMap<String, ArrayList> map) throws SQLException {
 
-            }
-        for (Object usu:map.get("Cliente")){
+        for (Object usu : map.get("Usuario")) {
+            Usuario usuario = (Usuario) usu;
+            getDAOUsuario().create(usuario);
+
+        }
+        for (Object usu : map.get("Cliente")) {
             Cliente cliente = (Cliente) usu;
             getDAOCliente().create(cliente);
 
         }
         for (Usuario usu : daoUsu.queryForAll())
-        Log.i("Usuarios", usu.getNombre());
+            Log.i("Usuarios", usu.getNombre());
         for (Cliente usu : getDAOCliente().queryForAll())
             Log.i("Usuarios", usu.getNombre());
     }
 
     public Dao<Cliente, Long> getDAOCliente() throws SQLException {
-        if(daoCli == null){
+        if (daoCli == null) {
             daoCli = getDao(Cliente.class);
         }
         return daoCli;
 
     }
+
     public Dao<Pedido, Long> getDAOPedido() throws SQLException {
-        if(daoPe == null){
+        if (daoPe == null) {
             daoPe = getDao(Pedido.class);
         }
         return daoPe;
 
     }
+
     private Dao<Usuario, Long> getDAOUsuario() throws SQLException {
-        if(daoUsu == null){
+        if (daoUsu == null) {
             daoUsu = getDao(Usuario.class);
         }
         return daoUsu;
 
-    }private Dao<Categoria, Long> getDAOCategoria() throws SQLException {
-        if(daoCat == null){
+    }
+
+    private Dao<Categoria, Long> getDAOCategoria() throws SQLException {
+        if (daoCat == null) {
             daoCat = getDao(Categoria.class);
         }
         return daoCat;
 
+    }
+
+
+    public Dao<Producto, Long> getDAOProducto() throws SQLException {
+        if (daoPro == null) {
+            daoPro = getDao(Producto.class);
+        }
+        return daoPro;
+
+    }
+
+    public boolean hacerLogin(Usuario usu) throws SQLException {
+        Usuario usuario = getDAOUsuario().queryForEq("username", usu.getUsername()).get(0);
+
+        return usuario != null;
+
+    }
+
+    public void dadesPrueba() throws SQLException {
+        //(String nif, String nombre, String apellidos, String calle, String poblacion, boolean administrador, String username, String password)
+        getDAOUsuario().create(new Usuario("583241A", "Matthew", "dssada", "sdsad", "asdsad", true, "aasdssda", "asdsad"));
+        getDAOCategoria().create(new Categoria("Ordenadores1", 2.2));
+        //public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento)
+        getDAOProducto().create(new Producto("producto1",2.2,new byte[]{02},false,2.2));
+        //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
+        getDAOCliente().create(new Cliente("583241A","sadsa","sadsad","sadsad","sdasd","20/22/22"));
     }
 }

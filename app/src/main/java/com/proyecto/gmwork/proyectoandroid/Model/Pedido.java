@@ -19,9 +19,11 @@ public class Pedido  implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private Date fecha;
+    private String fecha;
     @DatabaseField
     private String estado;
+    @DatabaseField
+    private double total;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Cliente cliente;
     @ForeignCollectionField
@@ -30,7 +32,7 @@ public class Pedido  implements Serializable {
     public Pedido() {
     }
     
-    public Pedido(Date fecha, String estado) {
+    public Pedido(String fecha, String estado) {
         this.fecha = fecha;
         this.estado = estado;
     }
@@ -42,15 +44,15 @@ public class Pedido  implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
-    public Date getFecha() {
+
+    public String getFecha() {
         return fecha;
     }
-    
-    public void setFecha(Date fecha) {
+
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    
+
     public String getEstado() {
         return estado;
     }

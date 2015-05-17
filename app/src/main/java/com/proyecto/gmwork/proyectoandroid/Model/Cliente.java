@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.j256.ormlite.dao.CloseableIterator;
 import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.field.types.DateTimeType;
@@ -39,8 +40,10 @@ public class Cliente implements Serializable {
     private String calle;
     @DatabaseField
     private String poblacion;
+    @DatabaseField(dataType = DataType.BYTE_ARRAY)
+    private byte[] img;
     @DatabaseField
-    private Date proximaVisita;
+    private String proximaVisita;
     @ForeignCollectionField
     private ForeignCollection<Pedido> pedido ;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
@@ -50,7 +53,7 @@ public class Cliente implements Serializable {
 
     }
 
-    public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
+    public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, String proximaVisita) {
         this.nif = nif;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -59,7 +62,7 @@ public class Cliente implements Serializable {
         this.calle = calle;
     }
 
-    public Cliente(String nif, String nombre, String apellidos, double longitud, double latitud, String calle, String poblacion, Date proximaVisita) {
+    public Cliente(String nif, String nombre, String apellidos, double longitud, double latitud, String calle, String poblacion, String proximaVisita) {
         this.nif = nif;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -135,15 +138,14 @@ public class Cliente implements Serializable {
     public void setPoblacion(String poblacion) {
         this.poblacion = poblacion;
     }
-    
-    public Date getProximaVisita() {
+
+    public String getProximaVisita() {
         return proximaVisita;
     }
-    
-    public void setProximaVisita(Date proximaVisita) {
+
+    public void setProximaVisita(String proximaVisita) {
         this.proximaVisita = proximaVisita;
     }
-
 
     public Usuario getUsu() {
         return usu;
@@ -155,6 +157,14 @@ public class Cliente implements Serializable {
 
     public ForeignCollection getPedido() {
         return pedido;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     public void setPedido(ForeignCollection pedido) {

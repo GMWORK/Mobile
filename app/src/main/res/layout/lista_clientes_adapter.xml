@@ -5,7 +5,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lpa_iv_img"
+        android:id="@+id/lca_iv_img"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:background="@android:drawable/toast_frame"
@@ -13,8 +13,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nombreProducto"
-        android:id="@+id/lpa_tv_nombre"
+        android:text="nombre"
+        android:id="@+id/lca_tv_nombre"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -22,28 +22,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Categoria"
-        android:id="@+id/lpa_tv_categoria"
-        android:layout_below="@+id/lpa_tv_nombre"
+        android:text="Apellidos"
+        android:id="@+id/lca_tv_apellidos"
+        android:layout_below="@+id/lca_tv_nombre"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Precio Unidad:"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/lpa_tv_categoria"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:text="Poblacion:"
+        android:id="@+id/lca_tv_poblacion"
 
+        android:layout_below="@+id/lca_tv_apellidos"
+        android:layout_centerHorizontal="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="precio"
-        android:id="@+id/lpa_tv_precio"
-        android:layout_below="@+id/lpa_tv_categoria"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:text="Calle:"
+        android:id="@+id/lca_tv_calle"
+
+        android:layout_below="@+id/lca_tv_poblacion"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

@@ -74,14 +74,13 @@ public class Identificador extends Activity implements View.OnClickListener{
         }
     }
     public void pasarPantalla() throws SQLException {
-        if(per.hacerLogin(username.getText().toString(), password.getText().toString())){
+       // if(per.hacerLogin(username.getText().toString(), password.getText().toString())){
             Toast.makeText(this,"Usuario encontrado",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this,Menu.class);
             startActivity(intent);
-        }else{
-            Toast.makeText(this,R.string.login_error,Toast.LENGTH_SHORT);
-        }
-
+        //}else{
+         //   Toast.makeText(this,R.string.login_error,Toast.LENGTH_SHORT);
+        //}
     }
     private EditText username;
     private EditText password;

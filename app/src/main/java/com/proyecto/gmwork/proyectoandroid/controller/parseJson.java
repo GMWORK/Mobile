@@ -54,7 +54,7 @@ public class parseJson {
         ArrayList clientes = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
-            clientes.add(new Cliente(object.getString("nif"), object.getString("nombre"), object.getString("apellidos"), Double.parseDouble(object.getString("longitud")), Double.parseDouble(object.getString("latitud")), object.getString("calle"), object.getString("poblacion"), new Date((Long.valueOf(object.getString("proximaVisita").replaceAll("T",":"))))));
+            clientes.add(new Cliente(object.getString("nif"), object.getString("nombre"), object.getString("apellidos"), Double.parseDouble(object.getString("longitud")), Double.parseDouble(object.getString("latitud")), object.getString("calle"), object.getString("poblacion"), object.getString("proximaVisita")));
         }
         return clientes;
     }

@@ -1,17 +1,13 @@
 package com.proyecto.gmwork.proyectoandroid.controller.dao;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
-import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
-import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
-import com.proyecto.gmwork.proyectoandroid.Model.mapping.OpenLiteHelper;
+import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +19,7 @@ public class PedidoDAOController {
     private Context con;
 
     public PedidoDAOController(Context con) throws SQLException {
+        clidao = new OpenLiteHelper(con);
         this.daoPe = clidao.getDAOPedido();
         this.con = con;
     }
@@ -48,8 +45,8 @@ public class PedidoDAOController {
 
     public void removePedido(int id) throws SQLException {
         daoPe.delete(daoPe.queryForEq("id", id));
-
     }
+
 
     public void EditarPedido(Pedido cat) throws SQLException {
         daoPe.updateId(cat, cat.getId());

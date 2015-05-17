@@ -1,6 +1,7 @@
 package com.proyecto.gmwork.proyectoandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
+import com.proyecto.gmwork.proyectoandroid.view.Cliente.UIListaClienteView;
+import com.proyecto.gmwork.proyectoandroid.view.Pedido.UIListaPedidoView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,58 +29,83 @@ import java.util.ArrayList;
 /**
  * Created by mateo on 04/05/15.
  */
-public class Menu extends Activity implements View.OnClickListener , AdapterView.OnItemClickListener {
+public class Menu extends Activity implements View.OnClickListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         setResources();
-        setResourcesFormat();
+       // setResourcesFormat();
         setEvents();
     }
 
     private void setEvents() {
         btn_Cliente.setOnClickListener(this);
         btn_Pedido.setOnClickListener(this);
+        btn_seleVisitar.setOnClickListener(this);
+        btn_sVisitarGeo.setOnClickListener(this);
     }
 
-    private void setResourcesFormat() {
+   /* private void setResourcesFormat() {
         btn_Cliente.setOnClickListener(this);
         btn_Pedido.setOnClickListener(this);
-        lv_lista.setOnItemClickListener(this);
 
-    }
+
+    }*/
 
     private void setResources() {
         btn_Cliente = (Button) findViewById(R.id.am_bt_cli);
         btn_Pedido = (Button) findViewById(R.id.am_bt_pedido);
-        lv_lista = (ListView) findViewById(R.id.am_lv_lista);
+        btn_seleVisitar = (Button) findViewById(R.id.am_btn_seleVisitar);
+        btn_sVisitarGeo = (Button) findViewById(R.id.am_btn_sVisitarGeo);
 
 
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.am_bt_cli:
-                modoCliente();
+                pasarACliente();
+                break;
+            case R.id.am_bt_pedido:
+                pasarAPedido();
+                break;
+            case R.id.am_btn_seleVisitar:
+                pasarASeleccionarVisita();
+                break;
+            case R.id.am_btn_sVisitarGeo:
+                pasarASeleccionarVisitaMasCercana();
                 break;
         }
 
     }
 
-    private void modoCliente() {
-        rl_layout.setVisibility(View.VISIBLE);
+    private void pasarACliente() {
+        Intent intent = new Intent(this, UIListaClienteView.class);
+        startActivity(intent);
+
+    }
+
+    private void pasarAPedido() {
+        Intent intent = new Intent(this, UIListaPedidoView.class);
+        startActivity(intent);
+    }
+
+    private void pasarASeleccionarVisita() {
+
+
+    }
+
+    private void pasarASeleccionarVisitaMasCercana() {
 
     }
 
     private Button btn_Pedido;
     private Button btn_Cliente;
-    private ListView lv_lista;
-    private RelativeLayout rl_layout;
+    private Button btn_seleVisitar;
+    private Button btn_sVisitarGeo;
 
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
 }

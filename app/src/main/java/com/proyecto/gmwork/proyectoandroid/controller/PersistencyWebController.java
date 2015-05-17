@@ -1,20 +1,14 @@
 package com.proyecto.gmwork.proyectoandroid.controller;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
-import com.proyecto.gmwork.proyectoandroid.Model.mapping.OpenLiteHelper;
+import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -39,10 +32,13 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
         this.con = con;
         this.bd = bd;
     }
-    public void comprovarSOS(){
+    public void comprovarSOS(boolean Network) throws SQLException {
+        if(Network){
         String[] usuari ={ "http://192.168.2.254:8080/webServiceJava/webresources/usuario" , "http://192.168.2.254:8080/webServiceJava/webresources/cliente" , "http://192.168.2.254:8080/webServiceJava/webresources/producto", "http://192.168.2.254:8080/webServiceJava/webresources/pedido"};
         this.execute(usuari);
-
+        }else{
+            bd.dadesPrueba();
+        }
     }
     String name = "";
     public boolean hacerLogin(Usuario usu) {
