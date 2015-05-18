@@ -121,7 +121,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;");
 
-
+            getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
             //trigger
             /*
             database.execSQL(
@@ -257,8 +257,8 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         getDAOUsuario().create(new Usuario("583241A", "Matthew", "dssada", "sdsad", "asdsad", true, "aasdssda", "asdsad"));
         getDAOCategoria().create(new Categoria("Ordenadores1", 2.2));
         //public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento)
-        getDAOProducto().create(new Producto("producto1",2.2,new byte[]{02},false,2.2));
+        getDAOProducto().create(new Producto("producto1", 2.2, new byte[]{02}, false, 2.2));
         //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
-        getDAOCliente().create(new Cliente("583241A","sadsa","sadsad","sadsad","sdasd","20/22/22"));
+        getDAOCliente().create(new Cliente("583241A", "sadsa", "sadsad", "sadsad", "sdasd", "20/22/22"));
     }
 }

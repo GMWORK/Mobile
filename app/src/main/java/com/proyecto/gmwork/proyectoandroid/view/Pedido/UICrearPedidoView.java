@@ -25,6 +25,7 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
 
         btn_sF.setOnClickListener(this);
         btn_asCliente.setOnClickListener(this);
+        btn_aProducto.setOnClickListener(this);
 
     }
 
@@ -37,6 +38,7 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
         btn_asCliente = (Button) findViewById(R.id.acp_btn_asCliente);
         tv_FEntrega = (TextView) findViewById(R.id.acp_et_FEntrega);
         tv_Cliente = (TextView) findViewById(R.id.acp_et_client);
+        btn_aProducto = (Button) findViewById(R.id.acp_btn_aProducto);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
             case R.id.acp_btn_asCliente:
                 new DialogCliente().show(getFragmentManager(),"tag");
                 break;
-            case R.id.acp_lv_productos:
+            case R.id.acp_btn_aProducto:
                 new DialogProducto().show(getFragmentManager(),"tag");
                 break;
         }
@@ -58,5 +60,5 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
     private Button btn_asCliente;
     private TextView tv_FEntrega;
     private TextView tv_Cliente;
-
+    private Button btn_aProducto;
 }

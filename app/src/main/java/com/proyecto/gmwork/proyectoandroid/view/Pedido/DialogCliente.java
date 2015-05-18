@@ -58,10 +58,8 @@ public class DialogCliente extends DialogFragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         try {
-            getActivity().getIntent().putExtra("nif", adapter.getItem(position).getNif());
-            String eleccion = adapter.getItem(position).getNombre();
             TextView a = (TextView) getActivity().findViewById(R.id.acp_et_client);
-            a.setText(eleccion);
+            a.setText(adapter.getItem(position).getNif());
 
             this.dismiss();
         } catch (Throwable throwable) {

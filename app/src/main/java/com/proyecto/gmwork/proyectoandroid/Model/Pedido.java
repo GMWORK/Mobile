@@ -64,7 +64,15 @@ public class Pedido  implements Serializable {
     public Cliente getCliente() {
         return cliente;
     }
-    
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }

@@ -114,6 +114,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/acp_btn_aProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/acp_lv_productos"

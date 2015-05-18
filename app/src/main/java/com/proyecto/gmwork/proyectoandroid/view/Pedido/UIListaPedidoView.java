@@ -3,6 +3,8 @@ package com.proyecto.gmwork.proyectoandroid.view.Pedido;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,6 +28,7 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
 
     private void setResources() {
         btn_Crear = (Button) findViewById(R.id.agp_btn_Crear);
+        lv_lista = (ListView) findViewById(R.id.agp_lv_lista);
 
 
     }
@@ -53,7 +56,18 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        switch (v.getId()) {
+            case R.id.agc_lv_lista:
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.menu_context_clientes, menu);
+                super.onCreateContextMenu(menu, v, menuInfo);
+                break;
+        }
 
+
+    }
     private ListView lv_lista;
     private Button btn_Crear;
 }

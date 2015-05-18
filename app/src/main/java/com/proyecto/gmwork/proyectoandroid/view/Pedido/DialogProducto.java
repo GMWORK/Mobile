@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
@@ -18,7 +19,7 @@ import java.util.Collections;
 /**
  * Created by Matthew on 17/05/2015.
  */
-public class DialogProducto extends DialogFragment {
+public class DialogProducto extends DialogFragment  implements AdapterView.OnItemClickListener{
     private PersistencyController per;
 
     @Override
@@ -48,4 +49,9 @@ public class DialogProducto extends DialogFragment {
     }
     private ListView lv_list;
     private  AdapterListProductos adapter;
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 }
