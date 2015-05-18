@@ -29,7 +29,7 @@ public class AdapterListProductos extends ArrayAdapter<Producto> {
 
     public AdapterListProductos(Context context,  ArrayList<Producto> productos) {
         super(context, R.layout.lista_productos_adapter, productos);
-        ctx = context;
+        this.mInflater = (Activity) context;
         listarray = productos;
 
     }
@@ -73,7 +73,10 @@ public class AdapterListProductos extends ArrayAdapter<Producto> {
             if (0 <= position && position < listarray.size()) {
                 tv_nombre.setText(String.valueOf(listarray.get(position).getNombre()));
                 tv_precio.setText(String.valueOf(listarray.get(position).getPrecio()));
-                tv_categoria.setText(listarray.get(position).getCategoria().getNombre());
+                if(listarray.get(position).getCategoria() != null){
+                    tv_categoria.setText(listarray.get(position).getCategoria().getNombre());
+                }
+
 
                 if (listarray.get(position).getImg() != null) {
                     iv_img.setImageBitmap(BitmapFactory.decodeByteArray(listarray.get(position).getImg(), 0, listarray.get(position).getImg().length));

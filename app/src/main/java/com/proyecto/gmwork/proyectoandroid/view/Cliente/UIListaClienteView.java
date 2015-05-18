@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+
 import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.controller.AdapterListClientes;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
@@ -33,7 +34,7 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lista_pedidos_adapter);
+        setContentView(R.layout.activity_gestion_clientes);
         setResources();
         setEvents();
         setResourcesFormat();

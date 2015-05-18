@@ -44,6 +44,15 @@ public class Producto implements Serializable{
         this.descuento = descuento;
     }
 
+    public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento, Categoria categoria) {
+        this.categoria = categoria;
+        this.descuento = descuento;
+        this.inhabilitats = inhabilitats;
+        this.img = img;
+        this.precio = precio;
+        this.nombre = nombre;
+    }
+
     public long getId() {
         return id;
     }

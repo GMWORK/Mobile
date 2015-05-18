@@ -43,7 +43,7 @@ public class DialogProducto extends DialogFragment  implements AdapterView.OnIte
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("as").setView(v);
+        builder.setTitle("Productos").setView(v);
 
         return builder.create();
     }

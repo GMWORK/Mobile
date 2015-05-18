@@ -35,6 +35,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static Dao<Usuario, Long> daoUsu = null;
     private static Dao<Categoria, Long> daoCat = null;
     private static Dao<Producto, Long> daoPro = null;
+    private static Dao<PedidoProducto, Long> daoProPe = null;
 
 
     public OpenLiteHelper(Context context) {
@@ -121,7 +122,8 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;");
 
-            getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
+            //getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
+
             //trigger
             /*
             database.execSQL(
@@ -186,22 +188,50 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    public void SOS(TreeMap<String, ArrayList> map) throws SQLException {
+    public void SOSCategoria(ArrayList map) throws SQLException {
 
-        for (Object usu : map.get("Usuario")) {
-            Usuario usuario = (Usuario) usu;
-            getDAOUsuario().create(usuario);
-
+        for (Object obj : map) {
+            Categoria usuario = (Categoria) obj;
+            getDAOCategoria().create(usuario);
+            Log.i("Nombre", usuario.getNombre());
         }
-        for (Object usu : map.get("Cliente")) {
-            Cliente cliente = (Cliente) usu;
-            getDAOCliente().create(cliente);
+    }
+    public void SOSCliente(ArrayList map) throws SQLException {
 
+        for (Object obj : map) {
+            Cliente cli = (Cliente) obj;
+            getDAOCliente().create(cli);
+            Log.i("Nombre", cli.getNombre());
         }
-        for (Usuario usu : daoUsu.queryForAll())
-            Log.i("Usuarios", usu.getNombre());
-        for (Cliente usu : getDAOCliente().queryForAll())
-            Log.i("Usuarios", usu.getNombre());
+    }
+    public void SOSProducto(ArrayList map) throws SQLException {
+        for (Object obj : map) {
+            Producto pro = (Producto) obj;
+            getDAOProducto().create(pro);
+            Log.i("Producto", pro.getNombre());
+        }
+    }
+    public void SOSPedido(ArrayList map) throws SQLException {
+        for (Object obj : map) {
+            Pedido pro = (Pedido) obj;
+            getDAOPedido().create(pro);
+            Log.i("Pedido", pro.getFecha());
+        }
+    }
+    public void SOSUsuario(ArrayList map) throws SQLException {
+        for (Object obj : map) {
+            Usuario usu = (Usuario) obj;
+            getDAOUsuario().create(usu);
+        }
+    }
+
+    public void SOSLiniaProducto(ArrayList map) throws SQLException {
+        for (Object obj : map) {
+            PedidoProducto usu = (PedidoProducto) obj;
+            getDAOPedidoProducto().create(usu);
+        }
+
+
     }
 
     public Dao<Cliente, Long> getDAOCliente() throws SQLException {
@@ -228,7 +258,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    private Dao<Categoria, Long> getDAOCategoria() throws SQLException {
+    public Dao<Categoria, Long> getDAOCategoria() throws SQLException {
         if (daoCat == null) {
             daoCat = getDao(Categoria.class);
         }
@@ -242,8 +272,14 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             daoPro = getDao(Producto.class);
         }
         return daoPro;
-
     }
+    public Dao<PedidoProducto, Long> getDAOPedidoProducto() throws SQLException {
+        if (daoProPe == null) {
+            daoProPe = getDao(PedidoProducto.class);
+        }
+        return daoProPe;
+    }
+
 
     public boolean hacerLogin(Usuario usu) throws SQLException {
         Usuario usuario = getDAOUsuario().queryForEq("username", usu.getUsername()).get(0);
@@ -261,4 +297,6 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
         getDAOCliente().create(new Cliente("583241A", "sadsa", "sadsad", "sadsad", "sdasd", "20/22/22"));
     }
+
+
 }

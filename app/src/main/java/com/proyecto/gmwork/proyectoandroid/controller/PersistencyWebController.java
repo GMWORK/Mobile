@@ -13,6 +13,7 @@ import org.json.JSONException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,56 +35,15 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
     }
     public void comprovarSOS(boolean Network) throws SQLException {
         if(Network){
-        String[] usuari ={ "http://192.168.2.254:8080/webServiceJava/webresources/usuario" , "http://192.168.2.254:8080/webServiceJava/webresources/cliente" , "http://192.168.2.254:8080/webServiceJava/webresources/producto", "http://192.168.2.254:8080/webServiceJava/webresources/pedido"};
+
+        String[] usuari ={ "http://192.168.2.254:8080/webServiceJava/webresources/categoria" , "http://192.168.2.254:8080/webServiceJava/webresources/usuario" , "http://192.168.2.254:8080/webServiceJava/webresources/cliente", "http://192.168.2.254:8080/webServiceJava/webresources/producto","http://192.168.2.254:8080/webServiceJava/webresources/pedido","http://192.168.2.254:8080/webServiceJava/webresources/productoPedido"};
         this.execute(usuari);
         }else{
             bd.dadesPrueba();
         }
     }
     String name = "";
-    public boolean hacerLogin(Usuario usu) {
 
-        //URL url;
-        // try {
-        // get URL content
-
-                    /*URLConnection conn = url.openConnection();
-
-                    // open the stream and put it into BufferedReader
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(conn.getInputStream()));
-
-                    String inputLine;
-
-                    //save to this Array
-                    ArrayList array = new ArrayList();
-                    while ((inputLine = br.readLine()) != null) {
-                        array.add(inputLine);
-                    }
-                    for(int i=0;i<array.size();i++){
-                        String o = array.get(i).toString();
-                        parseJson js = new parseJson();
-                       usuari = js.username(o);
-
-
-                    }
-                    br.close();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                //ParseJson js = new ParseJson();
-                //js.pars();
-            } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
-        if(usu.getUsername().equals("")){
-            return true;
-        }else return false;
-
-
-    }
     private String []Content;
     private String Error = "";
     // private ProgressDialog Dialog = new ProgressDialog(con);
@@ -172,8 +132,10 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
     public boolean consultarUsuario() {
         return false;
     }
-    public void SOS(String [] string) throws JSONException, SQLException {
-        this.bd.SOS(parseJson.SOS(string));
+    public void SOS(String [] string) throws JSONException, SQLException, UnsupportedEncodingException {
+        parseJson.SOS(string,bd);
+        //this.bd.SOS(parseJson.SOS(string , bd));
+
     }
 }
 

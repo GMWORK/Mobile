@@ -42,7 +42,7 @@ public class PersistencyController {
         peDAO = new PedidoDAOController(context);
         proDAO = new ProductoDAOController(context);
         perWeb = new PersistencyWebController(con, new OpenLiteHelper(con));
-        //perWeb.comprovarSOS(isNetworkAvailable());
+        perWeb.comprovarSOS(isNetworkAvailable());
     }
 
     public boolean hacerLogin(String username, String password) throws SQLException {
