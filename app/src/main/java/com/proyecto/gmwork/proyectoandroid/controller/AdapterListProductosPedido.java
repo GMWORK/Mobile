@@ -1,4 +1,4 @@
-package com.proyecto.gmwork.proyectoandroid.controller.dao;
+package com.proyecto.gmwork.proyectoandroid.controller;
 
 /**
  * Created by mateo on 18/05/15.

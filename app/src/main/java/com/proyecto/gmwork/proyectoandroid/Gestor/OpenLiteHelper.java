@@ -250,7 +250,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    private Dao<Usuario, Long> getDAOUsuario() throws SQLException {
+    public Dao<Usuario, Long> getDAOUsuario() throws SQLException {
         if (daoUsu == null) {
             daoUsu = getDao(Usuario.class);
         }
@@ -297,6 +297,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
         getDAOCliente().create(new Cliente("583241A", "sadsa", "sadsad", "sadsad", "sdasd", "20/22/22"));
     }
+
 
 
 }

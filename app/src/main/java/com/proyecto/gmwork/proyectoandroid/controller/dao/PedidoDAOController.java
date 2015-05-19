@@ -37,7 +37,7 @@ public class PedidoDAOController {
         return todos;
     }
 
-    public Pedido filtrarPedido(int id) throws SQLException {
+    public Pedido filtrarPedido(long id) throws SQLException {
 
         Pedido client = daoPe.queryForEq("id", id).get(0);
         return client;
@@ -47,8 +47,8 @@ public class PedidoDAOController {
         daoPe.delete(daoPe.queryForEq("id", id));
     }
 
-
     public void EditarPedido(Pedido cat) throws SQLException {
         daoPe.updateId(cat, cat.getId());
     }
+
 }

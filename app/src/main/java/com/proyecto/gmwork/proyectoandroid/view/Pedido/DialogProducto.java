@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.controller.AdapterListProductos;
@@ -52,6 +53,8 @@ public class DialogProducto extends DialogFragment  implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        TextView producto = (TextView) view.findViewById(R.id.lppa_tv_nombre);
+        getActivity().getIntent().putExtra("Producto"+position+"",producto.getText().toString());
+        this.dismiss();
     }
 }

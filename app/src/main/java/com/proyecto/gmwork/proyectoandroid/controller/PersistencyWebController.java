@@ -27,19 +27,19 @@ import java.util.TreeMap;
 public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
     private   Context con;
     private boolean encontrarId;
-    private OpenLiteHelper bd;
+    private PersistencyController per;
 
-    public PersistencyWebController(Context con,OpenLiteHelper bd) {
+    public PersistencyWebController(Context con,PersistencyController per) throws SQLException {
         this.con = con;
-        this.bd = bd;
+        this.per = per;
     }
     public void comprovarSOS(boolean Network) throws SQLException {
         if(Network){
 
-        String[] usuari ={ "http://192.168.2.254:8080/webServiceJava/webresources/categoria" , "http://192.168.2.254:8080/webServiceJava/webresources/usuario" , "http://192.168.2.254:8080/webServiceJava/webresources/cliente", "http://192.168.2.254:8080/webServiceJava/webresources/producto","http://192.168.2.254:8080/webServiceJava/webresources/pedido","http://192.168.2.254:8080/webServiceJava/webresources/productoPedido"};
+        String[] usuari ={ "http://192.168.1.187:8080/WebservicesJava2/webresources/categoria" , "http://192.168.1.187:8080/WebservicesJava2/webresources/producto" , "http://192.168.1.187:8080/WebservicesJava2/webresources/usuario", "http://192.168.1.187:8080/WebservicesJava2/webresources/cliente","http://192.168.1.187:8080/WebservicesJava2/webresources/pedido","http://192.168.1.187:8080/WebservicesJava2/webresources/productoPedido"};
         this.execute(usuari);
         }else{
-            bd.dadesPrueba();
+            per.dadesPrueba();
         }
     }
     String name = "";
@@ -133,10 +133,32 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
         return false;
     }
     public void SOS(String [] string) throws JSONException, SQLException, UnsupportedEncodingException {
-        parseJson.SOS(string,bd);
+        //categoria ,producto, usuario ,cliente,  pedido , productoPedido
+        TreeMap<String, ArrayList> map = new TreeMap<String,ArrayList>();
+        map.put("Categoria", parseJson.montarCategoria(string[0]));
+        map.put("Productos", parseJson.montarProductos(string[1]));
+        map.put("Usuario",parseJson.montarUsuarios(string[2]));
+        //map.put("Cliente",parseJson.montarClientes(string[3]));
+        //map.put("Pedido",parseJson.montarPedido(string[4]));
+       // map.put("PedidoProducto",parseJson.montarPedidoProducto(string[5]));
+       // map.put("PedidoProducto"),parseJson.mont)
+        per.guardarDatosBajados(map);
+        //per.SOSUsuario(montarUsuarios(string[1]));
+        //per.SOSCliente(montarClientes(string[2]));
+       // per.SOSPedido(montarPedido(string[3]));
+       // per.SOSProducto(montarProductos(string[4]));
         //this.bd.SOS(parseJson.SOS(string , bd));
 
     }
-}
+        //TreeMap<String , ArrayList> map =  new  TreeMap<String , ArrayList>();
+        //Usuario
+        /*map.put("Categoria"),montarCategoria(String[0]);
+        map.put("Producto",montarProductos(String[1]);
+        map.put("Pedido",montarProductos(String[2]);
+        map.put("Usuario",montarUsuarios(string[3]));
+        map.put("Cliente",montarClientes(string[4]));
+        return map;*/
+    }
+
 
 

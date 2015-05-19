@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/pa_tv_nombre"
+        android:id="@+id/lppa_tv_nombre"
         android:text="nombreProducto"
         android:layout_alignBottom="@+id/imageView"
         android:layout_centerHorizontal="true" />
@@ -23,16 +23,16 @@
     android:layout_height="wrap_content"
     android:text="cantidad"
     android:id="@+id/textView"
-    android:layout_alignTop="@+id/editText2"
+    android:layout_alignTop="@+id/lppa_tv_cantidad"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
+        android:id="@+id/lppa_tv_cantidad"
         android:text="cantidad"
         android:layout_marginTop="46dp"
-        android:layout_below="@+id/pa_tv_precio"
+        android:layout_below="@+id/lppa_tv_precio"
         android:layout_toRightOf="@+id/imageView"
         android:layout_toEndOf="@+id/imageView" />
 
@@ -41,38 +41,38 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Precio Unidad:"
-        android:id="@+id/pa_tv_pU"
-        android:layout_below="@+id/pa_tv_nombre"
-        android:layout_toLeftOf="@+id/pa_tv_nombre"
-        android:layout_toStartOf="@+id/pa_tv_nombre" />
+        android:id="@+id/lppa_tv_pU"
+        android:layout_below="@+id/lppa_tv_nombre"
+        android:layout_toLeftOf="@+id/lppa_tv_nombre"
+        android:layout_toStartOf="@+id/lppa_tv_nombre" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="EtiquetaPrecio"
-        android:id="@+id/pa_tv_precio"
-        android:layout_below="@id/pa_tv_pU"
-        android:layout_toRightOf="@id/pa_tv_pU"
-        android:layout_toEndOf="@id/pa_tv_pU" />
+        android:text="etiqueta_precio"
+        android:id="@+id/lppa_tv_precio"
+        android:layout_below="@id/lppa_tv_pU"
+        android:layout_toRightOf="@id/lppa_tv_pU"
+        android:layout_toEndOf="@id/lppa_tv_pU" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="PrecioTotal:"
+        android:text="preciototal:"
         android:id="@+id/textView3"
-        android:layout_below="@+id/editText2"
-        android:layout_toLeftOf="@+id/pa_tv_precio"
-        android:layout_toStartOf="@+id/pa_tv_precio" />
+        android:layout_below="@+id/lppa_tv_cantidad"
+        android:layout_toLeftOf="@+id/lppa_tv_precio"
+        android:layout_toStartOf="@+id/lppa_tv_precio" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="precio Total con la cantidad"
-        android:id="@+id/pa_tv_precioTotal"
-        android:layout_below="@+id/editText2"
+        android:text="precio_total_con_la_cantidad"
+        android:id="@+id/lppa_tv_precioTotal"
+        android:layout_below="@+id/lppa_tv_cantidad"
         android:layout_toRightOf="@+id/textView3"
         android:layout_toEndOf="@+id/textView3" />
 
@@ -80,9 +80,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-"
-        android:id="@+id/button2"
-        android:layout_above="@+id/pa_tv_precioTotal"
+        android:text="descontar"
+        android:id="@+id/lppa_btn_restar"
+        android:layout_above="@+id/lppa_tv_precioTotal"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -90,10 +90,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/button3"
-        android:layout_alignTop="@+id/button2"
-        android:layout_toLeftOf="@+id/button2"
-        android:layout_toStartOf="@+id/button2" />
+        android:text="añadir"
+        android:id="@+id/lppa_btn_sumar"
+        android:layout_alignTop="@+id/lppa_btn_restar"
+        android:layout_toLeftOf="@+id/lppa_btn_restar"
+        android:layout_toStartOf="@+id/lppa_btn_restar" />
 
 </RelativeLayout>

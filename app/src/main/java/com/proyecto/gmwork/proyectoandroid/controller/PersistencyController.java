@@ -6,22 +6,27 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.CategoriaDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoDAOController;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoProductoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ProductoDAOController;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.UsuarioDAOController;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by mateo on 30/04/15.
@@ -31,6 +36,9 @@ public class PersistencyController {
     private ClienteDAOController cliDAO;
     private ProductoDAOController proDAO;
     private PedidoDAOController peDAO;
+    private UsuarioDAOController usuDAO;
+    private CategoriaDAOController catDAO;
+    private PedidoProductoDAOController pepoDAO;
     private OpenLiteHelper bd;
     private Context con;
 
@@ -41,7 +49,10 @@ public class PersistencyController {
         cliDAO = new ClienteDAOController(context);
         peDAO = new PedidoDAOController(context);
         proDAO = new ProductoDAOController(context);
-        perWeb = new PersistencyWebController(con, new OpenLiteHelper(con));
+        usuDAO = new UsuarioDAOController(context);
+        catDAO =  new CategoriaDAOController(context);
+        pepoDAO = new PedidoProductoDAOController(context);
+        perWeb = new PersistencyWebController(con, this);
         perWeb.comprovarSOS(isNetworkAvailable());
     }
 
@@ -64,7 +75,44 @@ public class PersistencyController {
 
     }
 
-    public void guardarDatosBajados() {
+    public void guardarDatosBajados(TreeMap<String,ArrayList> map) throws SQLException {
+        Categoria cat = null;
+        for (Object obj : map.get("Categoria")){
+            cat = (Categoria) obj;
+            catDAO.addCategoria(cat);
+        }for(Object obj :map.get("Productos")){
+            Producto pro  = (Producto) obj;
+            cat = catDAO.filtrarCategoria(pro.getCategoria().getNombre());
+            cat.addProducto(pro);
+            catDAO.EditarCategoria(cat);
+            proDAO.addProducto(pro);
+        }for(Object obj : map.get("Usuario")){
+            Usuario usu = (Usuario) obj;
+            usuDAO.addUsuario(usu);
+        }for (Object obj : map.get("Cliente")){
+            Cliente cli = (Cliente) obj;
+            Usuario usu = usuDAO.filtrarUsuario(cli.getUsu().getNombre());
+            usu.addClientes(cli);
+            cliDAO.addCliente(cli);
+            usuDAO.EditarProducto(usu);
+        }for (Object obj : map.get("Pedido")){
+            Pedido ped = (Pedido) obj;
+            Cliente cli = cliDAO.filtrarCliente(ped.getCliente().getNombre());
+            ped.setCliente(cli);
+            cliDAO.EditarCliente(cli);
+            peDAO.addPedido(ped);
+        }for (Object obj : map.get("PedidoProducto")){
+            PedidoProducto pedPro = (PedidoProducto) obj;
+            Pedido ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
+            Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
+            pro.addLiniaPedido(pedPro);
+            ped.addLiniaProducto(pedPro);
+            peDAO.EditarPedido(ped);
+            proDAO.EditarProducto(pro);
+            pepoDAO.addPedidoProducto(pedPro);
+
+        }
+
 
     }
 
@@ -138,5 +186,12 @@ public class PersistencyController {
             String[] fecha = pe.getFecha().split("/");
             //max.set( Calendar.YEAR,fe);
         }
+    }
+
+    public void dadesPrueba() {
+    }
+
+    public void SOSCategoria(ArrayList arrayList) {
+
     }
 }

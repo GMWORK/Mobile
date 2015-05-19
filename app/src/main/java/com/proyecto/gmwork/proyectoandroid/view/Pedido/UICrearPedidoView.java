@@ -1,9 +1,11 @@
 package com.proyecto.gmwork.proyectoandroid.view.Pedido;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
@@ -39,6 +41,7 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
         tv_FEntrega = (TextView) findViewById(R.id.acp_et_FEntrega);
         tv_Cliente = (TextView) findViewById(R.id.acp_et_client);
         btn_aProducto = (Button) findViewById(R.id.acp_btn_aProducto);
+        lv_productos = (ListView) findViewById(R.id.acp_lv_productos);
     }
 
     @Override
@@ -51,13 +54,15 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
                 new DialogCliente().show(getFragmentManager(),"tag");
                 break;
             case R.id.acp_btn_aProducto:
-                new DialogProducto().show(getFragmentManager(),"tag");
+                Intent intent = new Intent(this,DialogProducto.class);
+                startActivityForResult(intent,1);
                 break;
         }
     }
 
     private Button btn_sF;
     private Button btn_asCliente;
+    private ListView lv_productos;
     private TextView tv_FEntrega;
     private TextView tv_Cliente;
     private Button btn_aProducto;

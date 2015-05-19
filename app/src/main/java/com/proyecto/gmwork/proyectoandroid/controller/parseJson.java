@@ -43,33 +43,7 @@ public class parseJson {
     }
 
 
-
-    public static void SOS(String [] string,OpenLiteHelper bd) throws JSONException, SQLException, UnsupportedEncodingException {
-
-//categoria , usuario ,cliente, producto , pedido , productoPedido
-        bd.SOSCategoria(montarCategoria(string[0]));
-        bd.SOSUsuario(montarUsuarios(string[1]));
-        bd.SOSCliente(montarClientes(string[2]));
-        bd.SOSPedido(montarPedido(string[3]));
-        bd.SOSProducto(montarProductos(string[4]));
-
-
-
-
-
-
-
-        //TreeMap<String , ArrayList> map =  new  TreeMap<String , ArrayList>();
-        //Usuario
-        /*map.put("Categoria"),montarCategoria(String[0]);
-        map.put("Producto",montarProductos(String[1]);
-        map.put("Pedido",montarProductos(String[2]);
-        map.put("Usuario",montarUsuarios(string[3]));
-        map.put("Cliente",montarClientes(string[4]));
-        return map;*/
-    }
-
-    private static ArrayList montarPedido(String  s) throws JSONException {;
+    public static ArrayList montarPedido(String  s) throws JSONException {;
         JSONArray json = new JSONArray(s);
         ArrayList pedido = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
@@ -80,7 +54,7 @@ public class parseJson {
         return pedido;
     }
 
-    private static ArrayList montarCategoria(String s) throws JSONException {
+    public static ArrayList montarCategoria(String s) throws JSONException {
         JSONArray json = new JSONArray(s);
         ArrayList categoria = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
@@ -91,7 +65,7 @@ public class parseJson {
         }
         return categoria;
     }
-    private static ArrayList montarProductos(String s) throws JSONException, UnsupportedEncodingException {
+    public static ArrayList montarProductos(String s) throws JSONException, UnsupportedEncodingException {
         JSONArray json = new JSONArray(s);
         ArrayList productos = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
@@ -101,15 +75,15 @@ public class parseJson {
             Producto pro = new Producto();
             Categoria cat = new Categoria();
             cat.setNombre(object2.getString("nombre"));
-            cat.setDescuento(Double.parseDouble(object2.getString("descuento")));
+            pro.setPrecio(object.getDouble("precio"));
             pro.setCategoria(cat);
-            pro.setNombre(object.getString("nombre"));
-            pro.setDescuento(object.getDouble("precio"));
+            pro.setDescuento(object.getDouble("descuento"));
             if(object.has("img")) {
                 pro.setImg(object.getString("img").getBytes("UTF8"));
             }
             pro.setInhabilitats(Boolean.parseBoolean(object.getString("inhabilitats")));
             pro.setDescuento(Double.parseDouble(object.getString("descuento")));
+            productos.add(pro);
 
 
 
@@ -117,17 +91,29 @@ public class parseJson {
         return productos;
     }
 
-    private static ArrayList montarClientes(String s) throws JSONException {
+    public static ArrayList montarClientes(String s) throws JSONException {
         JSONArray json = new JSONArray(s);
         ArrayList clientes = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
-            clientes.add(new Cliente(object.getString("nif"), object.getString("nombre"), object.getString("apellidos"), Double.parseDouble(object.getString("longitud")), Double.parseDouble(object.getString("latitud")), object.getString("calle"), object.getString("poblacion"), object.getString("proximaVisita")));
+            JSONObject object2 = object.getJSONObject("usuarioid");
+            Usuario usu = new Usuario();
+            Cliente cli = new Cliente();
+            cli.setNif(object.getString("nif"));
+            cli.setNombre(object.getString("nombre"));
+            cli.setApellidos(object.getString("apellidos"));
+            cli.setLatitud(object.getDouble("latitud"));
+            cli.setLongitud(object.getDouble("longitud"));
+            cli.setPoblacion(object.getString("poblacion"));
+            cli.setProximaVisita(object.getString("proximaVisita"));
+            cli.setCalle(object.getString("calle"));
+            usu.setNif(object2.getString("nif"));
+            usu.addClientes(cli);
         }
         return clientes;
     }
 
-    private static ArrayList montarUsuarios(String string) throws JSONException {
+    public static ArrayList montarUsuarios(String string) throws JSONException {
         JSONArray json = new JSONArray(string);
         ArrayList usuarios = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
@@ -135,5 +121,9 @@ public class parseJson {
             usuarios.add(new Usuario(object.getString("nif"), object.getString("nombre"), object.getString("apellidos"), object.getString("poblacion"), object.getString("calle"), Boolean.parseBoolean(object.getString("administrador")), object.getString("username"), object.getString("password")));
         }
         return usuarios;
+    }
+
+    public static ArrayList montarPedidoProducto(String S) {
+        return null;
     }
 }
