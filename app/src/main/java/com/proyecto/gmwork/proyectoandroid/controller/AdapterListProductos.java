@@ -73,9 +73,9 @@ public class AdapterListProductos extends ArrayAdapter<Producto> {
             if (0 <= position && position < listarray.size()) {
                 tv_nombre.setText(String.valueOf(listarray.get(position).getNombre()));
                 tv_precio.setText(String.valueOf(listarray.get(position).getPrecio()));
-                if(listarray.get(position).getCategoria() != null){
+
                     tv_categoria.setText(listarray.get(position).getCategoria().getNombre());
-                }
+
 
 
                 if (listarray.get(position).getImg() != null) {

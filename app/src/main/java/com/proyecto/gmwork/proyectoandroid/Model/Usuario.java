@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Matthew on 05/05/2015.
  */
-@DatabaseTable(tableName = "USUARIO")
+@DatabaseTable(tableName = "usuario")
 public class Usuario implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;

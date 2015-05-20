@@ -31,7 +31,7 @@ public class ProductoDAOController {
         return daoPro.queryForEq("nombre",nombre).get(0);
     }
     public void addProducto(Producto cat) throws SQLException {
-        daoPro.create(cat);
+        daoPro.createOrUpdate(cat);
     }
     public void removeProducto(String nombre) throws SQLException {
 

@@ -27,10 +27,10 @@ public class UsuarioDAOController {
         return todos;
     }
     public Usuario filtrarUsuario(String nif) throws SQLException {
-        return daoUsu.queryForEq("nombre",nif).get(0);
+        return daoUsu.queryForEq("nif",nif).get(0);
     }
     public void addUsuario(Usuario cat) throws SQLException {
-        daoUsu.create(cat);
+        daoUsu.createOrUpdate(cat);
     }
     public void removeUsuario(String nif) throws SQLException {
 

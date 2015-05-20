@@ -53,8 +53,10 @@ public class PersistencyController {
         catDAO =  new CategoriaDAOController(context);
         pepoDAO = new PedidoProductoDAOController(context);
         perWeb = new PersistencyWebController(con, this);
-        perWeb.comprovarSOS(isNetworkAvailable());
-    }
+        if(RequiredSOS()==0) {
+            perWeb.comprovarSOS(isNetworkAvailable());
+        }
+        }
 
     public boolean hacerLogin(String username, String password) throws SQLException {
         Usuario user = new Usuario();
@@ -80,28 +82,33 @@ public class PersistencyController {
         for (Object obj : map.get("Categoria")){
             cat = (Categoria) obj;
             catDAO.addCategoria(cat);
-        }for(Object obj :map.get("Productos")){
+        }
+        for(Object obj :map.get("Productos")){
             Producto pro  = (Producto) obj;
             cat = catDAO.filtrarCategoria(pro.getCategoria().getNombre());
             cat.addProducto(pro);
             catDAO.EditarCategoria(cat);
             proDAO.addProducto(pro);
-        }for(Object obj : map.get("Usuario")){
+        }
+        for(Object obj : map.get("Usuario")){
             Usuario usu = (Usuario) obj;
             usuDAO.addUsuario(usu);
-        }for (Object obj : map.get("Cliente")){
+        }
+        for (Object obj : map.get("Cliente")){
             Cliente cli = (Cliente) obj;
-            Usuario usu = usuDAO.filtrarUsuario(cli.getUsu().getNombre());
+            Usuario usu = usuDAO.filtrarUsuario(cli.getUsu().getNif());
             usu.addClientes(cli);
-            cliDAO.addCliente(cli);
             usuDAO.EditarProducto(usu);
-        }for (Object obj : map.get("Pedido")){
+            cliDAO.addCliente(cli);
+        }
+        for (Object obj : map.get("Pedido")){
             Pedido ped = (Pedido) obj;
-            Cliente cli = cliDAO.filtrarCliente(ped.getCliente().getNombre());
+            Cliente cli = cliDAO.filtrarCliente(ped.getCliente().getNif());
             ped.setCliente(cli);
             cliDAO.EditarCliente(cli);
             peDAO.addPedido(ped);
-        }for (Object obj : map.get("PedidoProducto")){
+        }
+        for (Object obj : map.get("PedidoProducto")){
             PedidoProducto pedPro = (PedidoProducto) obj;
             Pedido ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
             Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
@@ -110,7 +117,6 @@ public class PersistencyController {
             peDAO.EditarPedido(ped);
             proDAO.EditarProducto(pro);
             pepoDAO.addPedidoProducto(pedPro);
-
         }
 
 
@@ -190,8 +196,8 @@ public class PersistencyController {
 
     public void dadesPrueba() {
     }
+    private int RequiredSOS() throws SQLException {
+        return catDAO.mostrarCategorias().size() + cliDAO.getClientes().size() +  pepoDAO.mostrarCategorias().size() + catDAO.mostrarCategorias().size()+usuDAO.getUsuarios().size() ;
+    };
 
-    public void SOSCategoria(ArrayList arrayList) {
-
-    }
 }

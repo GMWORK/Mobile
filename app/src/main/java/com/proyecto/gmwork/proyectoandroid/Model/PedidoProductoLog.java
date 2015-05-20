@@ -6,10 +6,10 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.sql.Date;
 
 /**
- * Created by mateo on 11/05/15.
+ * Created by mateo on 20/05/15.
  */
-@DatabaseTable(tableName = "ClienteLog")
-public class ClienteLog {
+@DatabaseTable(tableName = "PedidoProductoLog")
+public class PedidoProductoLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
@@ -17,15 +17,23 @@ public class ClienteLog {
     @DatabaseField
     private String fecha;
     @DatabaseField
-    private long idCliente;
+    private long idPedidoProducto;
 
-    public ClienteLog() {
+    public PedidoProductoLog() {
     }
 
-    public ClienteLog(String operacion, String fecha, long idCliente) {
+    public PedidoProductoLog(String operacion, String fecha, long idPedidoProducto) {
         this.operacion = operacion;
         this.fecha = fecha;
-        this.idCliente = idCliente;
+        this.idPedidoProducto = idPedidoProducto;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getOperacion() {
@@ -44,11 +52,11 @@ public class ClienteLog {
         this.fecha = fecha;
     }
 
-    public long getIdCliente() {
-        return idCliente;
+    public long getIdPedidoProducto() {
+        return idPedidoProducto;
     }
 
-    public void setIdCliente(long idCliente) {
-        this.idCliente = idCliente;
+    public void setIdPedidoProducto(long idPedidoProducto) {
+        this.idPedidoProducto = idPedidoProducto;
     }
 }

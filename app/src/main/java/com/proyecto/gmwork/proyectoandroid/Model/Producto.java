@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Matthew on 05/05/2015.
  */
 
-@DatabaseTable(tableName = "PRODUCTO")
+@DatabaseTable(tableName = "producto")
 public class Producto implements Serializable{
     @DatabaseField(generatedId = true)
     private long id;

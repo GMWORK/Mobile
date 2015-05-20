@@ -29,7 +29,7 @@ public class PedidoProductoDAOController {
         return daoPePo.queryForEq("nombre",nombre).get(0);
     }
     public void addPedidoProducto(PedidoProducto cat) throws SQLException {
-        daoPePo.create(cat);
+        daoPePo.createOrUpdate(cat);
     }
     public void removePedidoProducto(String nombre) throws SQLException {
 

@@ -1,12 +1,15 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Date;
 
 /**
  * Created by mateo on 11/05/15.
  */
+
+@DatabaseTable(tableName = "ProductoLog")
 public class ProductoLog {
     @DatabaseField(generatedId = true)
     private long id;

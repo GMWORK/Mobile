@@ -6,13 +6,14 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Matthew on 05/05/2015.
  */
-@DatabaseTable(tableName = "CATEGORIA")
+@DatabaseTable(tableName = "categoria")
 public class Categoria  implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
@@ -29,6 +30,7 @@ public class Categoria  implements Serializable {
     public Categoria(String nombre, double descuento) {
         this.nombre = nombre;
         this.descuento = descuento;
+
     }
 
     public long getId() {
@@ -63,7 +65,7 @@ public class Categoria  implements Serializable {
         this.productos = productos;
     }
 
-    public void addProducto(Producto pro) {
+    public void addProducto(Producto pro) throws SQLException {
         this.productos.add(pro);
         pro.setCategoria(this);
 

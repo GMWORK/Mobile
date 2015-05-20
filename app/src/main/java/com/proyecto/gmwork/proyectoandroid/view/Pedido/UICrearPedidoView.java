@@ -54,8 +54,7 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener 
                 new DialogCliente().show(getFragmentManager(),"tag");
                 break;
             case R.id.acp_btn_aProducto:
-                Intent intent = new Intent(this,DialogProducto.class);
-                startActivityForResult(intent,1);
+                new DialogProducto().show(getFragmentManager(), "tag");
                 break;
         }
     }

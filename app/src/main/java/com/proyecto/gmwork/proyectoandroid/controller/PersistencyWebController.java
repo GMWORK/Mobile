@@ -36,7 +36,7 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
     public void comprovarSOS(boolean Network) throws SQLException {
         if(Network){
 
-        String[] usuari ={ "http://192.168.1.187:8080/WebservicesJava2/webresources/categoria" , "http://192.168.1.187:8080/WebservicesJava2/webresources/producto" , "http://192.168.1.187:8080/WebservicesJava2/webresources/usuario", "http://192.168.1.187:8080/WebservicesJava2/webresources/cliente","http://192.168.1.187:8080/WebservicesJava2/webresources/pedido","http://192.168.1.187:8080/WebservicesJava2/webresources/productoPedido"};
+        String[] usuari ={ "http://192.168.1.3:8080/WebservicesJava2/webresources/categoria" , "http://192.168.1.3:8080/WebservicesJava2/webresources/producto" , "http://192.168.1.3:8080/WebservicesJava2/webresources/usuario", "http://192.168.1.3:8080/WebservicesJava2/webresources/cliente","http://192.168.1.3:8080/WebservicesJava2/webresources/pedido","http://192.168.1.3:8080/WebservicesJava2/webresources/productoPedido"};
         this.execute(usuari);
         }else{
             per.dadesPrueba();
@@ -129,19 +129,16 @@ public class PersistencyWebController  extends AsyncTask<String, Void, Void>{
         return null;
     }
 
-    public boolean consultarUsuario() {
-        return false;
-    }
+
     public void SOS(String [] string) throws JSONException, SQLException, UnsupportedEncodingException {
         //categoria ,producto, usuario ,cliente,  pedido , productoPedido
         TreeMap<String, ArrayList> map = new TreeMap<String,ArrayList>();
         map.put("Categoria", parseJson.montarCategoria(string[0]));
         map.put("Productos", parseJson.montarProductos(string[1]));
         map.put("Usuario",parseJson.montarUsuarios(string[2]));
-        //map.put("Cliente",parseJson.montarClientes(string[3]));
-        //map.put("Pedido",parseJson.montarPedido(string[4]));
-       // map.put("PedidoProducto",parseJson.montarPedidoProducto(string[5]));
-       // map.put("PedidoProducto"),parseJson.mont)
+        map.put("Cliente",parseJson.montarClientes(string[3]));
+        map.put("Pedido",parseJson.montarPedido(string[4]));
+        map.put("PedidoProducto",parseJson.montarPedidoProducto(string[5]));
         per.guardarDatosBajados(map);
         //per.SOSUsuario(montarUsuarios(string[1]));
         //per.SOSCliente(montarClientes(string[2]));

@@ -30,7 +30,7 @@ public class CategoriaDAOController {
         return daoCat.queryForEq("nombre",nombre).get(0);
     }
     public void addCategoria(Categoria cat) throws SQLException {
-         daoCat.create(cat);
+         daoCat.createOrUpdate(cat);
     }
     public void removeCategoria(String nombre) throws SQLException {
 

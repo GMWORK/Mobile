@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by mateo on 30/04/15.
  */
-@DatabaseTable(tableName = "CLIENTE")
+@DatabaseTable(tableName = "cliente")
 public class Cliente implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;

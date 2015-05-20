@@ -31,7 +31,7 @@ public class ClienteDAOController {
 
     public void addCliente(Cliente cat) {
         try {
-            clidao.getDAOCliente().create(cat);
+            daoCli.createOrUpdate(cat);
 
         } catch (SQLException ex) {
             Log.i("errorSQL", ex.getMessage());

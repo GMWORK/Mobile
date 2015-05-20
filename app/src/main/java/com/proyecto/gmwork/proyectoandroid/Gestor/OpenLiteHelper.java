@@ -9,14 +9,18 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
+import com.proyecto.gmwork.proyectoandroid.Model.CategoriaLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.ClienteLog;
+import com.proyecto.gmwork.proyectoandroid.Model.Horas;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
+import com.proyecto.gmwork.proyectoandroid.Model.PedidoProductoLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.ProductoLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
+import com.proyecto.gmwork.proyectoandroid.Model.UsuarioLog;
 import com.proyecto.gmwork.proyectoandroid.R;
 
 import java.sql.Date;
@@ -29,7 +33,7 @@ import java.util.TreeMap;
  */
 public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "db.lite";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 212323;
     private static Dao<Cliente, Long> daoCli = null;
     private static Dao<Pedido, Long> daoPe = null;
     private static Dao<Usuario, Long> daoUsu = null;
@@ -59,23 +63,26 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, PedidoLog.class);
             TableUtils.createTable(connectionSource, ClienteLog.class);
             TableUtils.createTable(connectionSource, ProductoLog.class);
-            database.execSQL("CREATE TRIGGER categoria_UP AFTER UPDATE ON categoria\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "    END;\n" +
+            TableUtils.createTable(connectionSource, CategoriaLog.class);
+            TableUtils.createTable(connectionSource, UsuarioLog.class);
+            TableUtils.createTable(connectionSource, PedidoProductoLog.class);
+            TableUtils.createTable(connectionSource, Horas.class);
+            database.execSQL(
+                    "CREATE TRIGGER categoria_UP AFTER UPDATE ON categoria\n" +
+                    "FOR EACH ROW\n" +
+                    "BEGIN\n" +
+                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "END;\n" +
                     "CREATE TRIGGER categoria_IN AFTER INSERT ON categoria\n" +
-                    "                    \"    FOR EACH ROW\\n\" +\n" +
-                    "                    \"    BEGIN\\n\" +\n" +
-                    "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
-                    "                    \"    END;\n" +
-                    "\n" +
+                    "FOR EACH ROW\n"+
+                    "BEGIN\n" +
+                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "END;\n" +
                     "CREATE TRIGGER categoria_D AFTER DELETE ON categoria\n" +
-                    "                    \"    FOR EACH ROW\\n\" +\n" +
-                    "                    \"    BEGIN\\n\" +\n" +
-                    "                    \"            INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\\n\" +\n" +
-                    "                    \"    END;\n" +
-                    "\n" +
+                    "FOR EACH ROW\n" +
+                    "BEGIN\n" +
+                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "END;\n" +
                     "CREATE TRIGGER cliente_UP AFTER UPDATE ON cliente\n" +
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
@@ -96,11 +103,21 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "    BEGIN\n" +
                     "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;\n" +
+                    "CREATE TRIGGER PedidoProducto_UP AFTER UPDATE ON pedido_has_producto\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO PedidoProductoLog (operacion, fecha,IdProducto) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;\n" +
                     "CREATE TRIGGER producto_IN AFTER INSERT ON producto\n" +
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
                     "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;\n" +
+                            "CREATE TRIGGER PedidoProducto_IN AFTER INSERT ON pedido_has_producto\n" +
+                            "    FOR EACH ROW\n" +
+                            "    BEGIN\n" +
+                            "            INSERT INTO PedidoProducto (operacion, fecha,IdProducto) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                            "     END;\n" +
                     "CREATE TRIGGER producto_D AFTER DELETE ON producto\n" +
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
@@ -120,6 +137,11 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
                     "    FOR EACH ROW\n" +
                     "    BEGIN\n" +
                     "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
+                    "     END;"+
+                    "CREATE TRIGGER pedidoProducto_D AFTER DELETE ON pedido_has_producto\n" +
+                    "    FOR EACH ROW\n" +
+                    "    BEGIN\n" +
+                    "            INSERT INTO PedidoProductoLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
                     "     END;");
 
             //getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
@@ -169,6 +191,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, PedidoLog.class, false);
             TableUtils.dropTable(connectionSource, ProductoLog.class, false);
             TableUtils.dropTable(connectionSource, ClienteLog.class, false);
+            TableUtils.dropTable(connectionSource, Horas.class, false);
             database.execSQL("DROP TRIGGER categoria_UP");
             database.execSQL("DROP TRIGGER categoria_IN");
             database.execSQL("DROP TRIGGER categoria_D");
@@ -181,6 +204,10 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             database.execSQL("DROP TRIGGER usuario_UP");
             database.execSQL("DROP TRIGGER usuario_IN");
             database.execSQL("DROP TRIGGER usuario_D");
+            database.execSQL("DROP TRIGGER pedidoProducto_D");
+            database.execSQL("DROP TRIGGER PedidoProducto_UP");
+            database.execSQL("DROP TRIGGER PedidoProducto_IN");
+            //pedidoProducto_D PedidoProducto_UP PedidoProducto_IN
             onCreate(database, connectionSource);
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,51 +215,6 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    public void SOSCategoria(ArrayList map) throws SQLException {
-
-        for (Object obj : map) {
-            Categoria usuario = (Categoria) obj;
-            getDAOCategoria().create(usuario);
-            Log.i("Nombre", usuario.getNombre());
-        }
-    }
-    public void SOSCliente(ArrayList map) throws SQLException {
-
-        for (Object obj : map) {
-            Cliente cli = (Cliente) obj;
-            getDAOCliente().create(cli);
-            Log.i("Nombre", cli.getNombre());
-        }
-    }
-    public void SOSProducto(ArrayList map) throws SQLException {
-        for (Object obj : map) {
-            Producto pro = (Producto) obj;
-            getDAOProducto().create(pro);
-            Log.i("Producto", pro.getNombre());
-        }
-    }
-    public void SOSPedido(ArrayList map) throws SQLException {
-        for (Object obj : map) {
-            Pedido pro = (Pedido) obj;
-            getDAOPedido().create(pro);
-            Log.i("Pedido", pro.getFecha());
-        }
-    }
-    public void SOSUsuario(ArrayList map) throws SQLException {
-        for (Object obj : map) {
-            Usuario usu = (Usuario) obj;
-            getDAOUsuario().create(usu);
-        }
-    }
-
-    public void SOSLiniaProducto(ArrayList map) throws SQLException {
-        for (Object obj : map) {
-            PedidoProducto usu = (PedidoProducto) obj;
-            getDAOPedidoProducto().create(usu);
-        }
-
-
-    }
 
     public Dao<Cliente, Long> getDAOCliente() throws SQLException {
         if (daoCli == null) {

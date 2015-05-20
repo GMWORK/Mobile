@@ -39,7 +39,7 @@ public class PedidoDAOController {
 
     public Pedido filtrarPedido(long id) throws SQLException {
 
-        Pedido client = daoPe.queryForEq("id", id).get(0);
+        Pedido client = daoPe.queryForId(id);
         return client;
     }
 

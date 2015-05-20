@@ -4,6 +4,8 @@ import com.j256.ormlite.field.types.DateTimeType;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
+import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 
@@ -48,6 +50,14 @@ public class parseJson {
         ArrayList pedido = new ArrayList();
         for (int i = 0 ; i< json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
+            JSONObject object2 = object.getJSONObject("clienteid");
+            Pedido ped = new Pedido();
+            Cliente client = new Cliente();
+            ped.setFecha(object.getString("fecha"));
+            ped.setEstado(object.getString("estado"));
+            client.setNif(object2.getString("nif"));
+            ped.setCliente(client);
+            pedido.add(ped);
 
         }
 
@@ -76,6 +86,8 @@ public class parseJson {
             Categoria cat = new Categoria();
             cat.setNombre(object2.getString("nombre"));
             pro.setPrecio(object.getDouble("precio"));
+            pro.setNombre(object.getString("nombre"));
+
             pro.setCategoria(cat);
             pro.setDescuento(object.getDouble("descuento"));
             if(object.has("img")) {
@@ -108,7 +120,8 @@ public class parseJson {
             cli.setProximaVisita(object.getString("proximaVisita"));
             cli.setCalle(object.getString("calle"));
             usu.setNif(object2.getString("nif"));
-            usu.addClientes(cli);
+            cli.setUsu(usu);
+            clientes.add(cli);
         }
         return clientes;
     }
@@ -123,7 +136,26 @@ public class parseJson {
         return usuarios;
     }
 
-    public static ArrayList montarPedidoProducto(String S) {
-        return null;
+    public static ArrayList montarPedidoProducto(String string) throws JSONException {
+
+        JSONArray json = new JSONArray(string);
+        ArrayList pedidoProducto = new ArrayList();
+        for (int i = 0 ; i< json.length(); i++) {
+            JSONObject object = json.getJSONObject(i);
+            JSONObject object2 = object.getJSONObject("pedido");
+            JSONObject object3 = object.getJSONObject("producto");
+            PedidoProducto pePro = new PedidoProducto();
+            Pedido ped = new Pedido();
+            Producto pro = new Producto();
+            pro.setNombre(object3.getString("nombre"));
+            pePro.setCantidad(object.getInt("cantidad"));
+            ped.setId(object2.getLong("id"));
+            pePro.setProducto(pro);
+            pePro.setPedido(ped);
+            pedidoProducto.add(pePro);
+        }
+
+
+        return pedidoProducto;
     }
 }

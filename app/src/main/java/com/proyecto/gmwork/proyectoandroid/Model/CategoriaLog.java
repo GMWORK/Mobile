@@ -6,26 +6,34 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.sql.Date;
 
 /**
- * Created by mateo on 11/05/15.
+ * Created by mateo on 20/05/15.
  */
-@DatabaseTable(tableName = "ClienteLog")
-public class ClienteLog {
+@DatabaseTable(tableName = "CategoriaLog")
+public class CategoriaLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
     private String operacion;
     @DatabaseField
-    private String fecha;
+    private Date fecha;
     @DatabaseField
-    private long idCliente;
+    private long idCategoria;
 
-    public ClienteLog() {
+    public CategoriaLog() {
     }
 
-    public ClienteLog(String operacion, String fecha, long idCliente) {
+    public CategoriaLog(String operacion, Date fecha, long idCategoria) {
         this.operacion = operacion;
         this.fecha = fecha;
-        this.idCliente = idCliente;
+        this.idCategoria = idCategoria;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getOperacion() {
@@ -36,19 +44,19 @@ public class ClienteLog {
         this.operacion = operacion;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public long getIdCliente() {
-        return idCliente;
+    public long getidCategoria() {
+        return idCategoria;
     }
 
-    public void setIdCliente(long idCliente) {
-        this.idCliente = idCliente;
+    public void setidCategoria(long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }

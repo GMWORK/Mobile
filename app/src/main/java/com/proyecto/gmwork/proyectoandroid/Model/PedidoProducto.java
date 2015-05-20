@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by mateo on 30/04/15.
  */
-@DatabaseTable(tableName = "LINIAPRODUCTO")
+@DatabaseTable(tableName = "pedido_has_producto")
 public class PedidoProducto implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
