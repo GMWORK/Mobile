@@ -4,6 +4,7 @@ import com.j256.ormlite.field.types.DateTimeType;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+import com.proyecto.gmwork.proyectoandroid.Model.Horas;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
@@ -45,10 +46,11 @@ public class parseJson {
     }
 
 
-    public static ArrayList montarPedido(String  s) throws JSONException {;
+    public static ArrayList montarPedido(String s) throws JSONException {
+        ;
         JSONArray json = new JSONArray(s);
         ArrayList pedido = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             JSONObject object2 = object.getJSONObject("clienteid");
             Pedido ped = new Pedido();
@@ -67,18 +69,19 @@ public class parseJson {
     public static ArrayList montarCategoria(String s) throws JSONException {
         JSONArray json = new JSONArray(s);
         ArrayList categoria = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             //(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento)
             //JSONObject object2 = object.getJSONObject("categoriaid");
-            categoria.add(new Categoria(object.getString("nombre"),object.getDouble("descuento")));
+            categoria.add(new Categoria(object.getString("nombre"), object.getDouble("descuento")));
         }
         return categoria;
     }
+
     public static ArrayList montarProductos(String s) throws JSONException, UnsupportedEncodingException {
         JSONArray json = new JSONArray(s);
         ArrayList productos = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             //(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento)
             JSONObject object2 = object.getJSONObject("categoriaid");
@@ -90,13 +93,12 @@ public class parseJson {
 
             pro.setCategoria(cat);
             pro.setDescuento(object.getDouble("descuento"));
-            if(object.has("img")) {
+            if (object.has("img")) {
                 pro.setImg(object.getString("img").getBytes("UTF8"));
             }
             pro.setInhabilitats(Boolean.parseBoolean(object.getString("inhabilitats")));
             pro.setDescuento(Double.parseDouble(object.getString("descuento")));
             productos.add(pro);
-
 
 
         }
@@ -106,7 +108,7 @@ public class parseJson {
     public static ArrayList montarClientes(String s) throws JSONException {
         JSONArray json = new JSONArray(s);
         ArrayList clientes = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             JSONObject object2 = object.getJSONObject("usuarioid");
             Usuario usu = new Usuario();
@@ -129,7 +131,7 @@ public class parseJson {
     public static ArrayList montarUsuarios(String string) throws JSONException {
         JSONArray json = new JSONArray(string);
         ArrayList usuarios = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             usuarios.add(new Usuario(object.getString("nif"), object.getString("nombre"), object.getString("apellidos"), object.getString("poblacion"), object.getString("calle"), Boolean.parseBoolean(object.getString("administrador")), object.getString("username"), object.getString("password")));
         }
@@ -140,7 +142,7 @@ public class parseJson {
 
         JSONArray json = new JSONArray(string);
         ArrayList pedidoProducto = new ArrayList();
-        for (int i = 0 ; i< json.length(); i++) {
+        for (int i = 0; i < json.length(); i++) {
             JSONObject object = json.getJSONObject(i);
             JSONObject object2 = object.getJSONObject("pedido");
             JSONObject object3 = object.getJSONObject("producto");
@@ -157,5 +159,17 @@ public class parseJson {
 
 
         return pedidoProducto;
+    }
+
+    public static ArrayList montarHoraBajada(String string) throws JSONException {
+        JSONObject json = new JSONObject(string);
+        ArrayList data = new ArrayList();
+        for (int i = 0; i < json.length(); i++) {
+            Horas hora = new Horas();
+            hora.setFecha(json.getString("value"));
+            data.add(hora);
+        }
+
+        return data;
     }
 }

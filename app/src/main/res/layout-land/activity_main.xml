@@ -53,8 +53,9 @@
         android:layout_height="wrap_content"
         android:text="Login!"
         android:id="@+id/la_btn_login"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/la_et_Password"
+        android:layout_alignLeft="@+id/textUser"
+        android:layout_alignStart="@+id/textUser" />
 
     <TextView
         android:layout_width="wrap_content"

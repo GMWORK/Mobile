@@ -40,6 +40,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static Dao<Categoria, Long> daoCat = null;
     private static Dao<Producto, Long> daoPro = null;
     private static Dao<PedidoProducto, Long> daoProPe = null;
+    private static Dao<Horas, Long> daoHora = null;
 
 
     public OpenLiteHelper(Context context) {
@@ -260,6 +261,12 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             daoProPe = getDao(PedidoProducto.class);
         }
         return daoProPe;
+    }
+    public Dao<Horas, Long> getDAOHoras() throws SQLException {
+        if (daoHora == null) {
+            daoHora = getDao(Horas.class);
+        }
+        return daoHora;
     }
 
 

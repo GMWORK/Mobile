@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
+import com.proyecto.gmwork.proyectoandroid.Model.Horas;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
@@ -15,6 +16,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.CategoriaDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
+import com.proyecto.gmwork.proyectoandroid.controller.dao.HoraDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoProductoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ProductoDAOController;
@@ -39,6 +41,7 @@ public class PersistencyController {
     private UsuarioDAOController usuDAO;
     private CategoriaDAOController catDAO;
     private PedidoProductoDAOController pepoDAO;
+    private HoraDAOController hoDAO;
     private OpenLiteHelper bd;
     private Context con;
 
@@ -53,6 +56,7 @@ public class PersistencyController {
         catDAO =  new CategoriaDAOController(context);
         pepoDAO = new PedidoProductoDAOController(context);
         perWeb = new PersistencyWebController(con, this);
+        hoDAO = new HoraDAOController(con);
         if(RequiredSOS()==0) {
             perWeb.comprovarSOS(isNetworkAvailable());
         }
@@ -79,6 +83,11 @@ public class PersistencyController {
 
     public void guardarDatosBajados(TreeMap<String,ArrayList> map) throws SQLException {
         Categoria cat = null;
+        for(Object obj : map.get("HoraBajada")){
+            Horas hora = (Horas) obj;
+            hoDAO.addPedido(hora);
+
+        }
         for (Object obj : map.get("Categoria")){
             cat = (Categoria) obj;
             catDAO.addCategoria(cat);
@@ -163,8 +172,13 @@ public class PersistencyController {
         peDAO.addPedido(pe);
 
     }
+    public String getUltimaDescarga() throws SQLException {
+        return hoDAO.getUltimaSubida().getFecha();
+    }
 
-
+    public String getUltimaBajada() throws SQLException {
+        return hoDAO.getUltimaBajada().getFecha();
+    }
     public void removePedido(int id) throws SQLException {
         peDAO.removePedido(id);
     }
