@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.view.Cliente.UIListaClienteView;
+import com.proyecto.gmwork.proyectoandroid.view.Cliente.VerClientesCercanos;
 import com.proyecto.gmwork.proyectoandroid.view.Pedido.UIListaPedidoView;
 
 import java.io.BufferedReader;
@@ -30,13 +31,15 @@ import java.util.ArrayList;
  * Created by mateo on 04/05/15.
  */
 public class Menu extends Activity implements View.OnClickListener {
+    private Bundle bun;
+    private String nombreUsuario = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         setResources();
-       // setResourcesFormat();
+        setResourcesFormat();
         setEvents();
     }
 
@@ -47,18 +50,19 @@ public class Menu extends Activity implements View.OnClickListener {
         btn_sVisitarGeo.setOnClickListener(this);
     }
 
-   /* private void setResourcesFormat() {
-        btn_Cliente.setOnClickListener(this);
-        btn_Pedido.setOnClickListener(this);
+   private void setResourcesFormat() {
+        tv_Usuario.setText(bun.getString("username"));
 
-
-    }*/
+    }
 
     private void setResources() {
         btn_Cliente = (Button) findViewById(R.id.am_bt_cli);
         btn_Pedido = (Button) findViewById(R.id.am_bt_pedido);
         btn_seleVisitar = (Button) findViewById(R.id.am_btn_seleVisitar);
         btn_sVisitarGeo = (Button) findViewById(R.id.am_btn_sVisitarGeo);
+        tv_Usuario = (TextView) findViewById(R.id.am_tv_nombreUsuario);
+        bun = getIntent().getExtras();
+
 
 
     }
@@ -99,6 +103,8 @@ public class Menu extends Activity implements View.OnClickListener {
     }
 
     private void pasarASeleccionarVisitaMasCercana() {
+        Intent intent = new Intent(this, VerClientesCercanos.class);
+        startActivity(intent);
 
     }
 
@@ -106,6 +112,6 @@ public class Menu extends Activity implements View.OnClickListener {
     private Button btn_Cliente;
     private Button btn_seleVisitar;
     private Button btn_sVisitarGeo;
-
+    private TextView tv_Usuario;
 
 }

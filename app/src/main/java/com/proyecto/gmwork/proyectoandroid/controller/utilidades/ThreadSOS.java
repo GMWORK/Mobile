@@ -1,5 +1,6 @@
 package com.proyecto.gmwork.proyectoandroid.controller.utilidades;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -23,11 +24,12 @@ import java.util.TreeMap;
  * Created by mateo on 20/05/15.
  */
 public class ThreadSOS  extends AsyncTask<String, Void, Void> {
+    private ProgressDialog dialog;
 String Error = "";
     String [] Content;
     PersistencyController per;
-    public ThreadSOS(String[] urls,PersistencyController per) {
-        Content = urls;
+    public ThreadSOS(PersistencyController per,Context con) {
+        dialog = new ProgressDialog(con);
         this.per = per;
     }
 
@@ -72,15 +74,15 @@ String Error = "";
 
     @Override
     protected void onPreExecute() {
-        /*Dialog.setMessage("Please wait...");
-        Dialog.show();*/
+        dialog.setMessage("Please wait...");
+        dialog.show();
         super.onPreExecute();
     }
 
     @Override
     protected void onPostExecute(Void unsed) {
         super.onPostExecute(unsed);
-        //Dialog.dismiss();
+        dialog.dismiss();
         if (Error != null) {
             try {
                 SOS(Content);

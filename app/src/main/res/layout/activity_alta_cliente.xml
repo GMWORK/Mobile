@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/fondo"
     tools:context=".view.Cliente.UiAltaClienteView">
     <!-- @DatabaseField(generatedId = true)
     private long id;
@@ -27,6 +28,7 @@
     private ForeignCollection<Pedido> pedido ;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Usuario usu;-->
+
     <TextView
         android:id="@+id/aac_tv_titulo"
         android:layout_width="wrap_content"
@@ -35,12 +37,17 @@
         android:layout_centerHorizontal="true"
         android:text="Alta Cliente"
         android:textSize="30dp" />
+    <RelativeLayout
+        android:layout_below="@+id/aac_tv_titulo"
+        android:layout_width="wrap_content"
+        android:background="@drawable/botones_fondo_4"
+        android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/aac_tv_titulo">
+        >
 
         <TextView
             android:id="@+id/aac_tv_nif"
@@ -272,5 +279,5 @@
         android:layout_below="@+id/rl6"
         android:layout_centerHorizontal="true"
         android:text="Guardar Cliente" />
-
+</RelativeLayout>
 </RelativeLayout>

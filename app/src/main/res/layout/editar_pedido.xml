@@ -2,9 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@drawable/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.Pedido.UIEditarPedidoView">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Pedido"
+        android:textSize="30dp"
+        android:id="@+id/titulo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_below="@id/titulo"
+        android:background="@drawable/botones_fondo_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <!--DatabaseField
     private String nombre;
     @DatabaseField
@@ -61,6 +74,7 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_below="@id/rl1"
         android:id="@+id/rl2"
@@ -126,5 +140,5 @@
     </RelativeLayout>
 
 
-
+    </RelativeLayout>
 </RelativeLayout>

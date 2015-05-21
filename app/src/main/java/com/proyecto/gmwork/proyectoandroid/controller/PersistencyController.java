@@ -53,14 +53,18 @@ public class PersistencyController {
         peDAO = new PedidoDAOController(context);
         proDAO = new ProductoDAOController(context);
         usuDAO = new UsuarioDAOController(context);
-        catDAO =  new CategoriaDAOController(context);
+        catDAO = new CategoriaDAOController(context);
         pepoDAO = new PedidoProductoDAOController(context);
         perWeb = new PersistencyWebController(con, this);
         hoDAO = new HoraDAOController(con);
-        if(RequiredSOS()==0) {
+
+    }
+
+    public void guardarDatosBajadosActivar() throws SQLException {
+        if (RequiredSOS() == 0) {
             perWeb.comprovarSOS(isNetworkAvailable());
         }
-        }
+    }
 
     public boolean hacerLogin(String username, String password) throws SQLException {
         Usuario user = new Usuario();
@@ -73,7 +77,7 @@ public class PersistencyController {
         }else{
             return false;
         }*/
-        if (bd.hacerLogin(user)) {
+        if (usuDAO.hacerLogin(user)) {
             return true;
         } else {
             return false;
@@ -81,43 +85,43 @@ public class PersistencyController {
 
     }
 
-    public void guardarDatosBajados(TreeMap<String,ArrayList> map) throws SQLException {
+    public void guardarDatosBajados(TreeMap<String, ArrayList> map) throws SQLException {
         Categoria cat = null;
-        for(Object obj : map.get("HoraBajada")){
+        for (Object obj : map.get("HoraBajada")) {
             Horas hora = (Horas) obj;
             hoDAO.addPedido(hora);
 
         }
-        for (Object obj : map.get("Categoria")){
+        for (Object obj : map.get("Categoria")) {
             cat = (Categoria) obj;
             catDAO.addCategoria(cat);
         }
-        for(Object obj :map.get("Productos")){
-            Producto pro  = (Producto) obj;
+        for (Object obj : map.get("Productos")) {
+            Producto pro = (Producto) obj;
             cat = catDAO.filtrarCategoria(pro.getCategoria().getNombre());
             cat.addProducto(pro);
             catDAO.EditarCategoria(cat);
             proDAO.addProducto(pro);
         }
-        for(Object obj : map.get("Usuario")){
+        for (Object obj : map.get("Usuario")) {
             Usuario usu = (Usuario) obj;
             usuDAO.addUsuario(usu);
         }
-        for (Object obj : map.get("Cliente")){
+        for (Object obj : map.get("Cliente")) {
             Cliente cli = (Cliente) obj;
             Usuario usu = usuDAO.filtrarUsuario(cli.getUsu().getNif());
             usu.addClientes(cli);
             usuDAO.EditarProducto(usu);
             cliDAO.addCliente(cli);
         }
-        for (Object obj : map.get("Pedido")){
+        for (Object obj : map.get("Pedido")) {
             Pedido ped = (Pedido) obj;
             Cliente cli = cliDAO.filtrarCliente(ped.getCliente().getNif());
             ped.setCliente(cli);
             cliDAO.EditarCliente(cli);
             peDAO.addPedido(ped);
         }
-        for (Object obj : map.get("PedidoProducto")){
+        for (Object obj : map.get("PedidoProducto")) {
             PedidoProducto pedPro = (PedidoProducto) obj;
             Pedido ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
             Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
@@ -172,6 +176,7 @@ public class PersistencyController {
         peDAO.addPedido(pe);
 
     }
+
     public String getUltimaDescarga() throws SQLException {
         return hoDAO.getUltimaSubida().getFecha();
     }
@@ -179,6 +184,7 @@ public class PersistencyController {
     public String getUltimaBajada() throws SQLException {
         return hoDAO.getUltimaBajada().getFecha();
     }
+
     public void removePedido(int id) throws SQLException {
         peDAO.removePedido(id);
     }
@@ -210,8 +216,11 @@ public class PersistencyController {
 
     public void dadesPrueba() {
     }
+
     private int RequiredSOS() throws SQLException {
-        return catDAO.mostrarCategorias().size() + cliDAO.getClientes().size() +  pepoDAO.mostrarCategorias().size() + catDAO.mostrarCategorias().size()+usuDAO.getUsuarios().size() ;
-    };
+        return catDAO.mostrarCategorias().size() + cliDAO.getClientes().size() + pepoDAO.mostrarCategorias().size() + catDAO.mostrarCategorias().size() + usuDAO.getUsuarios().size();
+    }
+
+    ;
 
 }

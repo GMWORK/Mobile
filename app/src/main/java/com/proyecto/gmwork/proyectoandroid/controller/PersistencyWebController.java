@@ -37,7 +37,7 @@ public class PersistencyWebController {
     public void comprovarSOS(boolean Network) throws SQLException {
         if(Network){
         String[] usuari ={ "categoria" , "producto" ,"usuario", "cliente","pedido","productohaspedido", "date"};
-        new ThreadSOS(usuari,per).execute(usuari);
+        new ThreadSOS(per,con).execute(usuari);
         }else{
             per.dadesPrueba();
         }
