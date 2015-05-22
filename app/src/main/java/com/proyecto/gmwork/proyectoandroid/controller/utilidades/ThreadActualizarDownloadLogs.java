@@ -40,8 +40,10 @@ public class ThreadActualizarDownloadLogs extends AsyncTask<String, Void, Void> 
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
         super.onPostExecute(aVoid);
         dialog.dismiss();
+
     }
 
     @Override
@@ -63,21 +65,9 @@ public class ThreadActualizarDownloadLogs extends AsyncTask<String, Void, Void> 
                     sb.append(line + "");
                 }
                 Content[i] = sb.toString();
+                doOperation();
             }
-            for (int i = 0 ; i< Content.length ; i++){
-                String content = Content[i];
-                JSONArray json = new JSONArray(content);
-                JSONObject object = json.getJSONObject(i);
-                String fechamodificacion = object.getString("fecha");
-                if(DateTime.parse(fechamodificacion).compareTo(DateTime.parse(per.getUltimaDescarga()))>0){
-                switch (object.getString("Op")){
-                    case "I":
 
-                        break;
-
-                }
-                }
-            }
         } catch (MalformedURLException ex) {
             ex.getMessage();
         } catch (IOException e) {
@@ -93,6 +83,9 @@ public class ThreadActualizarDownloadLogs extends AsyncTask<String, Void, Void> 
             }
             return null;
         }
+    }
+    public void doOperation(){
+        per.doBajada(Content[0]);
     }
 
 }

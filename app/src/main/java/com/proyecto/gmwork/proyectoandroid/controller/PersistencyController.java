@@ -221,6 +221,9 @@ public class PersistencyController {
         return catDAO.mostrarCategorias().size() + cliDAO.getClientes().size() + pepoDAO.mostrarCategorias().size() + catDAO.mostrarCategorias().size() + usuDAO.getUsuarios().size();
     }
 
+    public void doBajada(String s) {
+    }
+
     ;
 
 }

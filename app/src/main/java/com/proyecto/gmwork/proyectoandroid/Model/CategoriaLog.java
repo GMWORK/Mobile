@@ -15,14 +15,14 @@ public class CategoriaLog {
     @DatabaseField
     private String operacion;
     @DatabaseField
-    private Date fecha;
+    private String fecha;
     @DatabaseField
     private long idCategoria;
 
     public CategoriaLog() {
     }
 
-    public CategoriaLog(String operacion, Date fecha, long idCategoria) {
+    public CategoriaLog(String operacion, String fecha, long idCategoria) {
         this.operacion = operacion;
         this.fecha = fecha;
         this.idCategoria = idCategoria;
@@ -44,11 +44,11 @@ public class CategoriaLog {
         this.operacion = operacion;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
