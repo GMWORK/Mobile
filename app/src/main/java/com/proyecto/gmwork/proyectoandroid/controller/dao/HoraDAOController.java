@@ -40,11 +40,29 @@ public class HoraDAOController {
 
     public Horas getUltimaBajada() throws SQLException {
 
-        Horas client = daoHora.queryForId((long) 1);
+        Horas client = daoHora.queryForEq("id","1").get(0);
         return client;
     }
     public Horas getUltimaSubida () throws SQLException {
-        return  daoHora.queryForId((long) 2);
+        Horas hora = null;
+        try{
+        hora =daoHora.queryForEq("id","2").get(0);
+        if(hora !=null){
+            return  hora;
+        }else{
+            hora.setFecha("1999-07-15T00:00:00+02:00");
+            hora.setId(2);
+            return hora;
+
+        }}catch(IndexOutOfBoundsException ex){
+            hora = new Horas();
+            hora.setFecha("1999-07-15T00:00:00+02:00");
+            hora.setId(2);
+            return hora;
+        }
+
+
+
     }
     public void removeHora(int id) throws SQLException {
         daoHora.delete(daoHora.queryForEq("id", id));

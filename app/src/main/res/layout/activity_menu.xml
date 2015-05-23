@@ -99,4 +99,12 @@
         android:layout_toRightOf="@+id/textView14"
         android:layout_toEndOf="@+id/textView14" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Session"
+        android:id="@+id/am_btn_cs"
+        android:layout_below="@+id/gridLayout"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

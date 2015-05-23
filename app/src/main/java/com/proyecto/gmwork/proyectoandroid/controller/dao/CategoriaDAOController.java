@@ -5,6 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
+import com.proyecto.gmwork.proyectoandroid.Model.CategoriaLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class CategoriaDAOController {
     private Dao<Categoria, Long> daoCat;
+    private Dao<CategoriaLog,Long> daoCatlog;
     private OpenLiteHelper cliCat;
 
     public CategoriaDAOController(Context con) throws SQLException {

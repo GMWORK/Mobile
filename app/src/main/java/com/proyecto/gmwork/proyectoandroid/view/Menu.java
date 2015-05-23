@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
+import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 import com.proyecto.gmwork.proyectoandroid.view.Cliente.UIListaClienteView;
 import com.proyecto.gmwork.proyectoandroid.view.Cliente.VerClientesCercanos;
 import com.proyecto.gmwork.proyectoandroid.view.Pedido.UIListaPedidoView;
@@ -25,6 +26,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -33,12 +35,17 @@ import java.util.ArrayList;
 public class Menu extends Activity implements View.OnClickListener {
     private Bundle bun;
     private String nombreUsuario = "";
+    private PersistencyController per;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        setResources();
+        try {
+            setResources();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         setResourcesFormat();
         setEvents();
     }
@@ -48,6 +55,7 @@ public class Menu extends Activity implements View.OnClickListener {
         btn_Pedido.setOnClickListener(this);
         btn_seleVisitar.setOnClickListener(this);
         btn_sVisitarGeo.setOnClickListener(this);
+        btn_cs.setOnClickListener(this);
     }
 
    private void setResourcesFormat() {
@@ -55,12 +63,14 @@ public class Menu extends Activity implements View.OnClickListener {
 
     }
 
-    private void setResources() {
+    private void setResources() throws SQLException {
+        per = new PersistencyController(this);
         btn_Cliente = (Button) findViewById(R.id.am_bt_cli);
         btn_Pedido = (Button) findViewById(R.id.am_bt_pedido);
         btn_seleVisitar = (Button) findViewById(R.id.am_btn_seleVisitar);
         btn_sVisitarGeo = (Button) findViewById(R.id.am_btn_sVisitarGeo);
         tv_Usuario = (TextView) findViewById(R.id.am_tv_nombreUsuario);
+        btn_cs = (Button) findViewById(R.id.am_btn_cs);
         bun = getIntent().getExtras();
 
 
@@ -75,6 +85,13 @@ public class Menu extends Activity implements View.OnClickListener {
                 break;
             case R.id.am_bt_pedido:
                 pasarAPedido();
+                break;
+            case R.id.am_btn_cs:
+                try {
+                    per.subirDatosLocales();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.am_btn_seleVisitar:
                 pasarASeleccionarVisita();
@@ -112,6 +129,7 @@ public class Menu extends Activity implements View.OnClickListener {
     private Button btn_Cliente;
     private Button btn_seleVisitar;
     private Button btn_sVisitarGeo;
+    private Button btn_cs;
     private TextView tv_Usuario;
 
 }

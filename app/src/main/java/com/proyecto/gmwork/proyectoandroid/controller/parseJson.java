@@ -51,15 +51,18 @@ public class parseJson {
         JSONArray json = new JSONArray(s);
         ArrayList pedido = new ArrayList();
         for (int i = 0; i < json.length(); i++) {
+
             JSONObject object = json.getJSONObject(i);
             JSONObject object2 = object.getJSONObject("clienteid");
+
             Pedido ped = new Pedido();
             Cliente client = new Cliente();
-            ped.setFecha(object.getString("fecha"));
+            ped.setFecha(object.getString("fechaEntrega"));
             ped.setEstado(object.getString("estado"));
             client.setNif(object2.getString("nif"));
             ped.setCliente(client);
             pedido.add(ped);
+
 
         }
 

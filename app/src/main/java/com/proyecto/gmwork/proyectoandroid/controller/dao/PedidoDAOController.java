@@ -6,6 +6,7 @@ import android.util.Log;
 import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
+import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,12 +16,14 @@ import java.util.List;
  */
 public class PedidoDAOController {
     private Dao<Pedido, Long> daoPe;
+    private Dao<PedidoLog, Long> daoPelog;
     private OpenLiteHelper clidao;
     private Context con;
 
     public PedidoDAOController(Context con) throws SQLException {
         clidao = new OpenLiteHelper(con);
         this.daoPe = clidao.getDAOPedido();
+        daoPelog = clidao.getDAOPedidoLog();
         this.con = con;
     }
 
@@ -36,7 +39,10 @@ public class PedidoDAOController {
         List<Pedido> todos = daoPe.queryForAll();
         return todos;
     }
-
+    public List<PedidoLog> getPedidosLog() throws SQLException {
+        List<PedidoLog> todos = daoPelog.queryForAll();
+        return todos;
+    }
     public Pedido filtrarPedido(long id) throws SQLException {
 
         Pedido client = daoPe.queryForId(id);

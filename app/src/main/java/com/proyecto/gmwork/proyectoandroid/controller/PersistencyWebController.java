@@ -7,6 +7,8 @@ import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
+import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarDownloadLogs;
+import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarUpload;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadSOS;
 
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 /**
@@ -74,7 +77,18 @@ public class PersistencyWebController {
         return null;
     }
 
-        //TreeMap<String , ArrayList> map =  new  TreeMap<String , ArrayList>();
+    public void activarActualizacionLocal() throws InterruptedException {
+        String [] aDescargar = new String[]{ "categoriasadescargar" ,"productosadescargar" , "usuarioadescargar","clienteadescargar" , "pedidosadescargar", "pedidoproductosadescargar" };
+     /*  Thread thread = new Thread(aDescargar,per,con));
+        thread.start();
+        thread.join();*/
+    }
+
+    public void subirInformacion(TreeMap<String, List<String[]>> map) {
+
+    }
+
+    //TreeMap<String , ArrayList> map =  new  TreeMap<String , ArrayList>();
         //Usuario
         /*map.put("Categoria"),montarCategoria(String[0]);
         map.put("Producto",montarProductos(String[1]);

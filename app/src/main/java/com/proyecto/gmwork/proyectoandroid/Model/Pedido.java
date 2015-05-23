@@ -36,7 +36,13 @@ public class Pedido  implements Serializable {
         this.fecha = fecha;
         this.estado = estado;
     }
-    
+
+    public Pedido(String fecha, String estado, double total) {
+        this.fecha = fecha;
+        this.estado = estado;
+        this.total = total;
+    }
+
     public long getId() {
         return id;
     }
@@ -89,5 +95,17 @@ public class Pedido  implements Serializable {
         this.liniaProducto.add(pPro);
         pPro.setPedido(this);
         
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido[" +
+                "id=" + id +
+                ", fecha='" + fecha + '\'' +
+                ", estado='" + estado + '\'' +
+                ", total=" + total +
+                ", cliente=" + cliente +
+                ", liniaProducto=" + liniaProducto +
+                ']';
     }
 }

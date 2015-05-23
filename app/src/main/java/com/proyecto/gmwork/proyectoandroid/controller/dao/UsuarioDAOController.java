@@ -7,6 +7,7 @@ import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
+import com.proyecto.gmwork.proyectoandroid.Model.UsuarioLog;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class UsuarioDAOController {
     private Dao<Usuario, Long> daoUsu;
+    private Dao<UsuarioLog, Long> daoUsulog;
     private OpenLiteHelper prodao;
     private Context con;
 

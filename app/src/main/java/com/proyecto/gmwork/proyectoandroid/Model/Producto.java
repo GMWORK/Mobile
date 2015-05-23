@@ -8,6 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -120,5 +121,19 @@ public class Producto implements Serializable{
     public void addLiniaPedido(PedidoProducto liPro) {
         this.liniaPedidos.add(liPro);
         liPro.setProducto(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Producto[" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", img=" + Arrays.toString(img) +
+                ", inhabilitats=" + inhabilitats +
+                ", descuento=" + descuento +
+                ", categoria=" + categoria +
+                ", liniaPedidos=" + liniaPedidos +
+                ']';
     }
 }

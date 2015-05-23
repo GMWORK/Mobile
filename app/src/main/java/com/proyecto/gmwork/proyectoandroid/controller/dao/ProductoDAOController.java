@@ -7,6 +7,7 @@ import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
+import com.proyecto.gmwork.proyectoandroid.Model.ProductoLog;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class ProductoDAOController {
     private Dao<Producto, Long> daoPro;
+    private Dao<ProductoLog, Long> daoProlog;
     private OpenLiteHelper prodao;
     private Context con;
     public ProductoDAOController(Context con) throws SQLException {

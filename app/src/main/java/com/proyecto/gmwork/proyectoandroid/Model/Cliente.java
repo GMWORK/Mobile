@@ -14,6 +14,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -63,7 +64,7 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(String nif, String nombre, String apellidos, double longitud, double latitud, String calle, String poblacion, String proximaVisita) {
-        this.nif = nif;
+            this.nif = nif;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.longitud = longitud;
@@ -174,5 +175,23 @@ public class Cliente implements Serializable {
     public void addPedido(Pedido ped) {
         this.pedido.add(ped);
         ped.setCliente(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente[" +
+                "id=" + id +
+                ", nif='" + nif + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", longitud=" + longitud +
+                ", latitud=" + latitud +
+                ", calle='" + calle + '\'' +
+                ", poblacion='" + poblacion + '\'' +
+                ", img=" + Arrays.toString(img) +
+                ", proximaVisita='" + proximaVisita + '\'' +
+                ", pedido=" + pedido +
+                ", usu=" + usu +
+                ']';
     }
 }

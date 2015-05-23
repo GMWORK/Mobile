@@ -1,45 +1,27 @@
-package com.proyecto.gmwork.proyectoandroid.Model;
+package com.proyecto.gmwork.proyectoandroid.Model.mapping;
 
-import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import org.joda.time.DateTime;
 
 /**
- * Created by Matthew on 05/05/2015.
+ * Created by Mateo on 22/05/2015.
  */
-@DatabaseTable(tableName = "usuario")
-public class Usuario implements Serializable {
-    @DatabaseField(generatedId = true)
+public class UsuarioVista {
     private long id;
-    @DatabaseField
     private String nif;
-    @DatabaseField
     private String nombre;
-    @DatabaseField
     private String apellidos;
-    @DatabaseField
     private String calle;
-    @DatabaseField
     private String poblacion;
-    @DatabaseField
     private boolean administrador;
-    @DatabaseField
     private String username;
-    @DatabaseField
     private String password;
-    @ForeignCollectionField
-    private ForeignCollection<Cliente> clientes;
+    private DateTime fecha;
+    private String Op;
 
-    public Usuario() {
+    public UsuarioVista() {
     }
 
-    public Usuario(String nif, String nombre, String apellidos, String calle, String poblacion, boolean administrador, String username, String password) {
+    public UsuarioVista(String nif, String nombre, String apellidos, String calle, String poblacion, boolean administrador, String username, String password, DateTime fecha, String op) {
         this.nif = nif;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -48,6 +30,8 @@ public class Usuario implements Serializable {
         this.administrador = administrador;
         this.username = username;
         this.password = password;
+        this.fecha = fecha;
+        Op = op;
     }
 
     public long getId() {
@@ -98,6 +82,14 @@ public class Usuario implements Serializable {
         this.poblacion = poblacion;
     }
 
+    public boolean isAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(boolean administrador) {
+        this.administrador = administrador;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -114,30 +106,25 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public boolean isAdministrador() {
-        return administrador;
+    public DateTime getFecha() {
+        return fecha;
     }
 
-    public void setAdministrador(boolean administrador) {
-        this.administrador = administrador;
+    public void setFecha(DateTime fecha) {
+        this.fecha = fecha;
     }
 
-    public ForeignCollection<Cliente> getClientes() {
-        return clientes;
+    public String getOp() {
+        return Op;
     }
 
-    public void setClientes(ForeignCollection<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
-    public void addClientes(Cliente cli) {
-        this.clientes.add(cli);
-        cli.setUsu(this);
+    public void setOp(String op) {
+        Op = op;
     }
 
     @Override
     public String toString() {
-        return "Usuario[" +
+        return "UsuarioVista[" +
                 "id=" + id +
                 ", nif='" + nif + '\'' +
                 ", nombre='" + nombre + '\'' +
@@ -147,7 +134,8 @@ public class Usuario implements Serializable {
                 ", administrador=" + administrador +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", clientes=" + clientes +
+                ", fecha=" + fecha +
+                ", Op='" + Op + '\'' +
                 ']';
     }
 }

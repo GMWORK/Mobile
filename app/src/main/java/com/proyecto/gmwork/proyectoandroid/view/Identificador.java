@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,16 +31,17 @@ import java.util.ArrayList;
 /**
  * Created by Matthew on 05/05/2015.
  */
-public class Identificador extends Activity implements View.OnClickListener{
+public class Identificador extends Activity implements View.OnClickListener {
     private PersistencyController per;
     private String Content;
     private String Error = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //AlertDialog alert = new AlertDialog(this);
-        new DialogMessage().show(getFragmentManager(),"tag");
+        new DialogMessage().show(getFragmentManager(), "tag");
         try {
             setResources();
         } catch (SQLException e) {
@@ -66,16 +69,21 @@ public class Identificador extends Activity implements View.OnClickListener{
 
     }
 
-    private void setResourcesFormat(){
+    private void setResourcesFormat() {
 
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.la_btn_login:
                 try {
                     pasarPantalla();
                 } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -88,21 +96,24 @@ public class Identificador extends Activity implements View.OnClickListener{
                 break;
         }
     }
-    public void pasarPantalla() throws SQLException {
-        if(per.hacerLogin(username.getText().toString(), password.getText().toString())){
-            Toast.makeText(this,"Usuario encontrado",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this,Menu.class);
-            intent.putExtra("username",username.getText().toString());
+
+    public void pasarPantalla() throws SQLException, UnsupportedEncodingException, InterruptedException {
+        // per.actualizarDatosLocalesActivar();
+        byte[] data = password.getText().toString().getBytes("UTF-8");
+        if (per.hacerLogin(username.getText().toString(), Base64.encodeToString(data, Base64.DEFAULT).trim())) {
+            Toast.makeText(this, "Usuario encontrado", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Menu.class);
+            intent.putExtra("username", username.getText().toString());
             startActivity(intent);
-        }else{
-            Toast.makeText(this,R.string.login_error,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
         }
     }
+
     private EditText username;
     private EditText password;
     private Button button;
     private Button btn_dInfo;
-
 
 
 }
