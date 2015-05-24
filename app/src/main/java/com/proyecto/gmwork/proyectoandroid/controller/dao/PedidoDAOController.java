@@ -49,7 +49,7 @@ public class PedidoDAOController {
         return client;
     }
 
-    public void removePedido(int id) throws SQLException {
+    public void removePedido(long id) throws SQLException {
         daoPe.delete(daoPe.queryForEq("id", id));
     }
 

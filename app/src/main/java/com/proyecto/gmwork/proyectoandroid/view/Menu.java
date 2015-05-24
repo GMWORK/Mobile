@@ -16,6 +16,7 @@ import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 import com.proyecto.gmwork.proyectoandroid.view.Cliente.UIListaClienteView;
 import com.proyecto.gmwork.proyectoandroid.view.Cliente.VerClientesCercanos;
+import com.proyecto.gmwork.proyectoandroid.view.Cliente.seleClientesAVisitar;
 import com.proyecto.gmwork.proyectoandroid.view.Pedido.UIListaPedidoView;
 
 import java.io.BufferedReader;
@@ -115,7 +116,8 @@ public class Menu extends Activity implements View.OnClickListener {
     }
 
     private void pasarASeleccionarVisita() {
-
+        Intent intent = new Intent(this, seleClientesAVisitar.class);
+        startActivity(intent);
 
     }
 

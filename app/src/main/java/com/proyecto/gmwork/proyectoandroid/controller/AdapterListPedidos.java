@@ -66,7 +66,7 @@ public class AdapterListPedidos extends ArrayAdapter<Pedido> {
             TextView tv_estado = (TextView) view.findViewById(R.id.lpa_tv_estado);
 
             if (0 <= position && position < listarray.size()) {
-                tv_pFecha.setText(String.valueOf(listarray.get(position).getFecha()));
+                tv_pFecha.setText(String.valueOf(listarray.get(position).getFechaEntrega()));
                 tv_id.setText(String.valueOf(listarray.get(position).getId()));
                 tv_pTotal.setText(String.valueOf(listarray.get(position).getTotal()));
                 tv_cliente.setText(listarray.get(position).getCliente().getNif());

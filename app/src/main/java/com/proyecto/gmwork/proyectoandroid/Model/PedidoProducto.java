@@ -18,6 +18,8 @@ public class PedidoProducto implements Serializable {
     private Pedido pedido;
     @DatabaseField
     private double cantidad;
+    @DatabaseField
+    private boolean baja;
 
     public PedidoProducto() {
     }
@@ -58,6 +60,14 @@ public class PedidoProducto implements Serializable {
 
     public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
     }
 
     @Override

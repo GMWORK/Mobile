@@ -2,9 +2,12 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 
 
 import android.content.Context;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.View;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
@@ -28,6 +31,7 @@ import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoProductoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.ProductoDAOController;
 import com.proyecto.gmwork.proyectoandroid.controller.dao.UsuarioDAOController;
+import com.proyecto.gmwork.proyectoandroid.controller.utilidades.GPSTracker;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.MontarSubida;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarDownloadLogs;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarUpload;
@@ -38,6 +42,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
@@ -77,6 +82,10 @@ public class PersistencyController {
         new ThreadActualizarDownloadLogs(aDescargar, this, con).execute(aDescargar);
     }
 
+    public Pedido filtrarPedido(long id) throws SQLException {
+        return peDAO.filtrarPedido(id);
+    }
+
     public void guardarDatosBajadosActivar() throws SQLException {
         if (RequiredSOS() == 0) {
             perWeb.comprovarSOS(isNetworkAvailable());
@@ -105,10 +114,9 @@ public class PersistencyController {
     public void subirDatosLocales() throws SQLException {
         TreeMap<String, List<String[]>> map = new TreeMap<String, List<String[]>>();
 
-        map.put("cliente", MontarSubida.montarCliente(cliDAO,getUltimaSubida()));
-        map.put("pedido",MontarSubida.montarPedido(peDAO,getUltimaSubida()));
-        new  ThreadActualizarUpload(map,con).execute();
-
+        map.put("cliente", MontarSubida.montarCliente(cliDAO, getUltimaSubida()));
+        map.put("pedido", MontarSubida.montarPedido(peDAO, getUltimaSubida()));
+        new ThreadActualizarUpload(map, con).execute();
 
 
     }
@@ -225,7 +233,7 @@ public class PersistencyController {
                     case "U":
                         Pedido catlocal = peDAO.filtrarPedido(vista.getId());
                         catlocal.setEstado(vista.getEstado());
-                        catlocal.setFecha(vista.getFechaEntrega());
+                        catlocal.setFechaEntrega(vista.getFechaEntrega());
                         /*catlocal.setCalle(vista.getCalle());
                         catlocal.setPoblacion(vista.getPoblacion());
                         catlocal.setLatitud(vista.getLatitud());
@@ -253,7 +261,7 @@ public class PersistencyController {
                     case "U":
                         Pedido catlocal = peDAO.filtrarPedido(vista.getId());
                         catlocal.setEstado(vista.getEstado());
-                        catlocal.setFecha(vista.getFechaEntrega());
+                        catlocal.setFechaEntrega(vista.getFechaEntrega());
                         /*catlocal.setCalle(vista.getCalle());
                         catlocal.setPoblacion(vista.getPoblacion());
                         catlocal.setLatitud(vista.getLatitud());
@@ -317,7 +325,7 @@ public class PersistencyController {
             ped.addLiniaProducto(pedPro);
             peDAO.EditarPedido(ped);
             proDAO.EditarProducto(pro);
-            pepoDAO.addPedidoProducto(pedPro);
+            // pepoDAO.addPedidoProducto(pedPro);
         }
 
 
@@ -355,13 +363,31 @@ public class PersistencyController {
         cliDAO.addCliente(cli);
     }
 
-    public void crearPedido(String fecha, Cliente cliente, ForeignCollection<PedidoProducto> productos) {
-        Pedido pe = new Pedido();
+    public void crearPedido(String fecha, String cliente, AdapterListPedidoProductos productos) throws SQLException {
+        Pedido ped = new Pedido();
+        Cliente cli = cliDAO.filtrarCliente(cliente);
+        ped.setCliente(cli);
+        ped.setEstado("procesando");
+        ped.setFechaEntrega(fecha);
+        cliDAO.EditarCliente(cli);
+        peDAO.addPedido(ped);
 
-        pe.setLiniaProducto(productos);
-        pe.setCliente(cliente);
-        pe.setFecha(fecha);
-        peDAO.addPedido(pe);
+        for (int i = 0; i < productos.getCount(); i++) {
+            PedidoProducto pedPro = productos.getItem(i);
+            //ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
+            Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
+
+            pro.addLiniaPedido(pedPro);
+
+            ped = peDAO.filtrarPedido(ped.getId());
+            pedPro.setPedido(ped);
+            ped.addLiniaProducto(pedPro);
+            peDAO.EditarPedido(ped);
+            proDAO.EditarProducto(pro);
+
+        }
+
+        peDAO.EditarPedido(ped);
 
     }
 
@@ -375,7 +401,7 @@ public class PersistencyController {
         return hoDAO.getUltimaBajada().getFecha();
     }
 
-    public void removePedido(int id) throws SQLException {
+    public void removePedido(long id) throws SQLException {
         peDAO.removePedido(id);
     }
 
@@ -394,14 +420,20 @@ public class PersistencyController {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void ultimaComanda(Cliente client) {
+    public Pedido ultimaComanda(Cliente client) {
         Iterator it = client.getPedido().iterator();
         Calendar max = Calendar.getInstance();
+        DateTime date = new DateTime();
+        Pedido ped = null;
         while (it.hasNext()) {
             Pedido pe = (Pedido) it.next();
-            String[] fecha = pe.getFecha().split("/");
+            if (DateTime.parse(pe.getFechaEntrega()).compareTo(date) > 0) {
+                date = DateTime.parse(pe.getFechaEntrega());
+                ped = pe;
+            }
             //max.set( Calendar.YEAR,fe);
         }
+        return ped;
     }
 
     public void dadesPrueba() {
@@ -414,6 +446,116 @@ public class PersistencyController {
     public void doBajada(String s) {
     }
 
-    ;
+    public List<String> nombresProductos() throws SQLException {
 
+        List<Producto> productos = proDAO.getPedidos();
+        List<String> nombres = new ArrayList<String>();
+        for (int i = 0; i < productos.size(); i++) {
+            nombres.add(productos.get(i).getNombre());
+        }
+        return nombres;
+    }
+
+    public List<PedidoProducto> mostrarPedidosProducto() throws SQLException {
+        return pepoDAO.mostrarCategorias();
+    }
+
+    public AdapterListPedidoProductos añadirRegistroPedidoProductoAdapter(AdapterListPedidoProductos adapter, String producto, int value) throws SQLException {
+
+        AdapterListPedidoProductos pojo = adapter;
+        PedidoProducto ped = new PedidoProducto();
+        ped.setCantidad(value);
+        Producto pro = null;
+        pro = proDAO.filtrarProducto(producto);
+        ped.setProducto(pro);
+        pojo.UpdateArray(ped);
+        pojo.add(ped);
+        return pojo;
+    }
+
+    public LatLng getMiUbicacion() {
+        GPSTracker tracker = new GPSTracker(con);
+
+        return new LatLng(tracker.getLatitude(), tracker.getLongitude());
+    }
+
+    public List<Cliente> getCLienteCercanos() throws SQLException {
+        GPSTracker tracker = new GPSTracker(con);
+        List<Cliente> clientes = mostrarClientes();
+        List<Cliente> aVisitar = new ArrayList<Cliente>();
+        Cliente cli = null;
+        for (int i = 0; i < clientes.size(); i++) {
+            cli = clientes.get(i);
+            if (tracker.distance(clientes.get(i).getLatitud(), clientes.get(i).getLongitud()) < 1.0) {
+                aVisitar.add(cli);
+            }
+        }
+        return aVisitar;
+    }
+
+
+    public void editarPedido(long pe, String nif, String fecha, AdapterListPedidoProductos pedidos) throws SQLException {
+        Pedido ped = peDAO.filtrarPedido(pe);
+        Cliente cli = cliDAO.filtrarCliente(nif);
+        ped.setCliente(cli);
+        ped.setEstado("procesando");
+        ped.setFechaEntrega(fecha);
+        cliDAO.EditarCliente(cli);
+        peDAO.EditarPedido(ped);
+
+        for (int i = 0; i < pedidos.getCount(); i++) {
+            PedidoProducto pedPro = pedidos.getItem(i);
+            //ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
+            Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
+
+            pro.addLiniaPedido(pedPro);
+
+            ped = peDAO.filtrarPedido(ped.getId());
+            pedPro.setPedido(ped);
+            ped.addLiniaProducto(pedPro);
+            peDAO.EditarPedido(ped);
+            proDAO.EditarProducto(pro);
+
+        }
+
+        peDAO.EditarPedido(ped);
+
+    }
+
+    public List<PedidoProducto> getListPedidoProductoFromPedido(ForeignCollection<PedidoProducto> a) {
+        List<PedidoProducto> pelist = new ArrayList<PedidoProducto>();
+        Iterator i = a.iterator();
+        while (i.hasNext()) {
+            PedidoProducto pePro = (PedidoProducto) i.next();
+            pelist.add(pePro);
+        }
+        return pelist;
+
+    }
+
+
+    public String[] clientesAVisitar(TreeMap<String, Boolean> checked) {
+        String[] clientes = new String[checked.size()];
+        Iterator chec = checked.keySet().iterator();
+        int i = 0;
+        while (chec.hasNext()) {
+            String nif = (String) chec.next();
+            if (checked.get(nif)) {
+                clientes[i] = nif;
+            }
+            i++;
+        }
+        return clientes;
+    }
+
+    public List<Cliente> getClienteseleccionados(String[] clienteses) throws SQLException {
+        List<Cliente> aVisitar = new ArrayList<Cliente>();
+        List<Cliente> clientes = mostrarClientes();
+        Cliente cli = null;
+        for (int i = 0; i < clienteses.length; i++) {
+            cli = clientes.get(i);
+            aVisitar.add(filtrarCliente(clienteses[i]));
+        }
+        return aVisitar;
+    }
 }

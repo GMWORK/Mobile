@@ -6,4 +6,9 @@
         <item>Topogràfic</item>
         <item>Satèl·lit</item>
     </string-array>
+    <string-array name="filtro_clientes">
+        <item>codigo</item>
+        <item>nombre</item>
+        <item>Pendientes de Visita</item>
+    </string-array>
 </resources>

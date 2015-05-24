@@ -29,6 +29,8 @@ public class Producto implements Serializable{
     private boolean inhabilitats;
     @DatabaseField
     private double descuento;
+    @DatabaseField
+    private boolean baja;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Categoria categoria;
     @ForeignCollectionField
@@ -119,8 +121,9 @@ public class Producto implements Serializable{
     }
 
     public void addLiniaPedido(PedidoProducto liPro) {
-        this.liniaPedidos.add(liPro);
         liPro.setProducto(this);
+        this.liniaPedidos.add(liPro);
+
     }
 
     @Override

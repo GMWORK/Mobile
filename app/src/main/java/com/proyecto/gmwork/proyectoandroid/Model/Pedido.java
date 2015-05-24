@@ -19,26 +19,27 @@ public class Pedido  implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String fecha;
+    private String fechaEntrega;
     @DatabaseField
     private String estado;
     @DatabaseField
     private double total;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Cliente cliente;
+    private boolean baja;
     @ForeignCollectionField
     private ForeignCollection<PedidoProducto> liniaProducto;
     
     public Pedido() {
     }
     
-    public Pedido(String fecha, String estado) {
-        this.fecha = fecha;
+    public Pedido(String fechaEntrega, String estado) {
+        this.fechaEntrega = fechaEntrega;
         this.estado = estado;
     }
 
     public Pedido(String fecha, String estado, double total) {
-        this.fecha = fecha;
+        this.fechaEntrega = fechaEntrega;
         this.estado = estado;
         this.total = total;
     }
@@ -51,12 +52,12 @@ public class Pedido  implements Serializable {
         this.id = id;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public String getEstado() {
@@ -92,16 +93,26 @@ public class Pedido  implements Serializable {
     }
 
     public void addLiniaProducto(PedidoProducto pPro) {
+
         this.liniaProducto.add(pPro);
         pPro.setPedido(this);
+
         
+    }
+
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
     }
 
     @Override
     public String toString() {
         return "Pedido[" +
                 "id=" + id +
-                ", fecha='" + fecha + '\'' +
+                ", fecha='" + fechaEntrega + '\'' +
                 ", estado='" + estado + '\'' +
                 ", total=" + total +
                 ", cliente=" + cliente +

@@ -44,6 +44,8 @@ public class Cliente implements Serializable {
     @DatabaseField(dataType = DataType.BYTE_ARRAY)
     private byte[] img;
     @DatabaseField
+    private boolean baja;
+    @DatabaseField
     private String proximaVisita;
     @ForeignCollectionField
     private ForeignCollection<Pedido> pedido ;
@@ -172,9 +174,19 @@ public class Cliente implements Serializable {
         this.pedido = pedido;
     }
 
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
+    }
+
     public void addPedido(Pedido ped) {
+
         this.pedido.add(ped);
         ped.setCliente(this);
+
     }
 
     @Override

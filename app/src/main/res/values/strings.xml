@@ -19,5 +19,9 @@
     <string name="cr">Crear</string>
     <string name="cliAVisitar">Seleccionar Clientes a Visitar</string>
     <string name="seleAVisitaGeo">Visitar clientes mas cercanos</string>
+    <string name="GPSAlertDialogTitle">title</string>
+    <string name="GPSAlertDialogMessage">This is a Message</string>
+    <string name="cancel">cancel</string>
+
 
 </resources>

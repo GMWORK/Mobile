@@ -1,6 +1,7 @@
 package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.sax.RootElement;
@@ -20,10 +21,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.proyecto.gmwork.proyectoandroid.R;
+import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,26 +34,42 @@ import java.util.HashMap;
  * Created by Matthew on 21/05/2015.
  */
 public class VerClientesCercanos extends Activity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, AdapterView.OnItemSelectedListener, View.OnClickListener {
+    private PersistencyController per;
     private GoogleMap map;
-    private LatLngBounds bounds;
     private Spinner cmbTipusMapa;
     ArrayList<HashMap<String, String>> menuItems;
-    final String KEY_ITEM = "punto"; // parent node
-    final String KEY_ID = "nombre";
-    final String KEY_NAME = "latitud";
-    final String KEY_COST = "longitud";
     private Button btnCentrar;
-    static final String ATOM_NAMESPACE = "http://www.w3.org/2005/Atom";
-    private RootElement root = new RootElement(ATOM_NAMESPACE, "feed");
-    private ToggleButton btnAnimacio;
-    private static final LatLng INS_BOSC_DE_LA_COMA = new LatLng(42.1727, 2.47631);
-    private static final String INS_BOSC_DE_LA_COMA_STR = "BOSC DE LA XOMA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ver_clientes_cercanos);
+        try {
+           //getFragmentManager().beginTransaction().;
+
+            setResources();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        setResourcesFormat();
+        setEvents();
+
+        // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
+    }
+
+    private void setEvents() {
+        btnCentrar.setOnClickListener(this);
+        cmbTipusMapa.setOnItemSelectedListener(this);
+    }
+
+    private void setResourcesFormat() {
+
+    }
+
+    private void setResources() throws SQLException {
         menuItems = new ArrayList<HashMap<String, String>>();
+        per = new PersistencyController(this);
+
        /* try {
             parseXML();
         } catch (IOException e) {
@@ -58,14 +77,11 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
         } catch (SAXException e) {
             e.printStackTrace();
         }*/
-        configurarMapa();
+
 
         cmbTipusMapa = (Spinner) findViewById(R.id.spinner);
-        cmbTipusMapa.setOnItemSelectedListener(this);
+
         btnCentrar = (Button) findViewById(R.id.btnCentrar);
-        btnCentrar.setOnClickListener(this);
-        btnAnimacio = (ToggleButton) findViewById(R.id.aniToggle);
-        // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
     }
 
     @Override
@@ -73,11 +89,11 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
         String tipus = (String) parent.getItemAtPosition(position);
         if (tipus.compareTo("Normal") == 0) {
             map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        } else if (tipus.compareTo("HÃ­brid") == 0) {
+        } else if (tipus.compareTo("Híbrid") == 0) {
             map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        } else if (tipus.compareTo("TopogrÃ fic") == 0) {
+        } else if (tipus.compareTo("Topogràfic") == 0) {
             map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        } else if (tipus.compareTo("SatÃ¨lÂ·lit") == 0) {
+        } else if (tipus.compareTo("Satèl·lit") == 0) {
             map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         }
     }
@@ -89,6 +105,13 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
 
     @Override
     public void onMapLoaded() {
+        try {
+
+            configurarMapa();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
             /*  bounds = new LatLngBounds(new LatLng(20, -130.0), new LatLng(55, -70.0));
 
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
@@ -127,27 +150,27 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
         // SW    new LatLng(55,  -70.0))*/
 
     }
-    private void configurarMapa() {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
+
+
+
+    private void configurarMapa() throws SQLException {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
         // que no l'hÃ gim instanciat prÃ¨viament
         if (map == null) {
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
             map.setMyLocationEnabled(true);
             // Comprovar si s'ha obtingut correctament l'objecte
-            for (int i = 0 ; i< menuItems.size();i++){
-                HashMap<String,String> hmap = menuItems.get(i);
-                String nombre = hmap.get(KEY_ID);
-                String latitud =  hmap.get(KEY_NAME);
-                String longitud = hmap.get(KEY_COST);
+            for (int i = 0 ; i< per.getCLienteCercanos().size();i++){
+                String nombre = per.getCLienteCercanos().get(i).getNombre();
+                String latitud = String.valueOf(per.getCLienteCercanos().get(i).getLatitud());
+                String longitud =String.valueOf(per.getCLienteCercanos().get(i).getLongitud());
                 LatLng lat  = new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitud));
+                pintar(lat);
                 map.addMarker(new MarkerOptions().position(lat)
-                        // la posiciÃ³
                         .title(nombre).snippet(nombre));
-            }
 
-            map.addMarker(new MarkerOptions().position(INS_BOSC_DE_LA_COMA)
-                    // la posiciÃ³
-                    .title(INS_BOSC_DE_LA_COMA_STR).snippet("Estudis: ESO, Batxillerat, Cicles Formatius i CAS"));
-            // el tÃ­tol // un fragment de text
+            }
+            map.moveCamera(
+                    CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
 
             if (map != null) {
             }// El mapa s'ha comprovat. Ara es pot manipular
@@ -165,36 +188,25 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
             case R.id.btnCentrar:
                 centrar();
                 break;
-            case R.id.aniToggle:
-                pintar();
-                break;
+
         }
 
     }
-    private void pintar() {
+    private void pintar(LatLng aPintar) {
         PolygonOptions rectOptions =
-                new PolygonOptions().add(new LatLng(42.1627, 2.46631))
-                        // Nord del punt anterior, perÃ² a la mateixa longitud
-                        .add(new LatLng(42.1827, 2.46631))
-                                // Mateixa latitud, perÃ² a uns kms a l'oest
-                        .add(new LatLng(42.1827, 2.48631))
-                                // Mateixa longitud, perÃ² uns kms al sud
-                        .add(new LatLng(42.1627, 2.48631))
-                                // Tancar el polÃ­gon
-                        .add(new LatLng(42.1627, 2.46631));
+                new PolygonOptions().add(aPintar);
         // Assignar un color
-        rectOptions.fillColor(Color.RED);
+        rectOptions.fillColor(Color.BLUE);
         // Afegir el nou polÃ­gon
         Polygon poligon = map.addPolygon(rectOptions);
     }
 
     private void centrar() {
-        if (btnAnimacio.isChecked()) {
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(INS_BOSC_DE_LA_COMA, 15), 2000, null);
-        } else {
+
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(per.getMiUbicacion(),50 ), 50, null);
             // Moure la cÃ mera a les coordendes del punt que ens interessa
             map.moveCamera(
-                    CameraUpdateFactory.newLatLng(INS_BOSC_DE_LA_COMA));
-        }
+                    CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
+
     }
 }

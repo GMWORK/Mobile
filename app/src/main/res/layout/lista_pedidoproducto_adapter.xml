@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:background="#FFFF" android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <ImageView
         android:layout_width="wrap_content"
@@ -77,24 +78,6 @@
         android:layout_toRightOf="@+id/textView3"
         android:layout_toEndOf="@+id/textView3" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="descontar"
-        android:id="@+id/lppa_btn_restar"
-        android:layout_above="@+id/lppa_tv_precioTotal"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="añadir"
-        android:id="@+id/lppa_btn_sumar"
-        android:layout_alignTop="@+id/lppa_btn_restar"
-        android:layout_toLeftOf="@+id/lppa_btn_restar"
-        android:layout_toStartOf="@+id/lppa_btn_restar" />
 
 </RelativeLayout>

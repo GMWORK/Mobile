@@ -57,7 +57,7 @@ public class parseJson {
 
             Pedido ped = new Pedido();
             Cliente client = new Cliente();
-            ped.setFecha(object.getString("fechaEntrega"));
+            ped.setFechaEntrega(object.getString("fechaEntrega"));
             ped.setEstado(object.getString("estado"));
             client.setNif(object2.getString("nif"));
             ped.setCliente(client);

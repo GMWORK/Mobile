@@ -33,6 +33,8 @@ public class Usuario implements Serializable {
     private String username;
     @DatabaseField
     private String password;
+    @DatabaseField
+    private boolean baja;
     @ForeignCollectionField
     private ForeignCollection<Cliente> clientes;
 
@@ -122,6 +124,14 @@ public class Usuario implements Serializable {
         this.administrador = administrador;
     }
 
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
+    }
+
     public ForeignCollection<Cliente> getClientes() {
         return clientes;
     }
@@ -131,8 +141,9 @@ public class Usuario implements Serializable {
     }
 
     public void addClientes(Cliente cli) {
-        this.clientes.add(cli);
         cli.setUsu(this);
+        this.clientes.add(cli);
+
     }
 
     @Override

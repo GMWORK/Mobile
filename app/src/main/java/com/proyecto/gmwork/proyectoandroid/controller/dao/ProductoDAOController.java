@@ -39,6 +39,7 @@ public class ProductoDAOController {
 
         daoPro.delete(this.filtrarProducto(nombre));
     }
+
     public void EditarProducto(Producto cat) throws SQLException {
         daoPro.updateId(cat, cat.getId());
     }

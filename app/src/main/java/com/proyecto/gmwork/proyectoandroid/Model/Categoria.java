@@ -21,6 +21,9 @@ public class Categoria  implements Serializable {
     private String nombre;
     @DatabaseField
     private double descuento;
+    @DatabaseField
+    private boolean baja;
+
     @ForeignCollectionField
     private ForeignCollection<Producto> productos;
 
@@ -66,9 +69,18 @@ public class Categoria  implements Serializable {
     }
 
     public void addProducto(Producto pro) throws SQLException {
-        this.productos.add(pro);
         pro.setCategoria(this);
+        this.productos.add(pro);
 
+
+    }
+
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
     }
 
     @Override
