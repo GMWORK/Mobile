@@ -5,35 +5,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
-import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
-import com.proyecto.gmwork.proyectoandroid.Model.Horas;
-import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
-import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
-import com.proyecto.gmwork.proyectoandroid.Model.Producto;
-import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
-import com.proyecto.gmwork.proyectoandroid.controller.parseJson;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;

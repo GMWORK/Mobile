@@ -36,17 +36,8 @@ public class UIEditarPedidoView extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_editar_pedido);
         bun = getIntent().getExtras();
         idPedido = bun.getLong("id");
-        try {
-            setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            setResourcesFormat();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        setResources();
+        setResourcesFormat();
         setEvents();
 
     }
@@ -56,21 +47,22 @@ public class UIEditarPedidoView extends Activity implements View.OnClickListener
         btn_asCliente.setOnClickListener(this);
         btn_aProducto.setOnClickListener(this);
         btn_altaPedido.setOnClickListener(this);
+        btn_finish.setOnClickListener(this);
     }
 
-    private void setResourcesFormat() throws SQLException {
+    private void setResourcesFormat() {
         tv_Cliente.setText(per.filtrarPedido(idPedido).getCliente().getNif());
         tv_FEntrega.setText(per.filtrarPedido(idPedido).getFechaEntrega());
-        adapter = new AdapterListPedidoProductos(this, (ArrayList) per.getListPedidoProductoFromPedido( per.filtrarPedido(idPedido).getLiniaProducto()));
+        adapter = new AdapterListPedidoProductos(this, (ArrayList) per.getListPedidoProductoFromPedido(per.filtrarPedido(idPedido).getLiniaProducto()));
 //        adapter = new AdapterListPedidoProductos(this, R.layout.lista_pedidoproducto_adapter);
-         lv_productos.setAdapter(adapter);
+        lv_productos.setAdapter(adapter);
         lv_productos.setOnItemClickListener(this);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, per.nombresProductos());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_productos.setAdapter(dataAdapter);
         number.setMaxValue(30);
-        number.setMinValue(0);
+        number.setMinValue(1);
 
         //adapter = new AdapterListPedidoProductos(this, R.layout.lista_pedidoproducto_adapter);
         // lv_productos.setAdapter(adapter);
@@ -85,7 +77,7 @@ public class UIEditarPedidoView extends Activity implements View.OnClickListener
 
     }
 
-    private void setResources() throws SQLException {
+    private void setResources() {
         btn_sF = (Button) findViewById(R.id.aep_btn_sF);
         btn_asCliente = (Button) findViewById(R.id.aep_btn_asCliente);
         tv_FEntrega = (TextView) findViewById(R.id.aep_et_FEntrega);
@@ -107,23 +99,17 @@ public class UIEditarPedidoView extends Activity implements View.OnClickListener
                 new Calendario(this, tv_FEntrega);
                 break;
             case R.id.aep_btn_asCliente:
+                Calendario cal = new Calendario(this,per,tv_Cliente.getText().toString());
                 new DialogCliente().show(getFragmentManager(), "tag");
                 break;
             case R.id.aep_btn_crPedido:
-                try {
-                    per.editarPedido(idPedido,tv_Cliente.getText().toString(), tv_FEntrega.getText().toString(), adapter);
-                    this.finishActivity(0);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                per.editarPedido(idPedido, tv_Cliente.getText().toString(), tv_FEntrega.getText().toString(), adapter);
+                finish();
                 break;
             case R.id.aep_btn_aProducto:
-                try {
-                    adapter = per.añadirRegistroPedidoProductoAdapter(adapter, spn_productos.getSelectedItem().toString(), number.getValue());
-                    lv_productos.setAdapter(adapter);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                adapter = per.añadirRegistroPedidoProductoAdapter(adapter, spn_productos.getSelectedItem().toString(), number.getValue());
+                lv_productos.setAdapter(adapter);
+
                 break;
 
         }
@@ -138,6 +124,7 @@ public class UIEditarPedidoView extends Activity implements View.OnClickListener
     private Spinner spn_productos;
     private Button btn_altaPedido;
     private NumberPicker number;
+    private Button btn_finish;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

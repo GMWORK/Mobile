@@ -29,16 +29,14 @@ import java.util.ArrayList;
 public class UIListaPedidoView extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private AdapterListPedidos adapter;
     private PersistencyController per;
-
+    private String usuario ;
+    private Bundle bun;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_pedidos);
-        try {
             setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         setResourcesFormat();
         setEvents();
     }
@@ -50,17 +48,19 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
     }
 
 
-    private void setResources() throws SQLException {
+    private void setResources()  {
+        bun = getIntent().getExtras();
+        usuario = bun.getString("username");
         btn_Crear = (Button) findViewById(R.id.agp_btn_Crear);
         lv_lista = (ListView) findViewById(R.id.agp_lv_lista);
+        btn_finish = (Button) findViewById(R.id.agp_btn_finish);
         per = new PersistencyController(this);
-        adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido());
-
-
+        adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido(usuario));
     }
 
     private void setEvents() {
         btn_Crear.setOnClickListener(this);
+        btn_finish.setOnClickListener(this);
     }
 
     @Override
@@ -69,12 +69,15 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
             case R.id.agp_btn_Crear:
                 crearRegistro();
                 break;
-
+            case R.id.agp_btn_finish:
+                finish();
+                break;
         }
     }
 
     private void crearRegistro() {
         Intent intent = new Intent(this, UICrearPedidoView.class);
+        intent.putExtra("username", usuario);
         startActivity(intent);
     }
 
@@ -98,14 +101,11 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mcc_it_borrar:
-                try {
                     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                     int listPosition = info.position;
                     per.removePedido(adapter.getItem(listPosition).getId());
                     Toast.makeText(this, "Se ha borrado correctamente el registro", Toast.LENGTH_SHORT).show();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+
                 break;
             /*case R.id.mcc_it_aVisita:
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -117,9 +117,14 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
             case R.id.mcc_it_editar:
                 AdapterView.AdapterContextMenuInfo in = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 int position = in.position;
-                editarPedido( adapter.getItem(position).getId());
+                if(adapter.getItem(position).getEstado().equals("completada")){
+                    Toast.makeText(this,"No se puede editar esta en estado completada",Toast.LENGTH_SHORT).show();
+                }else {
+                    editarPedido(adapter.getItem(position).getId());
+                }
                 break;
         }
+
         return super.onContextItemSelected(item);
     }
 
@@ -132,4 +137,5 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
 
     private ListView lv_lista;
     private Button btn_Crear;
+    private Button btn_finish;
 }

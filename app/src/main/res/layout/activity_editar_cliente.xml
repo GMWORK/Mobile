@@ -41,7 +41,8 @@
         android:layout_width="wrap_content"
         android:background="@drawable/botones_fondo_4"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/aec_tv_titulo">
+        android:layout_below="@+id/aec_tv_titulo"
+        android:id="@+id/relativeLayout3">
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="wrap_content"
@@ -278,5 +279,16 @@
         android:layout_below="@+id/rl6"
         android:layout_centerHorizontal="true"
         android:text="Editar Cliente" />
+
     </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar Operacion"
+        android:id="@+id/aec_btn_finish"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignLeft="@+id/aec_tv_titulo"
+        android:layout_alignStart="@+id/aec_tv_titulo" />
+
 </RelativeLayout>

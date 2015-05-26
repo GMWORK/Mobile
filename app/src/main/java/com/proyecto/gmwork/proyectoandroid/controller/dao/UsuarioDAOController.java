@@ -21,37 +21,88 @@ public class UsuarioDAOController {
     private OpenLiteHelper prodao;
     private Context con;
 
-    public UsuarioDAOController(Context con) throws SQLException {
+    public UsuarioDAOController(Context con) {
         this.con = con;
         prodao = new OpenLiteHelper(con);
-        daoUsu = prodao.getDAOUsuario();
+        try {
+            daoUsu = prodao.getDAOUsuario();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<Usuario> getUsuarios() throws SQLException {
-        List<Usuario> todos = daoUsu.queryForAll();
+    public List<Usuario> getUsuarios() {
+        List<Usuario> todos = null;
+        try {
+            todos = daoUsu.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return todos;
     }
 
-    public Usuario filtrarUsuario(String nif) throws SQLException {
-        return daoUsu.queryForEq("nif", nif).get(0);
-    }
-
-    public void addUsuario(Usuario cat) throws SQLException {
-        daoUsu.createOrUpdate(cat);
-    }
-
-    public void removeUsuario(String nif) throws SQLException {
-
-        daoUsu.delete(this.filtrarUsuario(nif));
-    }
-
-    public void EditarProducto(Usuario cat) throws SQLException {
-        daoUsu.updateId(cat, cat.getId());
-    }
-
-    public boolean hacerLogin(Usuario cat) throws SQLException {
+    public Usuario filtrarUsuario(String nif) {
         try {
-        Usuario usu = daoUsu.queryForEq("username", cat.getUsername()).get(0);
+            return daoUsu.queryForEq("nif", nif).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public Usuario filtrarUsuario(int id) {
+        Usuario usu = null;
+        try {
+            usu = daoUsu.queryForEq("id", id).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return usu;
+    }
+    public Usuario filtrarUser(String username) {
+        Usuario usu = null;
+        try {
+            usu = daoUsu.queryForEq("username", username).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return usu;
+    }
+
+
+    public boolean addUsuario(Usuario cat) {
+        try {
+            daoUsu.createOrUpdate(cat);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void removeUsuario(String nif) {
+
+        try {
+            daoUsu.delete(this.filtrarUsuario(nif));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void EditarProducto(Usuario usu) {
+        try {
+            daoUsu.updateId(usu, usu.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean hacerLogin(Usuario cat) {
+        try {
+            Usuario usu = daoUsu.queryForEq("username", cat.getUsername()).get(0);
 
             if (usu.getPassword().equals(cat.getPassword())) {
                 return true;
@@ -61,6 +112,9 @@ public class UsuarioDAOController {
             }
         } catch (IndexOutOfBoundsException ex) {
             Log.i("Usuario", "Han introducido usuario erroneo");
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

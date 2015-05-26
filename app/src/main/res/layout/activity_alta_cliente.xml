@@ -41,7 +41,8 @@
         android:layout_below="@+id/aac_tv_titulo"
         android:layout_width="wrap_content"
         android:background="@drawable/botones_fondo_4"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2">
 
     <RelativeLayout
         android:id="@+id/rl1"
@@ -276,8 +277,18 @@
         android:id="@+id/aac_btn_gCli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Guardar Cliente"
         android:layout_below="@+id/rl6"
-        android:layout_centerHorizontal="true"
-        android:text="Guardar Cliente" />
-</RelativeLayout>
+        android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar Operacion"
+            android:id="@+id/aac_btn_finish"
+            android:layout_below="@+id/aac_btn_gCli"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

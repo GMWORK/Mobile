@@ -13,7 +13,7 @@ public class CategoriaLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String operacion;
+    private String Op;
     @DatabaseField
     private String fecha;
     @DatabaseField
@@ -22,8 +22,8 @@ public class CategoriaLog {
     public CategoriaLog() {
     }
 
-    public CategoriaLog(String operacion, String fecha, long idCategoria) {
-        this.operacion = operacion;
+    public CategoriaLog(String Op, String fecha, long idCategoria) {
+        this.Op = Op;
         this.fecha = fecha;
         this.idCategoria = idCategoria;
     }
@@ -37,11 +37,11 @@ public class CategoriaLog {
     }
 
     public String getOperacion() {
-        return operacion;
+        return Op;
     }
 
     public void setOperacion(String operacion) {
-        this.operacion = operacion;
+        this.Op = operacion;
     }
 
     public String getFecha() {

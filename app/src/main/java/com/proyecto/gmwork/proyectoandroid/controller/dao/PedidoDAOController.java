@@ -9,6 +9,7 @@ import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,41 +21,92 @@ public class PedidoDAOController {
     private OpenLiteHelper clidao;
     private Context con;
 
-    public PedidoDAOController(Context con) throws SQLException {
+    public PedidoDAOController(Context con) {
         clidao = new OpenLiteHelper(con);
-        this.daoPe = clidao.getDAOPedido();
-        daoPelog = clidao.getDAOPedidoLog();
+        try {
+            this.daoPe = clidao.getDAOPedido();
+            daoPelog = clidao.getDAOPedidoLog();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         this.con = con;
     }
 
     public void addPedido(Pedido cat) {
         try {
-            daoPe.create(cat);
+            daoPe.createOrUpdate(cat);
         } catch (SQLException ex) {
             Log.i("errorSQL", ex.getMessage());
         }
     }
 
-    public List<Pedido> getPedidos() throws SQLException {
-        List<Pedido> todos = daoPe.queryForAll();
-        return todos;
-    }
-    public List<PedidoLog> getPedidosLog() throws SQLException {
-        List<PedidoLog> todos = daoPelog.queryForAll();
-        return todos;
-    }
-    public Pedido filtrarPedido(long id) throws SQLException {
+    public List<Pedido> getPedidos(String username) {
+        List<Pedido> todos = null;
+        List<Pedido> pedidos = new ArrayList<Pedido>();
+        try {
+            todos = daoPe.queryForAll();
+            for (int i = 0; i < todos.size(); i++) {
+                if (todos.get(i).getCliente().getUsu().getUsername().equals(username) && !todos.get(i).isBaja()) {
+                    pedidos.add(todos.get(i));
 
-        Pedido client = daoPe.queryForId(id);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pedidos;
+    }
+
+    public List<PedidoLog> getPedidosLog() {
+        List<PedidoLog> todos = null;
+        try {
+            todos = daoPelog.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return todos;
+    }
+
+    public Pedido filtrarPedido(long id) {
+
+        Pedido client = null;
+        try {
+            client = daoPe.queryForId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return client;
     }
 
-    public void removePedido(long id) throws SQLException {
-        daoPe.delete(daoPe.queryForEq("id", id));
+    public ArrayList<Pedido> filtrarPedidoLista(long id) {
+        ArrayList<Pedido> ped = null;
+        try {
+            ped = (ArrayList<Pedido>) daoPe.queryForEq("id", id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            clidao.close();
+
+        }
+        return ped;
     }
 
-    public void EditarPedido(Pedido cat) throws SQLException {
-        daoPe.updateId(cat, cat.getId());
+
+    public void removePedido(long id) {
+        try {
+            daoPe.delete(daoPe.queryForEq("id", id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void EditarPedido(Pedido cat) {
+        try {
+            daoPe.updateId(cat, cat.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -45,8 +45,6 @@ public class parseJsonSubida {
     public static String ObjecttoJson(ArrayList objects) throws JSONException, ClassNotFoundException {
 
         JSONArray json = new JSONArray();
-        JSONObject object = new JSONObject();
-        JSONObject object2 = new JSONObject();
 
         Gson gson = new Gson();
 

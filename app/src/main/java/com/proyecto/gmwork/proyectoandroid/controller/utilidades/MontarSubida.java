@@ -19,7 +19,7 @@ import java.util.TreeMap;
  * Created by Mateo on 23/05/2015.
  */
 public class MontarSubida {
-    public static List<String[]> montarCliente(ClienteDAOController dao,String ultimabajada) throws SQLException {
+    public static List<String[]> montarCliente(ClienteDAOController dao,String ultimabajada)  {
         List<ClienteLog> cliLog = dao.getLog();
         ClienteLog logCli = null;
         Gson gson = new Gson();
@@ -48,7 +48,7 @@ public class MontarSubida {
         }
         return cliente;
     }
-    public static List<String[]> montarPedido(PedidoDAOController dao,String ultimabajada) throws SQLException {
+    public static List<String[]> montarPedido(PedidoDAOController dao,String ultimabajada) {
         List<PedidoLog> cliLog = dao.getPedidosLog();
         PedidoLog logCli = null;
         Gson gson = new Gson();

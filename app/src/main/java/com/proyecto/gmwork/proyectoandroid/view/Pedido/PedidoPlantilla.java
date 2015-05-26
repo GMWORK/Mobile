@@ -1,40 +1,39 @@
 package com.proyecto.gmwork.proyectoandroid.view.Pedido;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.controller.AdapterListPedidoProductos;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 import com.proyecto.gmwork.proyectoandroid.view.Calendario;
 
-import org.w3c.dom.Text;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UICrearPedidoView extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+/**
+ * Created by Mateo on 25/05/2015.
+ */
+public class PedidoPlantilla extends Activity implements View.OnClickListener {
     private AdapterListPedidoProductos adapter;
     private PersistencyController per;
     private Bundle bun;
-    private String username;
+    private long idPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pedido);
+        bun = getIntent().getExtras();
+        idPedido = bun.getLong("id");
 
         setResources();
 
@@ -51,19 +50,30 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener,
         btn_asCliente.setOnClickListener(this);
         btn_aProducto.setOnClickListener(this);
         btn_altaPedido.setOnClickListener(this);
-        btn_finish.setOnClickListener(this);
     }
 
     private void setResourcesFormat() {
-        adapter = new AdapterListPedidoProductos(this, R.layout.lista_pedidoproducto_adapter);
-        // lv_productos.setAdapter(adapter);
-        lv_productos.setOnItemClickListener(this);
+        tv_Cliente.setText(per.filtrarPedido(idPedido).getCliente().getNif());
+        tv_FEntrega.setText(per.filtrarPedido(idPedido).getFechaEntrega());
+        adapter = new AdapterListPedidoProductos(this, (ArrayList) per.getListPedidoProductoFromPedido(per.filtrarPedido(idPedido).getLiniaProducto()));
+        lv_productos.setAdapter(adapter);
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, per.nombresProductos());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_productos.setAdapter(dataAdapter);
         number.setMaxValue(30);
-        number.setMinValue(1);
+        number.setMinValue(0);
+
+        //adapter = new AdapterListPedidoProductos(this, R.layout.lista_pedidoproducto_adapter);
+        // lv_productos.setAdapter(adapter);
+      /*  lv_productos.setOnItemClickListener(this);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, per.nombresProductos());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_productos.setAdapter(dataAdapter);
+        number.setMaxValue(30);
+        number.setMinValue(1);*/
 
 
     }
@@ -71,14 +81,11 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener,
     private void setResources() {
         btn_sF = (Button) findViewById(R.id.acp_btn_sF);
         btn_asCliente = (Button) findViewById(R.id.acp_btn_asCliente);
-        tv_FEntrega = (TextView) findViewById(R.id.acp_et_FEntrega);
+        tv_FEntrega = (TextView) findViewById(R.id.acp_tv_fEntrega);
         tv_Cliente = (TextView) findViewById(R.id.acp_et_client);
         btn_aProducto = (Button) findViewById(R.id.acp_btn_aProducto);
         lv_productos = (ListView) findViewById(R.id.acp_lv_productos);
-        btn_finish = (Button) findViewById(R.id.acp_btn_finish);
         per = new PersistencyController(this);
-        //bun = getIntent().getExtras();
-
         spn_productos = (Spinner) findViewById(R.id.acp_sp_productos);
         number = (NumberPicker) findViewById(R.id.acp_number_picker);
         btn_altaPedido = (Button) findViewById(R.id.acp_btn_crPedido);
@@ -96,12 +103,11 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener,
                 new DialogCliente().show(getFragmentManager(), "tag");
                 break;
             case R.id.acp_btn_crPedido:
-                per.crearPedido(tv_FEntrega.getText().toString(), tv_Cliente.getText().toString(), adapter);
-                Calendario cal = new Calendario(this,per,tv_Cliente.getText().toString());
+                per.crearPedido(tv_FEntrega.getText().toString(),tv_Cliente.getText().toString(), adapter);
                 finish();
 
                 break;
-            case R.id.agp_btn_finish:
+            case R.id.acp_btn_finish:
                 finish();
                 break;
             case R.id.acp_btn_aProducto:
@@ -121,11 +127,8 @@ public class UICrearPedidoView extends Activity implements View.OnClickListener,
     private Button btn_aProducto;
     private Spinner spn_productos;
     private Button btn_altaPedido;
-    private Button btn_finish;
     private NumberPicker number;
+    private Button btn_finish;
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
 }

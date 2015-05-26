@@ -22,17 +22,14 @@ import java.sql.SQLException;
  */
 public class UICrearClienteView extends Activity implements View.OnClickListener {
     private PersistencyController per;
-
+    private Bundle bun;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_cliente);
-        try {
-            setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setResources();
         setEvents();
         setResourcesFormat();
 
@@ -48,13 +45,15 @@ public class UICrearClienteView extends Activity implements View.OnClickListener
         }*/
         btn_gCli.setOnClickListener(this);
         btn_sF.setOnClickListener(this);
-
+        btn_finish.setOnClickListener(this);
     }
 
     private void setResourcesFormat() {
     }
 
-    private void setResources() throws SQLException {
+    private void setResources() {
+        bun = getIntent().getExtras();
+        username = bun.getString("username");
         et_nif = (EditText) findViewById(R.id.aac_et_nif);
         et_nombre = (EditText) findViewById(R.id.aac_et_nombre);
         et_apellidos = (EditText) findViewById(R.id.aac_et_apellidos);
@@ -64,7 +63,7 @@ public class UICrearClienteView extends Activity implements View.OnClickListener
         btn_gCli = (Button) findViewById(R.id.aac_btn_gCli);
         btn_sF = (Button) findViewById(R.id.aac_btn_sF);
         per = new PersistencyController(this);
-
+        btn_finish = (Button) findViewById(R.id.aac_btn_finish);
     }
 
 
@@ -72,10 +71,13 @@ public class UICrearClienteView extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.aac_btn_sF:
-                new Calendario(this,et_proximaVisita);
+                new Calendario(this, et_proximaVisita);
                 break;
             case R.id.aac_btn_gCli:
                 crearCliente();
+                break;
+            case R.id.aac_btn_finish:
+                finish();
                 break;
         }
     }
@@ -89,13 +91,16 @@ public class UICrearClienteView extends Activity implements View.OnClickListener
         String proximaVisita = et_proximaVisita.getText().toString();
 
         if (nif.length() > 0 && nombre.length() > 0 && apellidos.length() > 0 && poblacion.length() > 0 && calle.length() > 0 && proximaVisita.length() > 0) {
-            per.crearCliente(et_nif.getText().toString(), et_nombre.getText().toString(), et_apellidos.getText().toString(), et_poblacion.getText().toString(), et_calle.getText().toString(), et_proximaVisita.getText().toString());
+            per.crearCliente(username, et_nif.getText().toString(), et_nombre.getText().toString(), et_apellidos.getText().toString(), et_poblacion.getText().toString(), et_calle.getText().toString(), et_proximaVisita.getText().toString());
             finish();
         } else {
             Toast.makeText(this, "Tienes que rellenar todos los campos", Toast.LENGTH_SHORT).show();
 
         }
 
+    }
+    private boolean comprovarCampos(){
+        return false;
     }
 
 
@@ -107,6 +112,8 @@ public class UICrearClienteView extends Activity implements View.OnClickListener
     private TextView et_proximaVisita;
     private Button btn_gCli;
     private Button btn_sF;
+    private Button btn_finish;
+
 
 
 }

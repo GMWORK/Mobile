@@ -39,18 +39,18 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
     private Spinner cmbTipusMapa;
     ArrayList<HashMap<String, String>> menuItems;
     private Button btnCentrar;
+    private String username;
+    private Bundle bun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_clientes_cercanos);
-        try {
+
            //getFragmentManager().beginTransaction().;
 
             setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         setResourcesFormat();
         setEvents();
 
@@ -66,9 +66,12 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
 
     }
 
-    private void setResources() throws SQLException {
+    private void setResources()  {
+        bun  =getIntent().getExtras();
+        username = bun.getString("username");
         menuItems = new ArrayList<HashMap<String, String>>();
         per = new PersistencyController(this);
+
 
        /* try {
             parseXML();
@@ -159,10 +162,10 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
             map.setMyLocationEnabled(true);
             // Comprovar si s'ha obtingut correctament l'objecte
-            for (int i = 0 ; i< per.getCLienteCercanos().size();i++){
-                String nombre = per.getCLienteCercanos().get(i).getNombre();
-                String latitud = String.valueOf(per.getCLienteCercanos().get(i).getLatitud());
-                String longitud =String.valueOf(per.getCLienteCercanos().get(i).getLongitud());
+            for (int i = 0 ; i< per.getCLienteCercanos(username).size();i++){
+                String nombre = per.getCLienteCercanos(username).get(i).getNombre();
+                String latitud = String.valueOf(per.getCLienteCercanos(username).get(i).getLatitud());
+                String longitud =String.valueOf(per.getCLienteCercanos(username).get(i).getLongitud());
                 LatLng lat  = new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitud));
                 pintar(lat);
                 map.addMarker(new MarkerOptions().position(lat)

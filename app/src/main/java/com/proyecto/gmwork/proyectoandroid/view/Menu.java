@@ -59,8 +59,8 @@ public class Menu extends Activity implements View.OnClickListener {
         btn_cs.setOnClickListener(this);
     }
 
-   private void setResourcesFormat() {
-        tv_Usuario.setText(bun.getString("username"));
+    private void setResourcesFormat() {
+        tv_Usuario.setText(nombreUsuario);
 
     }
 
@@ -71,9 +71,9 @@ public class Menu extends Activity implements View.OnClickListener {
         btn_seleVisitar = (Button) findViewById(R.id.am_btn_seleVisitar);
         btn_sVisitarGeo = (Button) findViewById(R.id.am_btn_sVisitarGeo);
         tv_Usuario = (TextView) findViewById(R.id.am_tv_nombreUsuario);
-        btn_cs = (Button) findViewById(R.id.am_btn_cs);
+        btn_cs = (Button) findViewById(R.id.am_btn_finish);
         bun = getIntent().getExtras();
-
+        nombreUsuario = bun.getString("username");
 
 
     }
@@ -87,12 +87,9 @@ public class Menu extends Activity implements View.OnClickListener {
             case R.id.am_bt_pedido:
                 pasarAPedido();
                 break;
-            case R.id.am_btn_cs:
-                try {
-                    per.subirDatosLocales();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            case R.id.am_btn_finish:
+                per.subirDatosLocales();
+                finish();
                 break;
             case R.id.am_btn_seleVisitar:
                 pasarASeleccionarVisita();
@@ -106,23 +103,27 @@ public class Menu extends Activity implements View.OnClickListener {
 
     private void pasarACliente() {
         Intent intent = new Intent(this, UIListaClienteView.class);
+        intent.putExtra("username" , nombreUsuario);
         startActivity(intent);
 
     }
 
     private void pasarAPedido() {
         Intent intent = new Intent(this, UIListaPedidoView.class);
+        intent.putExtra("username" , nombreUsuario);
         startActivity(intent);
     }
 
     private void pasarASeleccionarVisita() {
         Intent intent = new Intent(this, seleClientesAVisitar.class);
+        intent.putExtra("username" , nombreUsuario);
         startActivity(intent);
 
     }
 
     private void pasarASeleccionarVisitaMasCercana() {
         Intent intent = new Intent(this, VerClientesCercanos.class);
+        intent.putExtra("username" , nombreUsuario);
         startActivity(intent);
 
     }

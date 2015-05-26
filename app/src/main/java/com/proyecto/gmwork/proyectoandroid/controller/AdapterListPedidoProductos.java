@@ -77,7 +77,7 @@ public class AdapterListPedidoProductos extends ArrayAdapter<PedidoProducto> {
 
                     tv_nombre.setText(String.valueOf(listarray.get(position).getProducto().getNombre()));
                     tv_precio.setText(String.valueOf(listarray.get(position).getProducto().getPrecio()));
-                    tv_precioTotal.setText(String.valueOf(listarray.get(position).getProducto().getPrecio() * listarray.get(position).getCantidad()));
+                    tv_precioTotal.setText(String.valueOf(listarray.get(position).getProducto().getPrecioDescontado() * listarray.get(position).getCantidad()));
                     tv_cantidad.setText(String.valueOf(listarray.get(position).getCantidad()));
 
             } else {

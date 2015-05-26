@@ -50,6 +50,8 @@ public class UIEditarClienteView extends Activity implements  View.OnClickListen
         btn_gCli.setOnClickListener(this);
         btn_sF.setOnClickListener(this);
 
+        btn_finish.setOnClickListener(this);
+
     }
 
     private void setResourcesFormat() throws SQLException {
@@ -72,6 +74,7 @@ public class UIEditarClienteView extends Activity implements  View.OnClickListen
         et_proximaVisita = (TextView) findViewById(R.id.aec_et_Proxima_Visita);
         btn_gCli = (Button) findViewById(R.id.aec_btn_gCli);
         btn_sF = (Button) findViewById(R.id.aec_btn_sF);
+        btn_finish = (Button) findViewById(R.id.aec_btn_finish);
         per = new PersistencyController(this);
 
     }
@@ -82,6 +85,9 @@ public class UIEditarClienteView extends Activity implements  View.OnClickListen
         switch (v.getId()) {
             case R.id.aec_btn_sF:
                 new Calendario(this,et_proximaVisita);
+                break;
+            case R.id.aec_btn_finish:
+                finish();
                 break;
             case R.id.aec_btn_gCli:
                 try {
@@ -120,6 +126,7 @@ public class UIEditarClienteView extends Activity implements  View.OnClickListen
     private TextView et_proximaVisita;
     private Button btn_gCli;
     private Button btn_sF;
+    private Button btn_finish;
 
 
     @Override

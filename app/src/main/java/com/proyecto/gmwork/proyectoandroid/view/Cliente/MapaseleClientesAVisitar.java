@@ -27,46 +27,46 @@ import java.util.HashMap;
  * Created by Mateo on 24/05/2015.
  */
 public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, AdapterView.OnItemSelectedListener, View.OnClickListener {
-        private Bundle bun;
-        private String[] clientes;
-        private PersistencyController per;
-        private GoogleMap map;
-        private Spinner cmbTipusMapa;
-        ArrayList<HashMap<String, String>> menuItems;
-        private Button btnCentrar;
+    private String[] clientes;
+    private PersistencyController per;
+    private GoogleMap map;
+    private Spinner cmbTipusMapa;
+    ArrayList<HashMap<String, String>> menuItems;
+    private Button btnCentrar;
+    private Bundle bun;
+    private Button btn_finish;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ver_clientes_cercanos);
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_ver_clientes_cercanos);
-            try {
+        //getFragmentManager().beginTransaction().;
 
-                //getFragmentManager().beginTransaction().;
+        setResources();
 
-                setResources();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            setResourcesFormat();
-            setEvents();
 
-            // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
-        }
+        setResourcesFormat();
+        setEvents();
 
-        private void setEvents() {
-            btnCentrar.setOnClickListener(this);
+        // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
+    }
 
-        }
+    private void setEvents() {
+        btnCentrar.setOnClickListener(this);
+        btn_finish.setOnClickListener(this);
+    }
 
-        private void setResourcesFormat() {
+    private void setResourcesFormat() {
 
-        }
+    }
 
-        private void setResources() throws SQLException {
-            menuItems = new ArrayList<HashMap<String, String>>();
-            per = new PersistencyController(this);
-            bun = getIntent().getExtras();
-            clientes = bun.getStringArray("clientes");
+    private void setResources() {
+        menuItems = new ArrayList<HashMap<String, String>>();
+        per = new PersistencyController(this);
+        bun = getIntent().getExtras();
+        clientes = bun.getStringArray("clientes");
+        btn_finish = (Button) findViewById(R.id.avcc_btn_finish);
+
 
        /* try {
             parseXML();
@@ -77,39 +77,37 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
         }*/
 
 
-            cmbTipusMapa = (Spinner) findViewById(R.id.spinner);
+        cmbTipusMapa = (Spinner) findViewById(R.id.spinner);
 
-            btnCentrar = (Button) findViewById(R.id.btnCentrar);
+        btnCentrar = (Button) findViewById(R.id.btnCentrar);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String tipus = (String) parent.getItemAtPosition(position);
+        if (tipus.compareTo("Normal") == 0) {
+            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        } else if (tipus.compareTo("Híbrid") == 0) {
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        } else if (tipus.compareTo("Topogràfic") == 0) {
+            map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        } else if (tipus.compareTo("Satèl·lit") == 0) {
+            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         }
+    }
 
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String tipus = (String) parent.getItemAtPosition(position);
-            if (tipus.compareTo("Normal") == 0) {
-                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            } else if (tipus.compareTo("Híbrid") == 0) {
-                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            } else if (tipus.compareTo("Topogràfic") == 0) {
-                map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-            } else if (tipus.compareTo("Satèl·lit") == 0) {
-                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            }
-        }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+    }
 
-        }
+    @Override
+    public void onMapLoaded() {
 
-        @Override
-        public void onMapLoaded() {
-            try {
-                cmbTipusMapa.setOnItemSelectedListener(this);
-                configurarMapa();
+        cmbTipusMapa.setOnItemSelectedListener(this);
+        configurarMapa();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
             /*  bounds = new LatLngBounds(new LatLng(20, -130.0), new LatLng(55, -70.0));
 
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
@@ -147,67 +145,66 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
                 });
         // SW    new LatLng(55,  -70.0))*/
 
-        }
+
+    }
 
 
+    private void configurarMapa() {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
+        // que no l'hÃ gim instanciat prÃ¨viament
+        if (map == null) {
+            map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
+            map.setMyLocationEnabled(true);
+            // Comprovar si s'ha obtingut correctament l'objecte
 
-        private void configurarMapa() throws SQLException {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
-            // que no l'hÃ gim instanciat prÃ¨viament
-            if (map == null) {
-                map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
-                map.setMyLocationEnabled(true);
-                // Comprovar si s'ha obtingut correctament l'objecte
-
-                for (int i = 0 ; i< per.getClienteseleccionados(clientes).size();i++){
-                    String nombre = per.getClienteseleccionados(clientes).get(i).getNombre();
-                    String latitud = String.valueOf(per.getCLienteCercanos().get(i).getLatitud());
-                    String longitud =String.valueOf(per.getCLienteCercanos().get(i).getLongitud());
-                    LatLng lat  = new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitud));
-                    pintar(lat);
-                    map.addMarker(new MarkerOptions().position(lat)
-                            .title(nombre).snippet(nombre));
-
-                }
-                map.moveCamera(
-                        CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
-
-                if (map != null) {
-                }// El mapa s'ha comprovat. Ara es pot manipular
+            for (int i = 0; i < per.getClienteseleccionados(clientes).size(); i++) {
+                String nombre = per.getClienteseleccionados(clientes).get(i).getNombre();
+                String latitud = String.valueOf(per.getClienteseleccionados(clientes).get(i).getLatitud());
+                String longitud = String.valueOf(per.getClienteseleccionados(clientes).get(i).getLongitud());
+                LatLng lat = new LatLng(Double.parseDouble(latitud), Double.parseDouble(longitud));
+                pintar(lat);
+                map.addMarker(new MarkerOptions().position(lat)
+                        .title(nombre).snippet(nombre));
             }
-        }
-
-
-
-    @Override
-        public void onMapReady(GoogleMap googleMap) {
-            map.setOnMapLoadedCallback(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btnCentrar:
-                    centrar();
-                    break;
-
-            }
-
-        }
-        private void pintar(LatLng aPintar) {
-            PolygonOptions rectOptions =
-                    new PolygonOptions().add(aPintar);
-            // Assignar un color
-            rectOptions.fillColor(Color.BLUE);
-            // Afegir el nou polÃ­gon
-            Polygon poligon = map.addPolygon(rectOptions);
-        }
-
-        private void centrar() {
-
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(per.getMiUbicacion(),50 ), 50, null);
-            // Moure la cÃ mera a les coordendes del punt que ens interessa
             map.moveCamera(
                     CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
 
+            if (map != null) {
+            }// El mapa s'ha comprovat. Ara es pot manipular
         }
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map.setOnMapLoadedCallback(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnCentrar:
+                centrar();
+                break;
+
+        }
+
+    }
+
+    private void pintar(LatLng aPintar) {
+        PolygonOptions rectOptions =
+                new PolygonOptions().add(aPintar);
+        // Assignar un color
+        rectOptions.fillColor(Color.BLUE);
+        // Afegir el nou polÃ­gon
+        Polygon poligon = map.addPolygon(rectOptions);
+    }
+
+    private void centrar() {
+
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(per.getMiUbicacion(), 50), 50, null);
+        // Moure la cÃ mera a les coordendes del punt que ens interessa
+        map.moveCamera(
+                CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
+
+    }
 }

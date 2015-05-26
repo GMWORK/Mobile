@@ -19,31 +19,87 @@ public class PedidoProductoDAOController {
     private Dao<PedidoProductoLog, Long> daoPePolog;
     private OpenLiteHelper cliCat;
 
-    public PedidoProductoDAOController(Context con) throws SQLException {
-        cliCat = new OpenLiteHelper(con);
-        this.daoPePo = cliCat.getDAOPedidoProducto();
+    public PedidoProductoDAOController(Context con)  {
+
+        try {
+            cliCat = new OpenLiteHelper(con);
+            this.daoPePo = cliCat.getDAOPedidoProducto();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public List<PedidoProducto> mostrarCategorias() throws SQLException {
-        return daoPePo.queryForAll();
+    public List<PedidoProducto> mostrarCategorias()  {
+        List<PedidoProducto> pePoList = null;
+        try {
+            pePoList  =  daoPePo.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pePoList;
     }
 
-    public PedidoProducto filtrarCategoria(String nombre) throws SQLException {
-        return daoPePo.queryForEq("nombre", nombre).get(0);
+    public PedidoProducto filtrarCategoria(String nombre)  {
+        PedidoProducto pePo = null;
+        try {
+            pePo =  daoPePo.queryForEq("nombre", nombre).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pePo;
     }
 
 
-    public void addPedidoProducto(PedidoProducto cat) throws SQLException {
-        daoPePo.createOrUpdate(cat);
+    public boolean addPedidoProducto(PedidoProducto cat)  {
+        try {
+            daoPePo.createOrUpdate(cat);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void removePedidoProducto(String nombre) throws SQLException {
-
-        daoPePo.delete(this.filtrarCategoria(nombre));
+    public boolean removePedidoProducto(String nombre)  {
+        PedidoProducto pePo = this.filtrarCategoria(nombre);
+        try {
+            daoPePo.delete(pePo);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void EditarPedidoProducto(PedidoProducto cat) throws SQLException {
-        daoPePo.updateId(cat, cat.getId());
+    public boolean EditarPedidoProducto(PedidoProducto cat)  {
+        try {
+            daoPePo.updateId(cat, cat.getId());
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public PedidoProducto filtrarPedidoProductoPedido(long idPedido)  {
+        PedidoProducto pePo = null;
+        try {
+            pePo =  daoPePo.queryForEq("id_pedido", idPedido).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pePo;
+    }
+
+    public boolean removePedidoProductodePedido(PedidoProducto pedProEs) {
+
+        try {
+            daoPePo.delete(pedProEs);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

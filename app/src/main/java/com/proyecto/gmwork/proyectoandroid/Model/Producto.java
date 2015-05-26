@@ -73,9 +73,17 @@ public class Producto implements Serializable{
     }
 
     public double getPrecio() {
+
         return precio;
     }
+    public double getPrecioDescontado(){
+        double totalDescuento = 0;
+        double descuentoCategoria =  (getCategoria().getDescuento()/100) * precio;
+        double descuentoProducto = (getDescuento()/100) * precio;
+        totalDescuento = (descuentoCategoria + descuentoProducto) - precio;
+        return totalDescuento;
 
+    }
     public void setPrecio(double precio) {
         this.precio = precio;
     }

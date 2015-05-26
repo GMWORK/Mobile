@@ -13,7 +13,7 @@ public class PedidoProductoLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String operacion;
+    private String Op;
     @DatabaseField
     private String fecha;
     @DatabaseField
@@ -22,8 +22,8 @@ public class PedidoProductoLog {
     public PedidoProductoLog() {
     }
 
-    public PedidoProductoLog(String operacion, String fecha, long idPedidoProducto) {
-        this.operacion = operacion;
+    public PedidoProductoLog(String Op, String fecha, long idPedidoProducto) {
+        this.Op = Op;
         this.fecha = fecha;
         this.idPedidoProducto = idPedidoProducto;
     }
@@ -37,11 +37,11 @@ public class PedidoProductoLog {
     }
 
     public String getOperacion() {
-        return operacion;
+        return Op;
     }
 
     public void setOperacion(String operacion) {
-        this.operacion = operacion;
+        this.Op = operacion;
     }
 
     public String getFecha() {

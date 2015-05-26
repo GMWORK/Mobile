@@ -14,14 +14,14 @@ public class PedidoLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String operacion;
+    private String Op;
     @DatabaseField
     private String fecha;
     @DatabaseField
     private long idPedido;
 
-    public PedidoLog(String operacion, String fecha, long idPedido) {
-        this.operacion = operacion;
+    public PedidoLog(String Op, String fecha, long idPedido) {
+        this.Op = Op;
         this.fecha = fecha;
         this.idPedido = idPedido;
     }
@@ -30,11 +30,11 @@ public class PedidoLog {
     }
 
     public String getOperacion() {
-        return operacion;
+        return Op;
     }
 
     public void setOperacion(String operacion) {
-        this.operacion = operacion;
+        this.Op = operacion;
     }
 
     public String getFecha() {

@@ -8,6 +8,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.ClienteLog;
 
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,23 +19,30 @@ import java.util.TreeMap;
  * Created by mateo on 30/04/15.
  */
 public class ClienteDAOController {
-    /**
-     * Returns an instance of the data access object
-     *
-     * @return
-     * @throws SQLException
-     */
+
     private Dao<Cliente, Long> daoCli;
     private Dao<ClienteLog, Long> daoClilog;
     private OpenLiteHelper clidao;
 
-    public ClienteDAOController(Context con) throws SQLException {
+    public ClienteDAOController(Context con) {
         clidao = new OpenLiteHelper(con);
-        this.daoCli = clidao.getDAOCliente();
-        daoClilog = clidao.getDAOClienteLog();
+        try {
+            this.daoCli = clidao.getDAOCliente();
+            daoClilog = clidao.getDAOClienteLog();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
-    public List<ClienteLog> getLog() throws SQLException {
-        return daoClilog.queryForAll();
+
+    public List<ClienteLog> getLog() {
+        List<ClienteLog> clienteslogs = new ArrayList<ClienteLog>();
+        try {
+            clienteslogs = daoClilog.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clienteslogs;
     }
 
     public void addCliente(Cliente cat) {
@@ -46,28 +54,125 @@ public class ClienteDAOController {
         }
     }
 
-    public ArrayList<Cliente> getClientes() throws SQLException {
-        ArrayList<Cliente> todos = (ArrayList<Cliente>) daoCli.queryForAll();
+    public ArrayList<Cliente> getClientes(String usuario) {
+        ArrayList<Cliente> todos = null;
+        ArrayList<Cliente> clientesUsuario = new ArrayList<Cliente>();
+        try {
+            todos = (ArrayList<Cliente>) daoCli.queryForAll();
+
+
+            Cliente cli = null;
+            for (int i = 0; i < todos.size(); i++) {
+                if (todos.get(i).getUsu().getUsername().equals(usuario.trim()) && !todos.get(i).isBaja()) {
+                    clientesUsuario.add(todos.get(i));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientesUsuario;
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        ArrayList<Cliente> todos = null;
+        try {
+            todos = (ArrayList<Cliente>) daoCli.queryForAll();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return todos;
     }
 
-    public void removeCliente(String nif) throws SQLException {
-
-        clidao.getDAOCliente().delete(clidao.getDAOCliente().queryForEq("nif", nif));
+    public void removeCliente(String nif) {
+        Cliente cli = null;
+        try {
+            cli = clidao.getDAOCliente().queryForEq("nif", nif).get(0);
+            cli.setBaja(true);
+            clidao.getDAOCliente().update(cli);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Cliente filtrarCliente(String nif) throws SQLException {
-        Cliente client = clidao.getDAOCliente().queryForEq("nif", nif).get(0);
-        return client;
+    public Cliente filtrarCliente(String nif) {
+        Cliente cli = null;
+        try {
+            cli = clidao.getDAOCliente().queryForEq("nif", nif).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return cli;
     }
 
-    public void EditarCliente(Cliente client) throws SQLException {
-        clidao.getDAOCliente().update(client);
+    public Cliente filtrarCliente(int id) {
+        Cliente cli = null;
+        try {
+            try {
+                cli = clidao.getDAOCliente().queryForEq("nif", id).get(0);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+        }
+        return cli;
     }
-    public Cliente filtrarID(long id) throws SQLException {
-        return daoCli.queryForEq("id",id).get(0);
+
+    public ArrayList<Cliente> filtrarClienteCampo(String campo, String dato, String username) {
+        ArrayList<Cliente> clientes = null;
+        ArrayList<Cliente> filtro =  new ArrayList<Cliente>();
+        try {
+            clientes = (ArrayList<Cliente>) daoCli.queryForEq(campo, dato);
+            for (int i = 0; i < clientes.size(); i++) {
+                if (clientes.get(i).getUsu().getUsername().equals(username.trim())) {
+                    filtro.add(clientes.get(i));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return filtro;
+
     }
-  /*  public List<Map<Cliente,ClienteLog>> getVista() throws SQLException {
+
+    public ArrayList<Cliente> filtrarCliente(String campo, String dato) {
+        ArrayList<Cliente> clientes = null;
+        try {
+            clientes = (ArrayList<Cliente>) daoCli.queryForEq(campo, dato);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+        return clientes;
+
+
+    }
+
+    public void EditarCliente(Cliente client) {
+
+        try {
+            clidao.getDAOCliente().update(client);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Cliente filtrarID(long id) {
+        Cliente cli = null;
+        try {
+            cli = daoCli.queryForEq("id", id).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cli;
+    }
+
+  /*  public List<Map<Cliente,ClienteLog>> getVista()  {
        List <Map<Cliente,ClienteLog>>clientsvista = new ArrayList<Map<Cliente,ClienteLog>>();
 
         List<Cliente> clientes = getClientes();

@@ -9,7 +9,7 @@
     tools:context=".view.Identificador"
     android:background="@drawable/fondo">
 <ImageView
-    android:background="@drawable/logo_login"
+
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/imageView2"
@@ -17,7 +17,7 @@
     android:layout_centerHorizontal="true" />
     <RelativeLayout
 
-        android:background="@drawable/botones_fondo_2"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView2"
@@ -28,20 +28,25 @@
         android:layout_height="wrap_content"
         android:text="LOGIN"
         android:textSize="40dp"
+        android:id="@+id/textView23"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
-        android:layout_marginTop="50dp"
-        android:id="@+id/textUser"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/textPassword"
-        android:layout_alignStart="@+id/textPassword" />
+            android:id="@+id/textUser"
+            android:layout_below="@+id/textView23"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     <EditText
+        android:drawableLeft="@drawable/user"
         android:hint="introduce tu usuario aqui..."
+        android:background="@drawable/editexttop"
+        android:padding="10dp"
+
+        android:textColorHint="#cccccc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/la_et_Username"
@@ -58,14 +63,17 @@
         android:text="Password"
         android:id="@+id/textPassword"
         android:layout_below="@+id/la_et_Username"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/textUser"
+        android:layout_alignEnd="@+id/textUser" />
 
     <EditText
+        android:textColorHint="#cccccc"
+        android:drawableLeft="@drawable/password"
         android:hint="Introduce tu contraseña aqui..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:ems="10"
+        android:background="@drawable/editextbottom"
         android:id="@+id/la_et_Password"
         android:layout_below="@+id/textPassword"
         android:layout_alignParentLeft="true"
@@ -76,7 +84,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesion"
+        android:text="Login"
+        android:background="@drawable/button_default"
         android:id="@+id/la_btn_login"
         android:layout_below="@+id/relativeLayout"
         android:layout_centerHorizontal="true" />
@@ -85,6 +94,7 @@
         style="?android:attr/buttonStyleSmall"
 
         android:layout_width="wrap_content"
+        android:background="@drawable/button_default"
         android:layout_height="wrap_content"
         android:text="Generar los Datos Locales..."
         android:id="@+id/am_btn_dInfo"

@@ -28,7 +28,11 @@ public class AdapterListPedidos extends ArrayAdapter<Pedido> {
         this.mInflater = (Activity) context;
         listarray = pedidos;
     }
+    public AdapterListPedidos(Context context, Pedido pedidos) {
+        super(context, R.layout.lista_pedidos_adapter,new ArrayList<Pedido>());
+        this.mInflater = (Activity) context;
 
+    }
     @Override
     public long getItemId(int position) {
         return position;
@@ -64,20 +68,24 @@ public class AdapterListPedidos extends ArrayAdapter<Pedido> {
             TextView tv_pTotal = (TextView) view.findViewById(R.id.lpa_tv_pTotal);
             TextView tv_cliente = (TextView) view.findViewById(R.id.lpa_tv_cliente);
             TextView tv_estado = (TextView) view.findViewById(R.id.lpa_tv_estado);
+            try {
+                if (0 <= position && position < listarray.size()) {
+                    tv_pFecha.setText(String.valueOf(listarray.get(position).getFechaEntrega()));
+                    tv_id.setText(String.valueOf(listarray.get(position).getId()));
+                    tv_pTotal.setText(String.valueOf(listarray.get(position).getTotal()));
+                    tv_cliente.setText(listarray.get(position).getCliente().getNif());
+                    tv_estado.setText(listarray.get(position).getEstado());
 
-            if (0 <= position && position < listarray.size()) {
-                tv_pFecha.setText(String.valueOf(listarray.get(position).getFechaEntrega()));
-                tv_id.setText(String.valueOf(listarray.get(position).getId()));
-                tv_pTotal.setText(String.valueOf(listarray.get(position).getTotal()));
-                tv_cliente.setText(listarray.get(position).getCliente().getNif());
-                tv_estado.setText(listarray.get(position).getEstado());
+                } else {
+                    tv_pFecha.setText("");
+                    tv_id.setText("");
+                    tv_pTotal.setText("");
+                    tv_cliente.setText("");
+                    tv_estado.setText("");
+                }
 
-            } else {
-                tv_pFecha.setText("");
-                tv_id.setText("");
-                tv_pTotal.setText("");
-                tv_cliente.setText("");
-                tv_estado.setText("");
+            }catch(NullPointerException ex){
+                return view;
             }
         }
         return view;

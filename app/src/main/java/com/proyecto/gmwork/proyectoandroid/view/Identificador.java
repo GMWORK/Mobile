@@ -77,37 +77,29 @@ public class Identificador extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.la_btn_login:
-                try {
                     pasarPantalla();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 break;
             case R.id.am_btn_dInfo:
-                try {
-                    per.guardarDatosBajadosActivar();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                per.guardarDatosBajadosActivar();
                 break;
         }
     }
 
-    public void pasarPantalla() throws SQLException, UnsupportedEncodingException, InterruptedException {
-        // per.actualizarDatosLocalesActivar();
-        byte[] data = password.getText().toString().getBytes("UTF-8");
-        //if (per.hacerLogin(username.getText().toString(), Base64.encodeToString(data, Base64.DEFAULT).trim())) {
+    public void pasarPantalla()  {
+
+
+        if (per.hacerLogin(username.getText().toString(), password.getText().toString())){
             Toast.makeText(this, "Usuario encontrado", Toast.LENGTH_SHORT).show();
+
+                per.actualizarDatosLocalesActivar();
+
             Intent intent = new Intent(this, Menu.class);
             intent.putExtra("username", username.getText().toString());
+
             startActivity(intent);
-        //} else {
-        //    Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
-       // }
+        } else {
+          Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
+       }
     }
 
     private EditText username;

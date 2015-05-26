@@ -4,6 +4,8 @@
 
     <item android:id="@+id/mcc_it_verUltimaComanda" android:title="Ver ultima comanda"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/mcc_it_aProximaVisita" android:title="Assignar Proxima Visita"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/mcc_it_editar" android:title="Editar Cliente"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/mcc_it_borrar" android:title="Borrar Cliente"

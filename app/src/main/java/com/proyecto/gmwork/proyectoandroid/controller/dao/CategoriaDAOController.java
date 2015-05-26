@@ -10,6 +10,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,26 +21,73 @@ public class CategoriaDAOController {
     private Dao<CategoriaLog,Long> daoCatlog;
     private OpenLiteHelper cliCat;
 
-    public CategoriaDAOController(Context con) throws SQLException {
-        cliCat = new OpenLiteHelper(con);
-        this.daoCat = cliCat.getDAOCategoria();
+    public CategoriaDAOController(Context con)  {
+
+        try {
+            cliCat = new OpenLiteHelper(con);
+            this.daoCat = cliCat.getDAOCategoria();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
-    public List<Categoria> mostrarCategorias() throws SQLException {
-        return daoCat.queryForAll();
+    public List<Categoria> mostrarCategorias()  {
+        List<Categoria> cat  = null;
+        try {
+           cat = daoCat.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cat;
     }
-    public Categoria filtrarCategoria(String nombre) throws SQLException {
-        return daoCat.queryForEq("nombre",nombre).get(0);
+    public Categoria filtrarCategoria(String nombre)  {
+        Categoria cat = null;
+        try {
+            cat =  daoCat.queryForEq("nombre",nombre).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cat;
     }
-    public void addCategoria(Categoria cat) throws SQLException {
-         daoCat.createOrUpdate(cat);
+    public Categoria filtrarCategoria(int id)  {
+        Categoria cat  = null;
+        try {
+            cat =  daoCat.queryForEq("id",id).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cat;
     }
-    public void removeCategoria(String nombre) throws SQLException {
+    public boolean addCategoria(Categoria cat)  {
 
-        daoCat.delete(this.filtrarCategoria(nombre));
+        try {
+            daoCat.createOrUpdate(cat);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    public void EditarCategoria(Categoria cat) throws SQLException {
-        daoCat.update(cat);
+    public boolean removeCategoria(String nombre)  {
+
+        try {
+            daoCat.delete(this.filtrarCategoria(nombre));
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+    public boolean EditarCategoria(Categoria cat)  {
+
+        try {
+            daoCat.update(cat);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

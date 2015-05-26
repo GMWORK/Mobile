@@ -63,6 +63,9 @@
         <activity
             android:name=".view.Cliente.MapaseleClientesAVisitar"
             android:label="@string/app_name" />
+        <activity
+            android:name=".view.Pedido.PedidoPlantilla"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

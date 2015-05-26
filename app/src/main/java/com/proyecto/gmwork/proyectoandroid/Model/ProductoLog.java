@@ -14,14 +14,14 @@ public class ProductoLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String operacion;
+    private String Op;
     @DatabaseField
     private Date fecha;
     @DatabaseField
     private long idProducto;
 
     public ProductoLog(String operacion, Date fecha, long idProducto) {
-        this.operacion = operacion;
+        this.Op = operacion;
         this.fecha = fecha;
         this.idProducto = idProducto;
     }
@@ -38,11 +38,11 @@ public class ProductoLog {
     }
 
     public String getOperacion() {
-        return operacion;
+        return Op;
     }
 
     public void setOperacion(String operacion) {
-        this.operacion = operacion;
+        this.Op = operacion;
     }
 
     public Date getFecha() {
@@ -65,7 +65,7 @@ public class ProductoLog {
     public String toString() {
         return "ProductoLog{" +
                 "id=" + id +
-                ", operacion='" + operacion + '\'' +
+                ", operacion='" + Op + '\'' +
                 ", fecha=" + fecha +
                 ", idProducto=" + idProducto +
                 '}';

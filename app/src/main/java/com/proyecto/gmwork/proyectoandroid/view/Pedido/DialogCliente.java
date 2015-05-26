@@ -24,28 +24,28 @@ import java.util.ArrayList;
 public class DialogCliente extends DialogFragment implements AdapterView.OnItemClickListener {
     private PersistencyController per;
     private String eleccion;
-
+    private Bundle bun ;
+    private String usuario;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        try {
             per = new PersistencyController(getActivity());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         //Collections.addAll(mOfficeListItems, getResources().getStringArray(R.array.offices));
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog, null);
 
         lv_list = (ListView) v.findViewById(R.id.d_lv_list);
-        try {
-            adapter = new AdapterListClientes(getActivity(), (ArrayList) per.mostrarClientes());
-            lv_list.setAdapter(adapter);
-            lv_list.setOnItemClickListener(this);
-        } catch (SQLException ex) {
 
-        }
+
+
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        bun =getActivity().getIntent().getExtras();
+        usuario = bun.getString("username");
+        adapter = new AdapterListClientes(getActivity(), (ArrayList) per.mostrarClientes(usuario));
+        lv_list.setAdapter(adapter);
+        lv_list.setOnItemClickListener(this);
 
         builder.setTitle("Clientes").setView(v);
 

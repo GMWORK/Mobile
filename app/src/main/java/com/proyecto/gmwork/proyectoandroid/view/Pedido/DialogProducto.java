@@ -25,21 +25,16 @@ public class DialogProducto extends DialogFragment  implements AdapterView.OnIte
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        try {
+
             per = new PersistencyController(getActivity());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         //Collections.addAll(mOfficeListItems, getResources().getStringArray(R.array.offices));
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog, null);
 
         lv_list = (ListView) v.findViewById(R.id.d_lv_list);
-        try {
+
             adapter = new AdapterListProductos(getActivity(), (ArrayList) per.mostrarProducto());
             lv_list.setAdapter(adapter);
-        } catch (SQLException ex) {
-
-        }
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

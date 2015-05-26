@@ -13,7 +13,7 @@ public class ClienteLog {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private String operacion;
+    private String Op;
     @DatabaseField
     private String fecha;
     @DatabaseField
@@ -22,18 +22,18 @@ public class ClienteLog {
     public ClienteLog() {
     }
 
-    public ClienteLog(String operacion, String fecha, long idCliente) {
-        this.operacion = operacion;
+    public ClienteLog(String Op, String fecha, long idCliente) {
+        this.Op = Op;
         this.fecha = fecha;
         this.idCliente = idCliente;
     }
 
     public String getOperacion() {
-        return operacion;
+        return Op;
     }
 
     public void setOperacion(String operacion) {
-        this.operacion = operacion;
+        this.Op = operacion;
     }
 
     public String getFecha() {

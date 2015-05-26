@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
@@ -27,13 +28,15 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Matthew on 06/05/2015.
  */
 public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
-    private static final String DATABASE_NAME = "db.lite";
-    private static final int DATABASE_VERSION = 212323;
+    private static final String DATABASE_NAME = "db.gmwork";
+    private static final int DATABASE_VERSION = 1;
     private static Dao<Cliente, Long> daoCli = null;
     private static Dao<Pedido, Long> daoPe = null;
     private static Dao<Usuario, Long> daoUsu = null;
@@ -41,10 +44,8 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     private static Dao<Producto, Long> daoPro = null;
     private static Dao<PedidoProducto, Long> daoProPe = null;
     private static Dao<Horas, Long> daoHora = null;
-    private static Dao<ClienteLog ,Long> daoCliLog = null;
-    private static Dao<PedidoLog ,Long> daoPeLog = null;
-
-
+    private static Dao<ClienteLog, Long> daoCliLog = null;
+    private static Dao<PedidoLog, Long> daoPeLog = null;
 
     public OpenLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION,
@@ -58,95 +59,27 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Categoria.class);
-            TableUtils.createTable(connectionSource, Cliente.class);
-            TableUtils.createTable(connectionSource, Pedido.class);
-            TableUtils.createTable(connectionSource, PedidoProducto.class);
-            TableUtils.createTable(connectionSource, Producto.class);
-            TableUtils.createTable(connectionSource, Usuario.class);
-            TableUtils.createTable(connectionSource, PedidoLog.class);
-            TableUtils.createTable(connectionSource, ClienteLog.class);
-            TableUtils.createTable(connectionSource, ProductoLog.class);
-            TableUtils.createTable(connectionSource, CategoriaLog.class);
-            TableUtils.createTable(connectionSource, UsuarioLog.class);
-            TableUtils.createTable(connectionSource, PedidoProductoLog.class);
-            TableUtils.createTable(connectionSource, Horas.class);
-            database.execSQL(
-                    "CREATE TRIGGER categoria_UP AFTER UPDATE ON categoria\n" +
-                    "FOR EACH ROW\n" +
-                    "BEGIN\n" +
-                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "END;\n" +
-                    "CREATE TRIGGER categoria_IN AFTER INSERT ON categoria\n" +
-                    "FOR EACH ROW\n"+
-                    "BEGIN\n" +
-                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "END;\n" +
-                    "CREATE TRIGGER categoria_D AFTER DELETE ON categoria\n" +
-                    "FOR EACH ROW\n" +
-                    "BEGIN\n" +
-                    "INSERT INTO CategoriaLog (operacion, fecha,IdCategoria) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "END;\n" +
-                    "CREATE TRIGGER cliente_UP AFTER UPDATE ON cliente\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "    END;\n" +
-                    "CREATE TRIGGER cliente_IN AFTER INSERT ON cliente\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "    END;\n" +
-                    "CREATE TRIGGER cliente_D AFTER DELETE ON cliente\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ClienteLog (operacion, fecha,idCliente) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "    END;\n" +
-                    "CREATE TRIGGER producto_UP AFTER UPDATE ON producto\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;\n" +
-                    "CREATE TRIGGER PedidoProducto_UP AFTER UPDATE ON pedido_has_producto\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO PedidoProductoLog (operacion, fecha,IdProducto) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;\n" +
-                    "CREATE TRIGGER producto_IN AFTER INSERT ON producto\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;\n" +
-                            "CREATE TRIGGER PedidoProducto_IN AFTER INSERT ON pedido_has_producto\n" +
-                            "    FOR EACH ROW\n" +
-                            "    BEGIN\n" +
-                            "            INSERT INTO PedidoProducto (operacion, fecha,IdProducto) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                            "     END;\n" +
-                    "CREATE TRIGGER producto_D AFTER DELETE ON producto\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO ProductoLog (operacion, fecha,IdProducto) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;\n" +
-                    "CREATE TRIGGER usuario_UP AFTER UPDATE ON usuario\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('U',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;" +
-                    "CREATE TRIGGER usuario_IN AFTER INSERT ON usuario\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('I',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;" +
-                    "CREATE TRIGGER usuario_D AFTER DELETE ON usuario\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO UsuarioLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;"+
-                    "CREATE TRIGGER pedidoProducto_D AFTER DELETE ON pedido_has_producto\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "            INSERT INTO PedidoProductoLog (operacion, fecha,idUsuario) VALUES('D',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "     END;");
+            TableUtils.createTableIfNotExists(connectionSource, Categoria.class);
+            TableUtils.createTableIfNotExists(connectionSource, Cliente.class);
+            TableUtils.createTableIfNotExists(connectionSource, Pedido.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoProducto.class);
+            TableUtils.createTableIfNotExists(connectionSource, Producto.class);
+            TableUtils.createTableIfNotExists(connectionSource, Usuario.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ClienteLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ProductoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, CategoriaLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, UsuarioLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoProductoLog.class);
+
+            TableUtils.createTableIfNotExists(connectionSource, Horas.class);
+            createTriggers("categoria", "CategoriaLog",database);
+            createTriggers("cliente", "ClienteLog",database);
+            createTriggers("pedido", "PedidoLog",database);
+            createTriggers("producto", "ProductoLog",database);
+            createTriggers("usuario", "UsuarioLog",database);
+            createTriggers("pedidoProducto", "PedidoProductoLog",database);
+
 
             //getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
 
@@ -181,6 +114,61 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             e.printStackTrace();
         }
 
+    }
+    public void borrarLogs() {
+        try {
+            TableUtils.dropTable(connectionSource, PedidoLog.class, true);
+            TableUtils.dropTable(connectionSource, ClienteLog.class, true);
+            TableUtils.dropTable(connectionSource, ProductoLog.class, true);
+            TableUtils.dropTable(connectionSource, CategoriaLog.class, true);
+            TableUtils.dropTable(connectionSource, UsuarioLog.class, true);
+            TableUtils.dropTable(connectionSource, PedidoProductoLog.class, true);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ClienteLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ProductoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, CategoriaLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, UsuarioLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoProductoLog.class);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    //private  ConnectionSource con = connectionSource;
+   /*public <T>  Dao<T, Long> daoGet(Class<T> classRepresentingTable){
+       Dao dao = null;
+       if (dao == null) {
+
+           dao = daoGet(cone,classRepresentingTable);
+
+       }
+       return dao;
+
+   }*/
+
+    private void createTriggers(String table, String claseLog,SQLiteDatabase sql) {
+        //Class< ? extends Object > clas = Class.forName("mode.definitivo."+table.replace(0, toUpperCase())+"");
+        //Dao dao = null;
+        //            dao = getDAO(Class.forName("com.proyecto.gmwork.proyectoandroid.Model." + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ""));
+
+        //Dao dao = getDAO(Class.forName("model.definitivo." + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ""));
+        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_UP");
+        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_IN");
+        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_D");
+        sql.execSQL("CREATE TRIGGER " + table + "_UP AFTER UPDATE ON " + table + "\n"
+                + "FOR EACH ROW \n"
+                + "BEGIN\n"
+                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('U',  CURRENT_TIMESTAMP ,NEW.id);\n"
+                + "END;\n");
+        sql.execSQL("CREATE TRIGGER " + table + "_IN AFTER INSERT ON " + table + "\n"
+                + "FOR EACH ROW\n"
+                + "BEGIN\n"
+                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('I',  CURRENT_TIMESTAMP ,NEW.id);\n"
+                + "END;\n");
+        sql.execSQL("CREATE TRIGGER " + table + "_D AFTER DELETE ON " + table + "\n"
+                + "FOR EACH ROW\n"
+                + "BEGIN\n"
+                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('D',  CURRENT_TIMESTAMP ,NEW.id);\n"
+                + "END;\n");
     }
 
     @Override
@@ -242,7 +230,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         }
         return daoUsu;
 
-   }
+    }
 
 
     public Dao<Categoria, Long> getDAOCategoria() throws SQLException {
@@ -260,24 +248,28 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         }
         return daoPro;
     }
+
     public Dao<PedidoLog, Long> getDAOPedidoLog() throws SQLException {
         if (daoPeLog == null) {
             daoPeLog = getDao(PedidoLog.class);
         }
         return daoPeLog;
     }
+
     public Dao<ClienteLog, Long> getDAOClienteLog() throws SQLException {
         if (daoCliLog == null) {
             daoCliLog = getDao(ClienteLog.class);
         }
         return daoCliLog;
     }
+
     public Dao<PedidoProducto, Long> getDAOPedidoProducto() throws SQLException {
         if (daoProPe == null) {
             daoProPe = getDao(PedidoProducto.class);
         }
         return daoProPe;
     }
+
     public Dao<Horas, Long> getDAOHoras() throws SQLException {
         if (daoHora == null) {
             daoHora = getDao(Horas.class);
@@ -302,7 +294,6 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
         getDAOCliente().create(new Cliente("583241A", "sadsa", "sadsad", "sadsad", "sdasd", "20/22/22"));
     }
-
 
 
 }
