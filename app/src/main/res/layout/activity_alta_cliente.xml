@@ -30,170 +30,54 @@
     private Usuario usu;-->
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/aac_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Alta Cliente"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        />
     <RelativeLayout
         android:layout_below="@+id/aac_tv_titulo"
         android:layout_width="wrap_content"
-        android:background="@drawable/botones_fondo_4"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout2">
 
-    <RelativeLayout
-        android:id="@+id/rl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView
-            android:id="@+id/aac_tv_nif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/aac_et_nif"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="nif"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/aac_et_nif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="69dp"
-            android:layout_marginStart="69dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/aac_tv_nif"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/icon_name" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl2"
+    <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl1">
+        android:text="Cancelar Operacion"
+        android:id="@+id/aac_btn_finish"
+        android:layout_alignTop="@+id/aac_btn_gCli"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:id="@+id/aac_tv_nombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/aac_et_nombre"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="nombre"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <Button
 
-        <EditText
-            android:id="@+id/aac_et_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="69dp"
-            android:layout_marginStart="69dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/aac_tv_nombre"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/icon_price" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl3"
+        android:background="@drawable/button_default"
+        android:id="@+id/aac_btn_gCli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl2">
-
-        <TextView
-            android:id="@+id/aac_tv_apellidos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/aac_et_apellidos"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="apellidos"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/aac_et_apellidos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="69dp"
-            android:layout_marginStart="69dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/aac_tv_apellidos"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/icon_price" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl3">
-
-        <TextView
-            android:id="@+id/aac_tv_poblacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/aac_et_poblacion"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="poblacion"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <EditText
-            android:id="@+id/aac_et_poblacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="69dp"
-            android:layout_marginStart="69dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/aac_tv_poblacion"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/icon_price" />
-
-    </RelativeLayout>
-
+        android:text="Guardar Cliente"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/rl5"
+        android:layout_toRightOf="@+id/relativeLayout2"
+        android:layout_toEndOf="@+id/relativeLayout2" />
 
     <RelativeLayout
         android:id="@+id/rl5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl4">
+        android:layout_below="@+id/rl4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp">
 
         <TextView
             android:id="@+id/aac_tv_calle"
@@ -206,6 +90,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
+            android:background="@drawable/editextdefaul"
             android:id="@+id/aac_et_calle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -226,68 +111,212 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl6"
+        android:id="@+id/rl4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl5">
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/aac_tv_pvis"
+            android:id="@+id/aac_tv_poblacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/aac_et_Proxima_Visita"
+            android:layout_alignBottom="@+id/aac_et_poblacion"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="PVisita"
+            android:text="poblacion"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/aac_et_Proxima_Visita"
+        <EditText
+            android:background="@drawable/editextdefaul"
+            android:id="@+id/aac_et_poblacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="69dp"
-            android:layout_marginStart="69dp"
-            android:layout_toLeftOf="@+id/aac_btn_sF"
-            android:layout_toStartOf="@+id/aac_btn_sF"
-            android:text="Fecha" />
+            android:layout_marginStart="69dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/aac_tv_pvis"
+            android:layout_above="@+id/aac_tv_poblacion"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:background="@drawable/icon_price" />
 
-        <Button
-            android:background="@android:drawable/ic_menu_my_calendar"
-            android:id="@+id/aac_btn_sF"
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/rl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp">
+
+        <TextView
+            android:id="@+id/aac_tv_apellidos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignBottom="@+id/aac_et_apellidos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="apellidos"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:background="@drawable/editextdefaul"
+            android:id="@+id/aac_et_apellidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/aac_tv_apellidos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/icon_price" />
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/aac_btn_gCli"
+    <RelativeLayout
+    android:id="@+id/rl6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    <TextView
+        android:id="@+id/aac_tv_pvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guardar Cliente"
-        android:layout_below="@+id/rl6"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/aac_et_Proxima_Visita"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="PVisita"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <Button
+    <TextView
+        android:id="@+id/aac_et_Proxima_Visita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="69dp"
+        android:layout_marginStart="69dp"
+        android:layout_toLeftOf="@+id/aac_btn_sF"
+        android:layout_toStartOf="@+id/aac_btn_sF"
+        android:text="Fecha" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/aac_tv_pvis"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/icon_price" />
+
+    <Button
+        android:background="@drawable/button_default"
+        android:drawableRight="@android:drawable/ic_menu_my_calendar"
+        android:id="@+id/aac_btn_sF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="26dp">
+
+        <TextView
+            android:id="@+id/aac_tv_nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar Operacion"
-            android:id="@+id/aac_btn_finish"
-            android:layout_below="@+id/aac_btn_gCli"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignBottom="@+id/aac_et_nombre"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="nombre"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:background="@drawable/editextdefaul"
+            android:id="@+id/aac_et_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/aac_tv_nombre"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/icon_price" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/aac_tv_nif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/aac_et_nif"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="nif"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:background="@drawable/editexttop"
+            android:id="@+id/aac_et_nif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="69dp"
+            android:layout_marginStart="69dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/aac_tv_nif"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/icon_name" />
 
     </RelativeLayout>
 

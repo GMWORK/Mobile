@@ -35,6 +35,7 @@
         android:layout_above="@+id/avcc_btn_finish" />
 
     <Spinner
+        android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
@@ -47,6 +48,7 @@
         android:entries="@array/tipos_mapas"  />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Centrar"
@@ -56,6 +58,7 @@
         android:layout_alignEnd="@+id/ID" />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volver al Menu"

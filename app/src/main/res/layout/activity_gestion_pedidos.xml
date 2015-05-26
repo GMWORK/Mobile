@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gestion de Pedidos"
@@ -13,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
     <ListView
+        android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agp_lv_lista"
@@ -23,6 +25,7 @@
         android:layout_above="@+id/agp_btn_finish" />
 
     <Button
+        android:background="@drawable/button_default"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +36,7 @@
         android:layout_alignParentEnd="true" />
 
     <SearchView
+        android:background="@drawable/editexttop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agc_et_search"
@@ -54,6 +58,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volver al Menu"

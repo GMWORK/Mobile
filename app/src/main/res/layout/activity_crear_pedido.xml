@@ -7,6 +7,7 @@
     android:background="@drawable/fondo"
     tools:context=".view.Pedido.UiCrearPedidoView">
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Pedido"
@@ -71,7 +72,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@android:drawable/ic_menu_my_calendar" />
+            android:drawableRight="@android:drawable/ic_menu_my_calendar" />
 
 
 
@@ -126,6 +127,15 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Cantidad"
+            android:id="@+id/textView20"
+            android:layout_below="@+id/textView19"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -135,6 +145,7 @@
         android:layout_below="@+id/rl2">
 
         <ListView
+            android:background="@drawable/editextdefaul"
             android:id="@+id/acp_lv_productos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -162,6 +173,7 @@
             android:layout_alignParentStart="true" />
 
         <Spinner
+            android:background="@drawable/editextdefaul"
             android:id="@+id/acp_sp_productos"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -191,15 +203,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/acp_number_picker"
             android:layout_alignEnd="@+id/acp_number_picker" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Cantidad"
-            android:id="@+id/textView20"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
     <ListView
+        android:background="@drawable/editextdefaul"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/asacav_lv_clientes"
@@ -13,6 +15,8 @@
         android:layout_above="@+id/ascav_btn_aVisitar" />
 
     <SearchView
+        android:background="@drawable/editexttop"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/asacav_sv_search"
@@ -23,6 +27,7 @@
         android:layout_alignParentEnd="true" />
 
     <Spinner
+        android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ascav_spn_campo"
@@ -61,6 +66,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:background="@drawable/button_default"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

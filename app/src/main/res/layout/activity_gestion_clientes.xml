@@ -13,6 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
     <ListView
+        android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agc_lv_lista"
@@ -23,16 +24,20 @@
         android:layout_above="@+id/button2" />
 
     <Button
+        android:background="@drawable/button_default"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Nuevo Cliente"
+        android:text="Alta Cliente"
         android:id="@+id/agc_btn_Crear"
         android:layout_below="@+id/agc_et_search"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/button2"
+        android:layout_toEndOf="@+id/button2" />
 
     <SearchView
+        android:background="@drawable/editexttop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agc_et_search"
@@ -54,6 +59,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volver al Menu"
