@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,9 @@ public class AdapterListClientes extends ArrayAdapter<Cliente> {
                 tv_poblacion.setText(listarray.get(position).getPoblacion());
                 tv_calle.setText(listarray.get(position).getCalle());
                 if (listarray.get(position).getImg() != null) {
-                    iv_img.setImageBitmap(BitmapFactory.decodeByteArray(listarray.get(position).getImg(), 0, listarray.get(position).getImg().length));
+                    byte[] bitmapdata = android.util.Base64.decode(listarray.get(position).getImg(), Base64.DEFAULT);
+                    Bitmap imatge = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                    iv_img.setImageBitmap(imatge);
 
                 }
             } else {

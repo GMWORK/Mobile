@@ -2,7 +2,9 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
@@ -29,6 +32,7 @@ public class AdapterListClienteSeleccionarVisita extends ArrayAdapter<Cliente> {
     public AdapterListClienteSeleccionarVisita(Context context, ArrayList<Cliente> clientes) {
         super(context, R.layout.lista_adapter_clientes_visitar, clientes);
         this.mInflater = (Activity) context;
+        ctx = context;
         listarray = clientes;
 
     }
@@ -61,7 +65,7 @@ public class AdapterListClienteSeleccionarVisita extends ArrayAdapter<Cliente> {
             view = inflator.inflate(R.layout.lista_adapter_clientes_visitar, null);
         } else
             view = convertView;
-
+        try{
         if (view != null) {
             TextView tv_nombre = (TextView) view.findViewById(R.id.lacv_tv_nombre);
             TextView tv_apellidos = (TextView) view.findViewById(R.id.lacv_tv_codigo);
@@ -70,10 +74,12 @@ public class AdapterListClienteSeleccionarVisita extends ArrayAdapter<Cliente> {
             CheckBox ch_visitar = (CheckBox) view.findViewById(R.id.lacv_check_avisitar);
             if (0 <= position && position < listarray.size()) {
                 tv_nombre.setText(String.valueOf(listarray.get(position).getNombre()));
-                tv_apellidos.setText(listarray.get(position).getApellidos());
+                tv_apellidos.setText(listarray.get(position).getNif());
                 tv_poblacion.setText(listarray.get(position).getPoblacion());
                 if (listarray.get(position).getImg() != null) {
-                    iv_img.setImageBitmap(BitmapFactory.decodeByteArray(listarray.get(position).getImg(), 0, listarray.get(position).getImg().length));
+                    byte[] bitmapdata = android.util.Base64.decode(listarray.get(position).getImg(), Base64.DEFAULT);
+                    Bitmap imatge = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                    iv_img.setImageBitmap(imatge);
 
                 }
             } else {
@@ -81,6 +87,9 @@ public class AdapterListClienteSeleccionarVisita extends ArrayAdapter<Cliente> {
                 tv_apellidos.setText("");
                 tv_poblacion.setText("");
             }
+        }
+        }catch(Exception ex){
+            Toast.makeText(ctx, ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
         return view;
 

@@ -12,7 +12,11 @@ import java.util.List;
 
 /**
  * Created by Matthew on 05/05/2015.
+ *
+ *
+ * Clase de los usuarios hace el mapeo de la base de de datos segun ormlite
  */
+
 @DatabaseTable(tableName = "usuario")
 public class Usuario implements Serializable {
     @DatabaseField(generatedId = true)

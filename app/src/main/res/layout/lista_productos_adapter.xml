@@ -10,7 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:background="@android:drawable/toast_frame"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/textView2" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,9 +35,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Precio Unidad:"
         android:id="@+id/textView2"
-        android:layout_below="@+id/lpa_tv_categoria"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_alignTop="@+id/lpa_tv_precio"
+        android:layout_alignRight="@+id/lpa_tv_categoria"
+        android:layout_alignEnd="@+id/lpa_tv_categoria" />
 
     <TextView
         android:layout_width="wrap_content"

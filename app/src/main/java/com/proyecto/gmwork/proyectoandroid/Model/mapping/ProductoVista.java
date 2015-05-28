@@ -11,7 +11,7 @@ public class ProductoVista {
     private long id;
     private String nombre;
     private double precio;
-    private byte[] img;
+    private String img;
     private boolean inhabilitats;
     private double descuento;
     private int categoriaid;
@@ -21,7 +21,7 @@ public class ProductoVista {
     public ProductoVista() {
     }
 
-    public ProductoVista(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento, int categoriaid, String op, DateTime fecha) {
+    public ProductoVista(String nombre, double precio,String img, boolean inhabilitats, double descuento, int categoriaid, String op, DateTime fecha) {
         this.nombre = nombre;
         this.precio = precio;
         this.img = img;
@@ -56,11 +56,11 @@ public class ProductoVista {
         this.precio = precio;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -106,16 +106,17 @@ public class ProductoVista {
 
     @Override
     public String toString() {
-        return "ProductoVista[" +
+        return "ProductoVista{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", precio=" + precio +
-                ", img=" + Arrays.toString(img) +
+                ", img='" + img + '\'' +
                 ", inhabilitats=" + inhabilitats +
                 ", descuento=" + descuento +
                 ", categoriaid=" + categoriaid +
                 ", Op='" + Op + '\'' +
                 ", fecha=" + fecha +
-                ']';
+                '}';
     }
 }
+

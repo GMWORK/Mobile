@@ -13,18 +13,20 @@ import java.util.List;
 
 /**
  * Created by Matthew on 05/05/2015.
+ *
+ * Clase de los productos hace el mapeo de la base de de datos segun ormlite
  */
 
 @DatabaseTable(tableName = "producto")
-public class Producto implements Serializable{
+public class Producto implements Serializable {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
     private String nombre;
     @DatabaseField
     private double precio;
-    @DatabaseField(dataType = DataType.BYTE_ARRAY)
-    private byte[] img;
+    @DatabaseField
+    private String img;
     @DatabaseField
     private boolean inhabilitats;
     @DatabaseField
@@ -39,7 +41,7 @@ public class Producto implements Serializable{
     public Producto() {
     }
 
-    public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento) {
+    public Producto(String nombre, double precio, String img, boolean inhabilitats, double descuento) {
         this.nombre = nombre;
         this.precio = precio;
         this.img = img;
@@ -47,7 +49,7 @@ public class Producto implements Serializable{
         this.descuento = descuento;
     }
 
-    public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento, Categoria categoria) {
+    public Producto(String nombre, double precio, String img, boolean inhabilitats, double descuento, Categoria categoria) {
         this.categoria = categoria;
         this.descuento = descuento;
         this.inhabilitats = inhabilitats;
@@ -76,23 +78,25 @@ public class Producto implements Serializable{
 
         return precio;
     }
-    public double getPrecioDescontado(){
+
+    public double getPrecioDescontado() {
         double totalDescuento = 0;
-        double descuentoCategoria =  (getCategoria().getDescuento()/100) * precio;
-        double descuentoProducto = (getDescuento()/100) * precio;
+        double descuentoCategoria = (getCategoria().getDescuento() / 100) * precio;
+        double descuentoProducto = (getDescuento() / 100) * precio;
         totalDescuento = (descuentoCategoria + descuentoProducto) - precio;
         return totalDescuento;
 
     }
+
     public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -132,6 +136,8 @@ public class Producto implements Serializable{
         liPro.setProducto(this);
         this.liniaPedidos.add(liPro);
 
+
+
     }
 
     @Override
@@ -140,11 +146,13 @@ public class Producto implements Serializable{
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", precio=" + precio +
-                ", img=" + Arrays.toString(img) +
+                ", img='" + img + '\'' +
                 ", inhabilitats=" + inhabilitats +
                 ", descuento=" + descuento +
+                ", baja=" + baja +
                 ", categoria=" + categoria +
                 ", liniaPedidos=" + liniaPedidos +
                 ']';
     }
 }
+

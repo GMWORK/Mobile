@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".view.Identificador"
-    android:background="@drawable/fondo">
+    android:background="#779ECB">
 <ImageView
 
     android:layout_width="wrap_content"
@@ -20,29 +20,22 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
-        android:id="@+id/relativeLayout">
-    <TextView
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:textSize="40dp"
-        android:id="@+id/textView23"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/textView23"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
             android:id="@+id/textUser"
-            android:layout_below="@+id/textView23"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
     <EditText
         android:drawableLeft="@drawable/user"
-        android:hint="introduce tu usuario aqui..."
+        android:hint="@string/am_tv_username"
         android:background="@drawable/editexttop"
         android:padding="10dp"
 
@@ -69,7 +62,7 @@
     <EditText
         android:textColorHint="#cccccc"
         android:drawableLeft="@drawable/password"
-        android:hint="Introduce tu contraseña aqui..."
+        android:hint="@string/am_tv_con"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -80,14 +73,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Iniciar Sesion"
         android:background="@drawable/button_default"
         android:id="@+id/la_btn_login"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -96,9 +90,40 @@
         android:layout_width="wrap_content"
         android:background="@drawable/button_default"
         android:layout_height="wrap_content"
-        android:text="Generar los Datos Locales..."
+        android:text="@string/am_btn_gd"
         android:id="@+id/am_btn_dInfo"
         android:layout_below="@+id/la_btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp" />
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:textSize="40dp"
+        android:id="@+id/textView23"
+
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView13"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="GMWORK!"
+        android:id="@+id/textView21"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView23"
+        android:layout_alignEnd="@+id/textView23" />
+
 
 </RelativeLayout>

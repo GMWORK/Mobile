@@ -6,16 +6,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
-import com.proyecto.gmwork.proyectoandroid.controller.AdapterListProductos;
-import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by Matthew on 21/05/2015.

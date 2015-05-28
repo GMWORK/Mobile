@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-   android:background="@drawable/fondo"
+   android:background="#779ECB"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:background="@drawable/button_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout3"
+        android:layout_alignRight="@+id/ascav_btn_filtro"
+        android:layout_alignEnd="@+id/ascav_btn_filtro"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    <TextView
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Seleccionar Clientes"
+        android:id="@+id/textView27"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    </RelativeLayout>
     <ListView
         android:background="@drawable/editextdefaul"
 
@@ -13,18 +32,6 @@
         android:id="@+id/asacav_lv_clientes"
         android:layout_below="@+id/ascav_spn_campo"
         android:layout_above="@+id/ascav_btn_aVisitar" />
-
-    <SearchView
-        android:background="@drawable/editexttop"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/asacav_sv_search"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Spinner
         android:background="@drawable/editextdefaul"
@@ -48,22 +55,26 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ir A Visitar"
         android:id="@+id/ascav_btn_aVisitar"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/ascav_spn_campo"
-        android:layout_alignEnd="@+id/ascav_spn_campo" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volver al Menu"
         android:id="@+id/ascav_btn_finish"
-        android:layout_alignTop="@+id/ascav_btn_aVisitar"
+        android:layout_below="@+id/asacav_lv_clientes"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/ascav_spn_campo"
+        android:layout_toLeftOf="@+id/ascav_spn_campo" />
 
     <Button
         android:background="@drawable/button_default"
@@ -75,4 +86,26 @@
         android:layout_alignTop="@+id/ascav_spn_campo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+
+    <SearchView
+        android:background="@drawable/editexttop"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/asacav_sv_search"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:background="@drawable/button_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clientes Cercanos"
+        android:id="@+id/ascav_btn_CliCer"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

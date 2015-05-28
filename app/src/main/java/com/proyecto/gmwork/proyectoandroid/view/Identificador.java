@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by Matthew on 05/05/2015.
  */
-public class Identificador extends Activity implements View.OnClickListener {
+public class Identificador extends ActionBarActivity implements View.OnClickListener {
     private PersistencyController per;
     private String Content;
     private String Error = null;
@@ -42,11 +43,8 @@ public class Identificador extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         //AlertDialog alert = new AlertDialog(this);
         new DialogMessage().show(getFragmentManager(), "tag");
-        try {
-            setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setResources();
+
         setResourcesFormat();
         setEvents();
         //prueba.setText(Content);
@@ -58,7 +56,7 @@ public class Identificador extends Activity implements View.OnClickListener {
         button.setOnClickListener(this);
     }
 
-    private void setResources() throws SQLException {
+    private void setResources() {
         username = (EditText) findViewById(R.id.la_et_Username);
         password = (EditText) findViewById(R.id.la_et_Password);
         button = (Button) findViewById(R.id.la_btn_login);
@@ -77,7 +75,7 @@ public class Identificador extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.la_btn_login:
-                    pasarPantalla();
+                pasarPantalla();
                 break;
             case R.id.am_btn_dInfo:
                 per.guardarDatosBajadosActivar();
@@ -85,21 +83,21 @@ public class Identificador extends Activity implements View.OnClickListener {
         }
     }
 
-    public void pasarPantalla()  {
+    public void pasarPantalla() {
 
 
-        if (per.hacerLogin(username.getText().toString(), password.getText().toString())){
+        if (per.hacerLogin(username.getText().toString(), password.getText().toString())) {
             Toast.makeText(this, "Usuario encontrado", Toast.LENGTH_SHORT).show();
 
-                per.actualizarDatosLocalesActivar();
+            per.actualizarDatosLocalesActivar();
 
             Intent intent = new Intent(this, Menu.class);
             intent.putExtra("username", username.getText().toString());
 
             startActivity(intent);
         } else {
-          Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
-       }
+            Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private EditText username;

@@ -41,50 +41,34 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
     private Button btnCentrar;
     private String username;
     private Bundle bun;
+    private Button btn_finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_clientes_cercanos);
-
-           //getFragmentManager().beginTransaction().;
-
-            setResources();
-
+        setResources();
         setResourcesFormat();
         setEvents();
-
-        // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
     }
 
     private void setEvents() {
         btnCentrar.setOnClickListener(this);
-        cmbTipusMapa.setOnItemSelectedListener(this);
+        btn_finish.setOnClickListener(this);
     }
 
     private void setResourcesFormat() {
 
     }
 
-    private void setResources()  {
-        bun  =getIntent().getExtras();
+    private void setResources() {
+        bun = getIntent().getExtras();
         username = bun.getString("username");
         menuItems = new ArrayList<HashMap<String, String>>();
         per = new PersistencyController(this);
-
-
-       /* try {
-            parseXML();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }*/
-
-
         cmbTipusMapa = (Spinner) findViewById(R.id.spinner);
-
         btnCentrar = (Button) findViewById(R.id.btnCentrar);
+        btn_finish = (Button) findViewById(R.id.avcc_btn_finish);
     }
 
     @Override
@@ -109,51 +93,11 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
     @Override
     public void onMapLoaded() {
         try {
-
             configurarMapa();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            /*  bounds = new LatLngBounds(new LatLng(20, -130.0), new LatLng(55, -70.0));
-
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-        map.addMarker(new MarkerOptions().position(new LatLng(40.801, -96.691)).title("Lincoln, NE"));
-        Marker mark = map.addMarker(new MarkerOptions().position(new LatLng(40.801, -96.691)).title("Lincoln, NE"));
-        map.addPolyline(new PolylineOptions().add(new LatLng(40.801, -96.691)).add(new LatLng(34.020, -118.412)).add(new LatLng(40.703, -73.980)));    // Lincoln, NE      .add(new LatLng(34.020, -118.412))   // Los Angeles, CA      .add(new LatLng(40.703, -73.980))    // New York, NY  );
-        Polyline polly = map.addPolyline(new PolylineOptions().add(new LatLng(40.801, -96.691)).add(new LatLng(34.020, -118.412)).add(new LatLng(40.703, -73.980)));
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (loc == null) {      // fall back to network if GPS is not available      loc = locationManager.getLastKnownLocation(                     LocationManager.NETWORK_PROVIDER);
-            loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,   // provider, min time/distance    new LocationListener() {
-                new LocationListener() {
-
-                    @Override
-                    public void onLocationChanged(Location location) {
-
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                });
-        // SW    new LatLng(55,  -70.0))*/
-
     }
-
 
 
     private void configurarMapa() throws SQLException {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
@@ -162,11 +106,11 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
             map.setMyLocationEnabled(true);
             // Comprovar si s'ha obtingut correctament l'objecte
-            for (int i = 0 ; i< per.getCLienteCercanos(username).size();i++){
+            for (int i = 0; i < per.getCLienteCercanos(username).size(); i++) {
                 String nombre = per.getCLienteCercanos(username).get(i).getNombre();
                 String latitud = String.valueOf(per.getCLienteCercanos(username).get(i).getLatitud());
-                String longitud =String.valueOf(per.getCLienteCercanos(username).get(i).getLongitud());
-                LatLng lat  = new LatLng(Double.parseDouble(latitud),Double.parseDouble(longitud));
+                String longitud = String.valueOf(per.getCLienteCercanos(username).get(i).getLongitud());
+                LatLng lat = new LatLng(Double.parseDouble(latitud), Double.parseDouble(longitud));
                 pintar(lat);
                 map.addMarker(new MarkerOptions().position(lat)
                         .title(nombre).snippet(nombre));
@@ -176,7 +120,7 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
                     CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
 
             if (map != null) {
-            }// El mapa s'ha comprovat. Ara es pot manipular
+            }
         }
     }
 
@@ -191,10 +135,14 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
             case R.id.btnCentrar:
                 centrar();
                 break;
+            case R.id.avcc_btn_finish:
+                finish();
+                break;
 
         }
 
     }
+
     private void pintar(LatLng aPintar) {
         PolygonOptions rectOptions =
                 new PolygonOptions().add(aPintar);
@@ -206,10 +154,10 @@ public class VerClientesCercanos extends Activity implements OnMapReadyCallback,
 
     private void centrar() {
 
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(per.getMiUbicacion(),50 ), 50, null);
-            // Moure la cÃ mera a les coordendes del punt que ens interessa
-            map.moveCamera(
-                    CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(per.getMiUbicacion(), 15), 2000, null);
+        // Moure la cÃ mera a les coordendes del punt que ens interessa
+        map.moveCamera(
+                CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
 
     }
 }

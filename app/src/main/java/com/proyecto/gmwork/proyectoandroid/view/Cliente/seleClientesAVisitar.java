@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.TreeMap;
 /**
  * Created by Mateo on 24/05/2015.
  */
-public class seleClientesAVisitar extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class seleClientesAVisitar extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private AdapterListClienteSeleccionarVisita adapter;
     private PersistencyController per;
     private TreeMap<String, Boolean> checked;
@@ -43,6 +44,7 @@ public class seleClientesAVisitar extends Activity implements View.OnClickListen
         btn_aVisitar.setOnClickListener(this);
         btn_filtro.setOnClickListener(this);
         btn_finish.setOnClickListener(this);
+        btn_CliCer.setOnClickListener(this);
     }
 
     private void setResourcesFormat() {
@@ -52,6 +54,7 @@ public class seleClientesAVisitar extends Activity implements View.OnClickListen
     private void setResources() {
         bun = getIntent().getExtras();
         username = bun.getString("username");
+        btn_CliCer = (Button) findViewById(R.id.ascav_btn_CliCer);
         lv_clientes = (ListView) findViewById(R.id.asacav_lv_clientes);
         btn_aVisitar = (Button) findViewById(R.id.ascav_btn_aVisitar);
         btn_filtro = (Button) findViewById(R.id.ascav_btn_filtro);
@@ -67,8 +70,16 @@ public class seleClientesAVisitar extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ascav_btn_CliCer:
+                Intent intent = new Intent(this,VerClientesCercanos.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+                break;
             case R.id.ascav_btn_aVisitar:
                 aVisitar();
+                break;
+            case R.id.ascav_btn_finish:
+                finish();
                 break;
             case R.id.ascav_btn_filtro:
                 adapter = new AdapterListClienteSeleccionarVisita(this, per.filtroCliente(spn_campo.getSelectedItem().toString(), sv_search.getQuery().toString(), username));
@@ -97,7 +108,7 @@ public class seleClientesAVisitar extends Activity implements View.OnClickListen
     private Spinner spn_campo;
     private SearchView sv_search;
     private Button btn_finish;
-
+    private Button btn_CliCer;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final CheckBox chec = (CheckBox) view.findViewById(R.id.lacv_check_avisitar);

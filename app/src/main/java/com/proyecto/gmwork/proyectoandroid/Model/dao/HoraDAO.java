@@ -1,4 +1,4 @@
-package com.proyecto.gmwork.proyectoandroid.controller.dao;
+package com.proyecto.gmwork.proyectoandroid.Model.dao;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.util.Log;
 import com.j256.ormlite.dao.Dao;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.Horas;
-import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,12 +15,12 @@ import java.util.logging.Logger;
 /**
  * Created by mateo on 20/05/15.
  */
-public class HoraDAOController {
+public class HoraDAO {
     private Dao<Horas, Long> daoHora;
     private OpenLiteHelper clidao;
     private Context con;
 
-    public HoraDAOController(Context con) {
+    public HoraDAO(Context con) {
 
         try {
             clidao = new OpenLiteHelper(con);
@@ -67,7 +66,7 @@ public class HoraDAOController {
             daoHora.update(uBa);
 
         } catch (SQLException ex) {
-            Logger.getLogger(HoraDAOController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoraDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -78,7 +77,7 @@ public class HoraDAOController {
             daoHora.update(uSu);
 
         } catch (SQLException ex) {
-            Logger.getLogger(HoraDAOController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoraDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public Horas getUltimaSubida () {

@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import com.proyecto.gmwork.proyectoandroid.controller.AdapterListClientes;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 import com.proyecto.gmwork.proyectoandroid.view.Calendario;
 import com.proyecto.gmwork.proyectoandroid.view.Pedido.DialogCliente;
+import com.proyecto.gmwork.proyectoandroid.view.Pedido.UICrearPedidoView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Created by mateo on 30/04/15.
  */
-public class UIListaClienteView extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class UIListaClienteView extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private PersistencyController per;
     private AdapterListClientes adapter;
     private String nombreUsuario;
@@ -49,10 +51,12 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
     }
 
     private void setEvents() {
+        btn_finish.setOnClickListener(this);
         btn_Crear.setOnClickListener(this);
     }
 
     private void setResources() {
+        btn_finish = (Button) findViewById(R.id.agc_btn_finish);
         bun = getIntent().getExtras();
         nombreUsuario = bun.getString("username");
         lv_lista = (ListView) findViewById(R.id.agc_lv_lista);
@@ -90,21 +94,15 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
                 per.removeCliente(adapter.getItem(listPosition).getNif());
                 Toast.makeText(this, "Se ha borrado correctamente el registro", Toast.LENGTH_SHORT).show();
                 break;
-            /*case R.id.mcc_it_aVisita:
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                int listPosition = info.position;
-                aVisitar.add(adapter.getItem(listPosition).getNif());
-                Toast.makeText(this,"Se ha guardado en la lista de personas a visitar",Toast.LENGTH_SHORT).show();
-                break;*/
             case R.id.mcc_it_aProximaVisita:
                 info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 listPosition = info.position;
                 Calendario cal = new Calendario(this,per,adapter.getItem(listPosition).getNif());
-                Toast.makeText(this, "Se ha borrado correctamente el registro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Actualizado Con Exito", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.mcc_it_verUltimaComanda:
-                if (adapter.getItem(listPosition).getPedido().size() > 0) {
-
+                if (adapter.getItem(listPosition).getPedido().size() >= 1) {
                     info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                     listPosition = info.position;
                     DialogPedido dialog = new DialogPedido();
@@ -115,7 +113,10 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
                     Toast.makeText(this, "Este Cliente no tiene comandas assignadas", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
+            case R.id.mcc_it_CrearPedido:
+                Intent intent = new Intent(this,UICrearPedidoView.class);
+                startActivity(intent);
+                break;
             case R.id.mcc_it_editar:
                 info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 listPosition = info.position;
@@ -130,10 +131,7 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
     protected void onResume() {
         super.onResume();
         adapter = new AdapterListClientes(this, (ArrayList<Cliente>) per.mostrarClientes(nombreUsuario));
-
-
         lv_lista.setAdapter(adapter);
-        Toast.makeText(this, "Se han actualizado los datos", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -148,6 +146,9 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.agc_btn_finish:
+                finish();
+                break;
             case R.id.agc_btn_Crear:
                 crearRegistro();
                 break;
@@ -171,7 +172,7 @@ public class UIListaClienteView extends Activity implements View.OnClickListener
         intent.putExtra("nif", nif);
         startActivity(intent);
     }
-
+    private Button btn_finish;
     private ListView lv_lista;
     private Button btn_Crear;
     private SearchView et_search;

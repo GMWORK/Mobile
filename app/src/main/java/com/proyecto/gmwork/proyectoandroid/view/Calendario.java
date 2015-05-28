@@ -25,6 +25,7 @@ public class Calendario implements DatePickerDialog.OnDateSetListener {
     private String cli;
     private boolean dismiss;
     private PersistencyController per;
+
     public Calendario(Context con, TextView v) {
         myCalendar = Calendar.getInstance();
         this.con = con;
@@ -35,7 +36,7 @@ public class Calendario implements DatePickerDialog.OnDateSetListener {
 
     }
 
-    public Calendario(Context con, PersistencyController per , String cli) {
+    public Calendario(Context con, PersistencyController per, String cli) {
         myCalendar = Calendar.getInstance();
         this.per = per;
         this.cli = cli;
@@ -51,15 +52,16 @@ public class Calendario implements DatePickerDialog.OnDateSetListener {
         myCalendar.set(Calendar.YEAR, year);
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if(v != null){
-        v.setText(darFecha());
+        if (v != null) {
+            v.setText(darFecha());
+        } else {
+            setFecha();
         }
-        setFecha();
 
     }
 
     public String getFechaSeleccionada() {
-        dismiss =true;
+        dismiss = true;
         return fechaSeleccionada;
     }
 

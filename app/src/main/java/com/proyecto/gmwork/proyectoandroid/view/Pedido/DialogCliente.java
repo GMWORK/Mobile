@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import com.proyecto.gmwork.proyectoandroid.R;
 import com.proyecto.gmwork.proyectoandroid.controller.AdapterListClientes;
-import com.proyecto.gmwork.proyectoandroid.controller.AdapterListProductos;
 import com.proyecto.gmwork.proyectoandroid.controller.PersistencyController;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -28,17 +26,10 @@ public class DialogCliente extends DialogFragment implements AdapterView.OnItemC
     private String usuario;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-            per = new PersistencyController(getActivity());
-
+        per = new PersistencyController(getActivity());
         //Collections.addAll(mOfficeListItems, getResources().getStringArray(R.array.offices));
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog, null);
-
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialoglista, null);
         lv_list = (ListView) v.findViewById(R.id.d_lv_list);
-
-
-
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         bun =getActivity().getIntent().getExtras();

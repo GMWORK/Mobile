@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by mateo on 30/04/15.
+ * Classe de clientes con mapeo  de la base de datos
  */
 @DatabaseTable(tableName = "cliente")
 public class Cliente implements Serializable {
@@ -41,8 +42,8 @@ public class Cliente implements Serializable {
     private String calle;
     @DatabaseField
     private String poblacion;
-    @DatabaseField(dataType = DataType.BYTE_ARRAY)
-    private byte[] img;
+    @DatabaseField
+    private String img;
     @DatabaseField
     private boolean baja;
     @DatabaseField
@@ -82,7 +83,7 @@ public class Cliente implements Serializable {
         return id;
     }
     
-    private void setId(long id) {
+    public void setId(long id) {
         this.id = id;
     }
     
@@ -162,11 +163,11 @@ public class Cliente implements Serializable {
         return pedido;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -189,6 +190,7 @@ public class Cliente implements Serializable {
 
     }
 
+
     @Override
     public String toString() {
         return "Cliente[" +
@@ -200,10 +202,12 @@ public class Cliente implements Serializable {
                 ", latitud=" + latitud +
                 ", calle='" + calle + '\'' +
                 ", poblacion='" + poblacion + '\'' +
-                ", img=" + Arrays.toString(img) +
+                ", img='" + img + '\'' +
+                ", baja=" + baja +
                 ", proximaVisita='" + proximaVisita + '\'' +
                 ", pedido=" + pedido +
                 ", usu=" + usu +
                 ']';
     }
 }
+

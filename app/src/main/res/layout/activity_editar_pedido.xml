@@ -4,128 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/fondo"
+    android:background="#779ECB"
     tools:context=".view.Pedido.UiCrearPedidoView">
-    <TextView
-        android:textStyle="bold"
+    <RelativeLayout
+        android:id="@+id/rlcabezera"
+        android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Editar Pedido"
-        android:textSize="30dp"
-        android:id="@+id/titulo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Pedido"
+            android:textSize="30dp"
+            android:id="@+id/titulo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
     <RelativeLayout
 
-        android:layout_below="@id/titulo"
-        android:background="@drawable/botones_fondo_3"
+        android:layout_below="@id/rlcabezera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/rl1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/aep_tv_fEntrega"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/aep_et_FEntrega"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="@string/fecha_entrega"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/aep_et_FEntrega"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="69dp"
-                android:layout_marginStart="69dp"
-                android:layout_toLeftOf="@+id/aep_btn_sF"
-                android:layout_toStartOf="@+id/aep_btn_sF"
-                android:text="Fecha" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/aep_tv_fEntrega"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/asignar" />
-
-            <Button
-                android:id="@+id/aep_btn_sF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@android:drawable/ic_menu_my_calendar" />
-
-
-
-
-        </RelativeLayout>
 
         <RelativeLayout
+            android:background="@drawable/editexttop"
             android:id="@+id/rl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rl1">
-
-            <TextView
-                android:id="@+id/aep_tv_pvis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/aep_et_client"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="@string/cliente"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
 
             <TextView
                 android:id="@+id/aep_et_client"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="69dp"
-                android:layout_marginStart="69dp"
-                android:layout_toLeftOf="@+id/aep_btn_asCliente"
-                android:layout_toStartOf="@+id/aep_btn_asCliente"
-                android:text="Nombrecliente" />
-
-            <Button
-                android:id="@+id/aep_btn_asCliente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="assignar cliente" />
+                android:text="...."
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Producto"
-                android:id="@+id/textView21"
-                android:layout_below="@+id/aep_tv_pvis"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Cliente: "
+                android:id="@+id/textView22"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/aep_et_client"
+                android:layout_toStartOf="@+id/aep_et_client" />
+
 
         </RelativeLayout>
 
@@ -136,71 +70,107 @@
             android:layout_below="@+id/rl2">
 
             <ListView
+                android:background="@drawable/editextdefaul"
                 android:id="@+id/aep_lv_productos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/aep_number_picker"
-                android:layout_above="@+id/aep_btn_crPedido" />
+                android:layout_above="@+id/aep_btn_crPedido"
+                android:layout_below="@+id/aep_btn_aProducto" />
 
             <Button
+                android:background="@drawable/button_default"
                 android:id="@+id/aep_btn_aProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Añadir Producto a la lista"
-                android:layout_below="@+id/aep_sp_productos"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_below="@+id/aep_sb_cantidad"
+                android:layout_toRightOf="@+id/aep_tv_cantidad"
+                android:layout_toEndOf="@+id/aep_tv_cantidad" />
 
             <Button
+                android:background="@drawable/button_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Editar Pedido"
                 android:id="@+id/aep_btn_crPedido"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Spinner
-                android:id="@+id/aep_sp_productos"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/aep_btn_aProducto"
-                android:layout_alignEnd="@+id/aep_btn_aProducto" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/aep_number_picker"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:orientation="vertical"
-                android:layout_toRightOf="@+id/aep_sp_productos"
-                android:layout_toEndOf="@+id/aep_sp_productos"
-                android:background="#fffff8ff" />
+                android:layout_alignParentEnd="true" />
 
             <Button
+                android:background="@drawable/button_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar Operacion"
+                android:text="Cancelar"
                 android:id="@+id/aep_btn_finish"
                 android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/aep_number_picker"
-                android:layout_alignEnd="@+id/aep_number_picker" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Cantidad"
-                android:id="@+id/textView22"
+                android:text="Linia de productos agregados"
+                android:id="@+id/textView31"
+                android:layout_above="@+id/aep_lv_productos"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <SeekBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/aep_sb_cantidad"
+                android:max="30"
+                android:indeterminate="false"
+                android:layout_below="@+id/aep_sp_productos"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="41dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Spinner
+                android:background="@drawable/editextbottom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aep_sp_productos"
+                android:layout_below="@+id/textView35"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Cantidad:"
+                android:id="@+id/textView32"
+                android:layout_below="@+id/aep_sp_productos"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="1"
+                android:id="@+id/aep_tv_cantidad"
+                android:layout_below="@+id/textView32"
+                android:layout_alignRight="@+id/textView31"
+                android:layout_alignEnd="@+id/textView31" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Lista de productos"
+                android:id="@+id/textView35"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="39dp" />
 
         </RelativeLayout>
     </RelativeLayout>

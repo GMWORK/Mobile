@@ -27,11 +27,12 @@ import java.util.TreeMap;
 /**
  * Created by Mateo on 23/05/2015.
  */
-public class ThreadActualizarUpload  extends AsyncTask<String, Void, Void> {
-    private String url = "http://192.168.1.101:8080/WebGMWORK/webresources/";
+public class ThreadActualizarUpload extends AsyncTask<String, Void, Void> {
+    private String url = "http://10.0.2.2:8080/WebGMWORK/webresources/";
     private TreeMap<String, List<String[]>> map;
     private ProgressDialog dialog;
-    public ThreadActualizarUpload(TreeMap<String, List<String[]>> map,Context con) {
+
+    public ThreadActualizarUpload(TreeMap<String, List<String[]>> map, Context con) {
         dialog = new ProgressDialog(con);
         this.map = map;
 
@@ -41,39 +42,41 @@ public class ThreadActualizarUpload  extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         try {
             doOperation();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             return null;
         }
 
 
     }
 
-    public void doOperation(){
+    public void doOperation() {
         String[] list = null;
         Iterator it = map.keySet().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             String key = (String) it.next();
             List<String[]> lista = (List<String[]>) map.get(key);
-            for (int i  = 0 ; i<lista.size();i++){
-                list = lista.get(i);
-                switch (list[0]){
-                    case "POST":
-                        doOperationPost(list[1],list[2]);
-                        break;
-                    case "PUT":
-                        doOperationPut(list[1],list[2]);
-                        break;
-                    case "DELETE":
-                        doOperationDelete(list[1],list[2]);
-                        break;
-                }
+            int i = 0;
+
+            list = lista.get(i);
+            switch (list[0]) {
+                case "POST":
+                    doOperationPost(list[1], list[2]);
+                    break;
+                case "PUT":
+                    doOperationPut(list[1], list[2]);
+                    break;
+                case "DELETE":
+                    doOperationDelete(list[1], list[2]);
+                    break;
             }
+            i++;
         }
 
+
     }
+
 
     private void doOperationDelete(String s, String s1) {
 
@@ -146,6 +149,7 @@ public class ThreadActualizarUpload  extends AsyncTask<String, Void, Void> {
         }
 
     }
+
     private String getStringFromInputStream(InputStream is) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -167,7 +171,8 @@ public class ThreadActualizarUpload  extends AsyncTask<String, Void, Void> {
 
 
         dialog.setMessage("Please wait...");
-        dialog.show();super.onPreExecute();
+        dialog.show();
+        super.onPreExecute();
     }
 
     @Override

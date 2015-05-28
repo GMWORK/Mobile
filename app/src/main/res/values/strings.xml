@@ -22,6 +22,19 @@
     <string name="GPSAlertDialogTitle">title</string>
     <string name="GPSAlertDialogMessage">This is a Message</string>
     <string name="cancel">cancel</string>
+    <string name="aac_alta_cliente">introduce un nif....</string>
+    <string name="aac_tv_nombre">Introduce un nombre...</string>
+    <string name="aac_et_apellidos">introduce los apellidos....</string>
+    <string name="aac_et_poblacion">Introduce una poblacion...</string>
+    <string name="aac_et_calle">Introduce una calle...</string>
+    <string name="aac_btn_gc">Guardar Cliente</string>
+    <string name="aac_btn_co">Cancelar Operacion</string>
+    <string name="aep_tv_titulo">Editar Pedido</string>
+    <string name="agp_tv_gp">Gestion de Pedidos</string>
+    <string name="am_tv_username">introduce tu usuario aqui...</string>
+    <string name="am_tv_con">Introduce tu contraseña aqui...</string>
+    <string name="am_btn_gd">Generar los Datos Locales...</string>
+    <string name="am_btn_login">Login</string>
 
 
 </resources>

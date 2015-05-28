@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item android:id="@+id/mcc_it_verUltimaComanda" android:title="Ver ultima comanda"
+    <item android:id="@+id/mcc_it_CrearPedido" android:title="Crear Pedido"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/mcc_it_aProximaVisita" android:title="Assignar Proxima Visita"
+    <item android:id="@+id/mcc_it_verUltimaComanda" android:title="Ver ultimo pedido"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/mcc_it_aProximaVisita" android:title="Asignar Proxima Visita"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/mcc_it_editar" android:title="Editar Cliente"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/mcc_it_borrar" android:title="Borrar Cliente"
         android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>

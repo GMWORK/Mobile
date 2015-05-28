@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by mateo on 30/04/15.
+ *Clase de Pedidos i mapeo de la base de datos segun ormlite
  */
 @DatabaseTable(tableName = "pedido")
 public class Pedido  implements Serializable {
@@ -96,6 +97,8 @@ public class Pedido  implements Serializable {
 
         this.liniaProducto.add(pPro);
         pPro.setPedido(this);
+
+
 
         
     }

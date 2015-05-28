@@ -23,6 +23,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Usuario;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoLog;
 import com.proyecto.gmwork.proyectoandroid.Model.UsuarioLog;
 import com.proyecto.gmwork.proyectoandroid.R;
+import com.proyecto.gmwork.proyectoandroid.controller.PersistencyWebController;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -73,48 +74,20 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, PedidoProductoLog.class);
 
             TableUtils.createTableIfNotExists(connectionSource, Horas.class);
-            createTriggers("categoria", "CategoriaLog",database);
-            createTriggers("cliente", "ClienteLog",database);
-            createTriggers("pedido", "PedidoLog",database);
-            createTriggers("producto", "ProductoLog",database);
-            createTriggers("usuario", "UsuarioLog",database);
-            createTriggers("pedidoProducto", "PedidoProductoLog",database);
+            createTriggers("categoria", "CategoriaLog", database);
+            createTriggers("cliente", "ClienteLog", database);
+            createTriggers("pedido", "PedidoLog", database);
+            createTriggers("producto", "ProductoLog", database);
+            createTriggers("usuario", "UsuarioLog", database);
+            createTriggers("pedidoProducto", "PedidoProductoLog", database);
 
 
-            //getDAOProducto().create(new Producto("Producto1", 2.2, null, false, 2.2));
-
-            //trigger
-            /*
-            database.execSQL(
-                    "\n" +
-                    "CREATE TRIGGER pedido_UP AFTER UPDATE ON pedido\n" +
-                    "    FOR EACH ROW\n" +
-                    "    BEGIN\n" +
-                    "        IF NEW.estado <> OLD.estado or New.fecha <> OLD.fecha THEN  \n" +
-                    "            INSERT INTO pedido_log (operacion, fecha,idPedido) VALUES('update',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "        END IF;\n" +
-                    "    END;\n" );
-            database.execSQL(
-                    "create trigger pedido_DE\n" +
-                    "after delete on pedido\n" +
-                    "for each row\n" +
-                    "begin" +
-                    "INSERT INTO pedido_log (operacion, fecha,idPedido) VALUES('delete',  CURRENT_TIMESTAMP ,OLD.id);\n" +
-                    "tend//");
-            database.execSQL(
-                    "create trigger pedido_IN\n" +
-                    "after insert on pedido\n" +
-                    "for each row\n" +
-                    "begin\n" +
-                    " INSERT INTO pedido_log (operacion, fecha,idPedido) VALUES('insert',  CURRENT_TIMESTAMP ,NEW.id);\n" +
-                    "end//"
-                    );
-*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
+
     public void borrarLogs() {
         try {
             TableUtils.dropTable(connectionSource, PedidoLog.class, true);
@@ -133,42 +106,32 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             ex.printStackTrace();
         }
     }
-    //private  ConnectionSource con = connectionSource;
-   /*public <T>  Dao<T, Long> daoGet(Class<T> classRepresentingTable){
-       Dao dao = null;
-       if (dao == null) {
 
-           dao = daoGet(cone,classRepresentingTable);
 
-       }
-       return dao;
-
-   }*/
-
-    private void createTriggers(String table, String claseLog,SQLiteDatabase sql) {
-        //Class< ? extends Object > clas = Class.forName("mode.definitivo."+table.replace(0, toUpperCase())+"");
-        //Dao dao = null;
-        //            dao = getDAO(Class.forName("com.proyecto.gmwork.proyectoandroid.Model." + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ""));
-
-        //Dao dao = getDAO(Class.forName("model.definitivo." + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ""));
-        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_UP");
-        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_IN");
-        sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_D");
-        sql.execSQL("CREATE TRIGGER " + table + "_UP AFTER UPDATE ON " + table + "\n"
-                + "FOR EACH ROW \n"
-                + "BEGIN\n"
-                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('U',  CURRENT_TIMESTAMP ,NEW.id);\n"
-                + "END;\n");
-        sql.execSQL("CREATE TRIGGER " + table + "_IN AFTER INSERT ON " + table + "\n"
-                + "FOR EACH ROW\n"
-                + "BEGIN\n"
-                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('I',  CURRENT_TIMESTAMP ,NEW.id);\n"
-                + "END;\n");
-        sql.execSQL("CREATE TRIGGER " + table + "_D AFTER DELETE ON " + table + "\n"
-                + "FOR EACH ROW\n"
-                + "BEGIN\n"
-                + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('D',  CURRENT_TIMESTAMP ,NEW.id);\n"
-                + "END;\n");
+    private void createTriggers(String table, String claseLog, SQLiteDatabase sql) {
+        String i = PersistencyWebController.getHora().getFecha();
+        try {
+            sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_UP");
+            sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_IN");
+            sql.execSQL("DROP TRIGGER IF EXISTS " + table + "_D");
+            sql.execSQL("CREATE TRIGGER " + table + "_UP AFTER UPDATE ON " + table + "\n"
+                    + "FOR EACH ROW \n"
+                    + "BEGIN\n"
+                    + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('U', DateTime('now') ,NEW.id);\n"
+                    + "END;\n");
+            sql.execSQL("CREATE TRIGGER " + table + "_IN AFTER INSERT ON " + table + "\n"
+                    + "FOR EACH ROW\n"
+                    + "BEGIN\n"
+                    + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('I', DateTime('now') ,NEW.id);\n"
+                    + "END;\n");
+            sql.execSQL("CREATE TRIGGER " + table + "_D AFTER DELETE ON " + table + "\n"
+                    + "FOR EACH ROW\n"
+                    + "BEGIN\n"
+                    + "INSERT INTO " + claseLog + " (Op, fecha,Id" + Character.toUpperCase(table.charAt(0)) + table.substring(1) + ") VALUES('D', DateTime('now') ,OLD.id);\n"
+                    + "END;\n");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override
@@ -199,6 +162,7 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
             database.execSQL("DROP TRIGGER pedidoProducto_D");
             database.execSQL("DROP TRIGGER PedidoProducto_UP");
             database.execSQL("DROP TRIGGER PedidoProducto_IN");
+
             //pedidoProducto_D PedidoProducto_UP PedidoProducto_IN
             onCreate(database, connectionSource);
         } catch (Exception e) {
@@ -290,10 +254,49 @@ public class OpenLiteHelper extends OrmLiteSqliteOpenHelper {
         getDAOUsuario().create(new Usuario("583241A", "Matthew", "dssada", "sdsad", "asdsad", true, "aasdssda", "asdsad"));
         getDAOCategoria().create(new Categoria("Ordenadores1", 2.2));
         //public Producto(String nombre, double precio, byte[] img, boolean inhabilitats, double descuento)
-        getDAOProducto().create(new Producto("producto1", 2.2, new byte[]{02}, false, 2.2));
+        getDAOProducto().create(new Producto("producto1", 2.2, "", false, 2.2));
         //public Cliente(String nif, String nombre, String apellidos, String poblacion,String calle, Date proximaVisita) {
         getDAOCliente().create(new Cliente("583241A", "sadsa", "sadsad", "sadsad", "sdasd", "20/22/22"));
     }
 
 
+    public void borrarBD() {
+        try {
+            TableUtils.dropTable(connectionSource, Categoria.class, false);
+            TableUtils.dropTable(connectionSource, Cliente.class, false);
+            TableUtils.dropTable(connectionSource, Pedido.class, false);
+            TableUtils.dropTable(connectionSource, PedidoProducto.class, false);
+
+            TableUtils.dropTable(connectionSource, Producto.class, false);
+
+            TableUtils.dropTable(connectionSource, Usuario.class, false);
+            TableUtils.dropTable(connectionSource, PedidoLog.class, false);
+            TableUtils.dropTable(connectionSource, ProductoLog.class, false);
+            TableUtils.dropTable(connectionSource, ClienteLog.class, false);
+            TableUtils.dropTable(connectionSource, Horas.class, false);
+            TableUtils.createTableIfNotExists(connectionSource, Categoria.class);
+            TableUtils.createTableIfNotExists(connectionSource, Cliente.class);
+            TableUtils.createTableIfNotExists(connectionSource, Pedido.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoProducto.class);
+            TableUtils.createTableIfNotExists(connectionSource, Producto.class);
+            TableUtils.createTableIfNotExists(connectionSource, Usuario.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ClienteLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, ProductoLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, CategoriaLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, UsuarioLog.class);
+            TableUtils.createTableIfNotExists(connectionSource, PedidoProductoLog.class);
+
+            TableUtils.createTableIfNotExists(connectionSource, Horas.class);
+            createTriggers("categoria", "CategoriaLog", this.getWritableDatabase());
+            createTriggers("cliente", "ClienteLog", this.getWritableDatabase());
+            createTriggers("pedido", "PedidoLog", this.getWritableDatabase());
+            createTriggers("producto", "ProductoLog", this.getWritableDatabase());
+            createTriggers("usuario", "UsuarioLog", this.getWritableDatabase());
+            createTriggers("pedidoProducto", "PedidoProductoLog", this.getWritableDatabase());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

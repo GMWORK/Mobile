@@ -2,7 +2,10 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
 import com.proyecto.gmwork.proyectoandroid.R;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +83,9 @@ public class AdapterListProductos extends ArrayAdapter<Producto> {
 
 
                 if (listarray.get(position).getImg() != null) {
-                    iv_img.setImageBitmap(BitmapFactory.decodeByteArray(listarray.get(position).getImg(), 0, listarray.get(position).getImg().length));
+                    byte[] bitmapdata = android.util.Base64.decode(listarray.get(position).getImg().getBytes(), Base64.DEFAULT);
+                    Bitmap imatge = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                    iv_img.setImageBitmap(imatge);
 
                 }
             } else {

@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 /**
  * Created by mateo on 04/05/15.
  */
-public class Menu extends Activity implements View.OnClickListener {
+public class Menu extends ActionBarActivity implements View.OnClickListener {
     private Bundle bun;
     private String nombreUsuario = "";
     private PersistencyController per;
@@ -42,11 +43,7 @@ public class Menu extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        try {
-            setResources();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setResources();
         setResourcesFormat();
         setEvents();
     }
@@ -55,7 +52,7 @@ public class Menu extends Activity implements View.OnClickListener {
         btn_Cliente.setOnClickListener(this);
         btn_Pedido.setOnClickListener(this);
         btn_seleVisitar.setOnClickListener(this);
-        btn_sVisitarGeo.setOnClickListener(this);
+//        btn_sVisitarGeo.setOnClickListener(this);
         btn_cs.setOnClickListener(this);
     }
 
@@ -64,12 +61,12 @@ public class Menu extends Activity implements View.OnClickListener {
 
     }
 
-    private void setResources() throws SQLException {
+    private void setResources() {
         per = new PersistencyController(this);
         btn_Cliente = (Button) findViewById(R.id.am_bt_cli);
         btn_Pedido = (Button) findViewById(R.id.am_bt_pedido);
         btn_seleVisitar = (Button) findViewById(R.id.am_btn_seleVisitar);
-        btn_sVisitarGeo = (Button) findViewById(R.id.am_btn_sVisitarGeo);
+       // btn_sVisitarGeo = (Button) findViewById(R.id.am_);
         tv_Usuario = (TextView) findViewById(R.id.am_tv_nombreUsuario);
         btn_cs = (Button) findViewById(R.id.am_btn_finish);
         bun = getIntent().getExtras();
@@ -94,9 +91,9 @@ public class Menu extends Activity implements View.OnClickListener {
             case R.id.am_btn_seleVisitar:
                 pasarASeleccionarVisita();
                 break;
-            case R.id.am_btn_sVisitarGeo:
-                pasarASeleccionarVisitaMasCercana();
-                break;
+           // case R.id.am_btn_sVisitarGeo:
+             //   pasarASeleccionarVisitaMasCercana();
+               // break;
         }
 
     }

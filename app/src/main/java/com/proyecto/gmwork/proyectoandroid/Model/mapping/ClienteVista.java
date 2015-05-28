@@ -19,14 +19,14 @@ public class ClienteVista {
     private String poblacion;
     private int usuarioid;
     private String proximaVisita;
-    private byte[] img;
+    private String img;
     private DateTime fecha;
     private String Op;
 
     public ClienteVista() {
     }
 
-    public ClienteVista(String nif, String nombre, String apellidos, double longitud, double latitud, String calle, String poblacion, int usuarioid, String proximaVisita, byte[] img, DateTime fecha, String op) {
+    public ClienteVista(String nif, String nombre, String apellidos, double longitud, double latitud, String calle, String poblacion, int usuarioid, String proximaVisita, String img, DateTime fecha, String op) {
         this.nif = nif;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -121,11 +121,11 @@ public class ClienteVista {
         this.fecha = fecha;
     }
 
-    public byte[] getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -147,7 +147,7 @@ public class ClienteVista {
 
     @Override
     public String toString() {
-        return "ClienteVista[" +
+        return "ClienteVista{" +
                 "id=" + id +
                 ", nif='" + nif + '\'' +
                 ", nombre='" + nombre + '\'' +
@@ -158,9 +158,10 @@ public class ClienteVista {
                 ", poblacion='" + poblacion + '\'' +
                 ", usuarioid=" + usuarioid +
                 ", proximaVisita='" + proximaVisita + '\'' +
-                ", img=" + Arrays.toString(img) +
+                ", img='" + img + '\'' +
                 ", fecha=" + fecha +
                 ", Op='" + Op + '\'' +
-                ']';
+                '}';
     }
 }
+

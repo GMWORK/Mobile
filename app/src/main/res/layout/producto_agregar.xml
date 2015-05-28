@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/pa_iv_pro"
+        android:background="@drawable/abc_btn_rating_star_on_mtrl_alpha"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Nombre:"
+        android:id="@+id/textView28"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/pa_iv_pro"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Precio:"
+        android:id="@+id/textView29"
+        android:layout_above="@+id/textView30"
+        android:layout_alignLeft="@+id/textView28"
+        android:layout_alignStart="@+id/textView28"
+        android:layout_marginBottom="53dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Precio descuento:"
+        android:id="@+id/textView30"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView29"
+        android:layout_alignStart="@+id/textView29" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/pa_tv_nombre"
+        android:layout_alignTop="@+id/textView28"
+        android:layout_toLeftOf="@+id/pa_iv_pro"
+        android:layout_toStartOf="@+id/pa_iv_pro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tv_pr_pre"
+        android:layout_alignTop="@+id/textView29"
+        android:layout_alignLeft="@+id/pa_tv_nombre"
+        android:layout_alignStart="@+id/pa_tv_nombre" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/pa_pd_precioDescu"
+        android:layout_alignTop="@+id/textView30"
+        android:layout_toRightOf="@+id/pa_tv_nombre"
+        android:layout_toEndOf="@+id/pa_tv_nombre" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Categoria:"
+        android:id="@+id/textView34"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/textView28"
+        android:layout_alignLeft="@+id/textView28"
+        android:layout_alignStart="@+id/textView28" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/pa_tv_cat"
+        android:layout_alignBottom="@+id/textView34"
+        android:layout_alignLeft="@+id/pa_tv_nombre"
+        android:layout_alignStart="@+id/pa_tv_nombre" />
+
+    <Button
+        android:background="@drawable/button_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir Producto A Lista"
+        android:id="@+id/pa_btn_agregar"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView34"
+        android:layout_toEndOf="@+id/textView34" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Cantidad "
+        android:id="@+id/textView36"
+        android:layout_below="@+id/textView30"
+        android:layout_alignLeft="@+id/textView30"
+        android:layout_alignStart="@+id/textView30"
+        android:layout_marginTop="32dp" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pa_number_picker"
+        android:background="#fffff8ff"
+        android:layout_below="@+id/textView36"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" />
+</RelativeLayout>

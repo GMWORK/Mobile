@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@drawable/fondo"
+    android:background="#779ECB"
     android:layout_height="match_parent">
-
+<RelativeLayout
+    android:background="@drawable/button_default"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeLayout6"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true">
     <TextView
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gestion de Pedidos"
+        android:text="@string/agp_tv_gp"
         android:textSize="30dp"
         android:id="@+id/textView9"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+</RelativeLayout>
     <ListView
         android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/agp_lv_lista"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/agc_et_search"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/agp_btn_finish" />
+        android:layout_above="@+id/agp_btn_finish"
+        android:layout_below="@+id/textView11" />
 
     <Button
         android:background="@drawable/button_default"
@@ -31,29 +39,17 @@
         android:layout_height="wrap_content"
         android:text="Crear Nuevo Pedido"
         android:id="@+id/agp_btn_Crear"
-        android:layout_below="@+id/agc_et_search"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <SearchView
-        android:background="@drawable/editexttop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/agc_et_search"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:queryHint="Filtrar Pedido" />
+        android:layout_below="@+id/relativeLayout6"
+        android:layout_alignRight="@+id/agp_btn_finish"
+        android:layout_alignEnd="@+id/agp_btn_finish" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Sostener para mas opciones..."
+        android:text="Sostener un Pedido para  ver mas opciones..."
         android:id="@+id/textView11"
-        android:layout_alignBottom="@+id/agp_btn_Crear"
+        android:layout_below="@+id/agp_btn_Crear"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -65,4 +61,5 @@
         android:id="@+id/agp_btn_finish"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 import com.proyecto.gmwork.proyectoandroid.Model.Producto;
@@ -66,7 +67,7 @@ public class AdapterListPedidoProductos extends ArrayAdapter<PedidoProducto> {
             view = inflator.inflate(R.layout.lista_pedidoproducto_adapter, null);
         } else
             view = convertView;
-
+        try{
         if (view != null) {
             TextView tv_nombre = (TextView) view.findViewById(R.id.lppa_tv_nombre);
             TextView tv_precio = (TextView) view.findViewById(R.id.lppa_tv_precio);
@@ -86,6 +87,9 @@ public class AdapterListPedidoProductos extends ArrayAdapter<PedidoProducto> {
                 tv_precioTotal.setText("");
                 tv_cantidad.setText("");
             }
+        }
+        }catch (Exception ex){
+            Toast.makeText(ctx,ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
         return view;
 

@@ -1,4 +1,4 @@
-package com.proyecto.gmwork.proyectoandroid.controller.dao;
+package com.proyecto.gmwork.proyectoandroid.Model.dao;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,13 +15,13 @@ import java.util.List;
 /**
  * Created by mateo on 30/04/15.
  */
-public class PedidoDAOController {
+public class PedidoDAO {
     private Dao<Pedido, Long> daoPe;
     private Dao<PedidoLog, Long> daoPelog;
     private OpenLiteHelper clidao;
     private Context con;
 
-    public PedidoDAOController(Context con) {
+    public PedidoDAO(Context con) {
         clidao = new OpenLiteHelper(con);
         try {
             this.daoPe = clidao.getDAOPedido();
@@ -34,12 +34,21 @@ public class PedidoDAOController {
     }
 
     public void addPedido(Pedido cat) {
+        //boolean insertar = false;
+        //while (insertar !=true) {
         try {
+            //    if (cat.getId() == 0) {
+            //    long id = daoPe.queryForAll().get(daoPe.queryForAll().size() - 1).getId();
+            // cat.setId(id);
+            //  } else {
             daoPe.createOrUpdate(cat);
+            //  insertar = true;
+            //}
         } catch (SQLException ex) {
             Log.i("errorSQL", ex.getMessage());
         }
     }
+
 
     public List<Pedido> getPedidos(String username) {
         List<Pedido> todos = null;

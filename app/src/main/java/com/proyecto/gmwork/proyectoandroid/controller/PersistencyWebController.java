@@ -53,18 +53,11 @@ public class PersistencyWebController {
 
     String name = "";
 
-    public TreeMap<String, ArrayList> actualizarDatos() throws InterruptedException, JSONException, UnsupportedEncodingException {
+    public void actualizarDatos() throws InterruptedException, JSONException, UnsupportedEncodingException {
         String[] urls = new String[]{"categoriasadescargar", "productosadescargar", "usuarioadescargar", "clienteadescargar", "pedidosadescargar", "pedidoproductosadescargar", "date"};
-        ThreadActualizarDownloadLogs actualizar = null;
+        ThreadActualizarDownloadLogs actualizar = new ThreadActualizarDownloadLogs(per,con);
+        actualizar.execute(urls);
 
-
-        actualizar = new ThreadActualizarDownloadLogs(urls, con);
-        Thread thread = new Thread(actualizar);
-        thread.start();
-        thread.join();
-
-
-        return actualizar.getMap();
     }
 
     public void subirDatosLocales(TreeMap<String, List<String[]>> map) {
@@ -117,7 +110,7 @@ public class PersistencyWebController {
 
     }
 
-    public Horas getHora() {
+    public static Horas getHora() {
         Horas hora = null;
         try {
             ThreadGetHoraServidor thread = new ThreadGetHoraServidor();
@@ -131,14 +124,7 @@ public class PersistencyWebController {
         }
         return hora;
     }
-    //TreeMap<String , ArrayList> map =  new  TreeMap<String , ArrayList>();
-    //Usuario
-        /*map.put("Categoria"),montarCategoria(String[0]);
-        map.put("Producto",montarProductos(String[1]);
-        map.put("Pedido",montarProductos(String[2]);
-        map.put("Usuario",montarUsuarios(string[3]));
-        map.put("Cliente",montarClientes(string[4]));
-        return map;*/
+
 }
 
 

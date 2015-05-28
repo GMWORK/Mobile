@@ -2,17 +2,13 @@ package com.proyecto.gmwork.proyectoandroid.controller;
 
 
 import android.content.Context;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.proyecto.gmwork.proyectoandroid.Model.Categoria;
 import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
-import com.proyecto.gmwork.proyectoandroid.Model.ClienteLog;
 import com.proyecto.gmwork.proyectoandroid.Model.Horas;
 import com.proyecto.gmwork.proyectoandroid.Model.Pedido;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
@@ -25,17 +21,15 @@ import com.proyecto.gmwork.proyectoandroid.Model.mapping.PedidoProductoVista;
 import com.proyecto.gmwork.proyectoandroid.Model.mapping.PedidoVista;
 import com.proyecto.gmwork.proyectoandroid.Model.mapping.ProductoVista;
 import com.proyecto.gmwork.proyectoandroid.Model.mapping.UsuarioVista;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.CategoriaDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.ClienteDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.HoraDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.PedidoProductoDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.ProductoDAOController;
-import com.proyecto.gmwork.proyectoandroid.controller.dao.UsuarioDAOController;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.CategoriaDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.ClienteDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.HoraDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.PedidoDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.PedidoProductoDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.ProductoDAO;
+import com.proyecto.gmwork.proyectoandroid.Model.dao.UsuarioDAO;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.GPSTracker;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.MontarSubida;
-import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarDownloadLogs;
-import com.proyecto.gmwork.proyectoandroid.controller.utilidades.ThreadActualizarUpload;
 import com.proyecto.gmwork.proyectoandroid.controller.utilidades.encodePassword;
 
 import org.joda.time.DateTime;
@@ -46,25 +40,22 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by mateo on 30/04/15.
  */
 public class PersistencyController {
     private PersistencyWebController perWeb;
-    private ClienteDAOController cliDAO;
-    private ProductoDAOController proDAO;
-    private PedidoDAOController peDAO;
-    private UsuarioDAOController usuDAO;
-    private CategoriaDAOController catDAO;
-    private PedidoProductoDAOController pepoDAO;
-    private HoraDAOController hoDAO;
+    private ClienteDAO cliDAO;
+    private ProductoDAO proDAO;
+    private PedidoDAO peDAO;
+    private UsuarioDAO usuDAO;
+    private CategoriaDAO catDAO;
+    private PedidoProductoDAO pepoDAO;
+    private HoraDAO hoDAO;
     private OpenLiteHelper bd;
     private Context con;
 
@@ -72,27 +63,29 @@ public class PersistencyController {
     public PersistencyController(Context context) {
         con = context;
         bd = new OpenLiteHelper(con);
-        cliDAO = new ClienteDAOController(context);
-        peDAO = new PedidoDAOController(context);
-        proDAO = new ProductoDAOController(context);
-        usuDAO = new UsuarioDAOController(context);
-        catDAO = new CategoriaDAOController(context);
-        pepoDAO = new PedidoProductoDAOController(context);
+        cliDAO = new ClienteDAO(context);
+        peDAO = new PedidoDAO(context);
+        proDAO = new ProductoDAO(context);
+        usuDAO = new UsuarioDAO(context);
+        catDAO = new CategoriaDAO(context);
+        pepoDAO = new PedidoProductoDAO(context);
         perWeb = new PersistencyWebController(con, this);
-        hoDAO = new HoraDAOController(con);
+        hoDAO = new HoraDAO(con);
 
     }
 
     public void actualizarDatosLocalesActivar() {
+
         try {
-            actualizarDatosLocales(perWeb.actualizarDatos());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            perWeb.actualizarDatos();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
         }
+
     }
 
     public Pedido filtrarPedido(long id) {
@@ -100,9 +93,11 @@ public class PersistencyController {
     }
 
     public void guardarDatosBajadosActivar() {
-        if (RequiredSOS() == 0) {
-            perWeb.comprovarSOS(isNetworkAvailable());
+        if (RequiredSOS() > 0) {
+            bd.borrarBD();
         }
+        perWeb.comprovarSOS(isNetworkAvailable());
+
     }
 
     public boolean hacerLogin(String username, String password) {
@@ -139,7 +134,7 @@ public class PersistencyController {
             Categoria cat = null;
             for (Object obj : map.get("HoraBajada")) {
                 Horas hora = (Horas) obj;
-               hoDAO.addPedido(hora);
+                hoDAO.addPedido(hora);
 
             }
             for (Object obj : map.get("Categoria")) {
@@ -175,19 +170,21 @@ public class PersistencyController {
                 PedidoProducto pedPro = (PedidoProducto) obj;
                 Pedido ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
                 Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
+                pedPro.setPedido(ped);
+                pedPro.setProducto(pro);
                 pro.addLiniaPedido(pedPro);
                 ped.addLiniaProducto(pedPro);
                 peDAO.EditarPedido(ped);
                 proDAO.EditarProducto(pro);
-                // pepoDAO.addPedidoProducto(pedPro);
+                pepoDAO.addPedidoProducto(pedPro);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             this.borrarlogs();
         }
     }
+
 
     private void guardarUltimaBajada() {
     }
@@ -219,7 +216,7 @@ public class PersistencyController {
                             catDAO.EditarCategoria(catlocal);
                             break;
                         case "D":
-                            catDAO.removeCategoria(vista.getNombre());
+                            catDAO.removeCategoria(vista.getId());
                             break;
                     }
                 }
@@ -254,7 +251,7 @@ public class PersistencyController {
                             proDAO.EditarProducto(catlocal);
                             break;
                         case "D":
-                            proDAO.removeProducto(vista.getNombre());
+                            proDAO.removeProducto(vista.getId());
                             break;
                     }
                 }
@@ -281,7 +278,7 @@ public class PersistencyController {
                             usuDAO.EditarProducto(catlocal);
                             break;
                         case "D":
-                            usuDAO.removeUsuario(vista.getNombre());
+                            usuDAO.removeUsuario(vista.getId());
                             break;
                     }
                 }
@@ -307,6 +304,7 @@ public class PersistencyController {
                             cliDAO.addCliente(cli);
                             break;
                         case "U":
+
                             Cliente catlocal = cliDAO.filtrarCliente(vista.getNif());
                             catlocal.setNombre(vista.getNombre());
                             catlocal.setApellidos(vista.getApellidos());
@@ -323,7 +321,7 @@ public class PersistencyController {
                             cliDAO.EditarCliente(catlocal);
                             break;
                         case "D":
-                            cliDAO.removeCliente(vista.getNombre());
+                            cliDAO.removeCliente(vista.getId());
                             break;
                     }
                 }
@@ -425,7 +423,7 @@ public class PersistencyController {
         Cliente cli = new Cliente(nif, nombre, apellidos, poblacion, calle, proximaVisita);
         Usuario usu = usuDAO.filtrarUser(usuario);
         cli.setUsu(usu);
-        cliDAO.addCliente(cli);
+        cliDAO.crearCliente(cli);
     }
 
     public void crearPedido(String fecha, String cliente, AdapterListPedidoProductos productos) {
@@ -439,7 +437,7 @@ public class PersistencyController {
         double total = 0;
         for (int i = 0; i < productos.getCount(); i++) {
             PedidoProducto pedPro = productos.getItem(i);
-            //ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
+            ped = peDAO.filtrarPedido(pedPro.getPedido().getId());
             Producto pro = proDAO.filtrarProducto(pedPro.getProducto().getNombre());
             total += pro.getPrecioDescontado();
             pro.addLiniaPedido(pedPro);
@@ -452,6 +450,7 @@ public class PersistencyController {
         }
         ped.setTotal(total);
         peDAO.addPedido(ped);
+
 
     }
 
@@ -581,6 +580,7 @@ public class PersistencyController {
 
             ped = peDAO.filtrarPedido(ped.getId());
             pedPro.setPedido(ped);
+            pedPro.setProducto(pro);
             ped.addLiniaProducto(pedPro);
             peDAO.EditarPedido(ped);
             proDAO.EditarProducto(pro);

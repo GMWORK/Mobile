@@ -24,8 +24,8 @@ public class ThreadGetHoraServidor implements Runnable {
         URL url = null;
         Object serverResponseString = null;
 
-        try {
-            url = new URL("http://192.168.1.101:8080/WebGMWORK/webresources/date");
+        try {//10.0.2.2
+            url = new URL("http://10.0.2.2:8080/WebGMWORK/webresources/date");
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Accept", "application/json");
@@ -41,7 +41,7 @@ public class ThreadGetHoraServidor implements Runnable {
         } catch (MalformedURLException ex) {
             Logger.getLogger(ThreadGetHoraServidor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         } finally {
             try {
                 reader.close();

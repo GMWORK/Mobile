@@ -43,7 +43,7 @@ String Error = "";
                 Object serverResponseString = null;
                 try {
                     for (int i = 0 ; i < urls.length ; i++) {
-                    url = new URL("http://192.168.1.101:8080/WebGMWORK/webresources/"+urls[i]);
+                    url = new URL("http://10.0.2.2:8080/WebGMWORK/webresources/"+urls[i]);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestProperty("Accept", "application/json");
 

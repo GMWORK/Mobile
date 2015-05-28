@@ -7,7 +7,7 @@
         <item>Satèl·lit</item>
     </string-array>
     <string-array name="filtro_clientes">
-        <item>nifç</item>
+        <item>nif</item>
         <item>nombre</item>
         <item>Pendientes de Visita</item>
     </string-array>

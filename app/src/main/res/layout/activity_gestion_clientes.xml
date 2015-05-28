@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@drawable/fondo"
+    android:background="#779ECB"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:background="@drawable/button_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/agc_btn_Crear"
+        android:layout_alignEnd="@+id/agc_btn_Crear"
+        android:id="@+id/relativeLayout7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gestion de Clientes"
@@ -12,6 +21,7 @@
         android:id="@+id/textView9"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+    </RelativeLayout>
     <ListView
         android:background="@drawable/editextdefaul"
         android:layout_width="wrap_content"
@@ -21,7 +31,7 @@
         android:layout_below="@+id/agc_et_search"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button2" />
+        android:layout_above="@+id/agc_btn_finish" />
 
     <Button
         android:background="@drawable/button_default"
@@ -33,37 +43,37 @@
         android:layout_below="@+id/agc_et_search"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
-
-    <SearchView
-        android:background="@drawable/editexttop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/agc_et_search"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:queryHint="Filtrar Cliente...." />
+        android:layout_toRightOf="@+id/agc_btn_finish"
+        android:layout_toEndOf="@+id/agc_btn_finish" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Sostener para mas opciones.."
+        android:text="Sostener un cliente para mas opciones.."
         android:id="@+id/textView10"
         android:layout_alignBottom="@+id/agc_btn_Crear"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignRight="@+id/agc_btn_finish"
+        android:layout_alignEnd="@+id/agc_btn_finish" />
 
     <Button
         android:background="@drawable/button_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volver al Menu"
-        android:id="@+id/button2"
+        android:id="@+id/agc_btn_finish"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <SearchView
+        android:background="@drawable/editexttop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/agc_et_search"
+        android:queryHint="Filtrar Cliente...."
+        android:layout_below="@+id/relativeLayout7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/agc_btn_Crear"
+        android:layout_alignEnd="@+id/agc_btn_Crear" />
 </RelativeLayout>

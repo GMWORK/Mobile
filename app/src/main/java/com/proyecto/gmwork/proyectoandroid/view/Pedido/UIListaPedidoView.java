@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Pedido;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,29 +27,25 @@ import java.util.ArrayList;
 /**
  * Created by mateo on 30/04/15.
  */
-public class UIListaPedidoView extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class UIListaPedidoView extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private AdapterListPedidos adapter;
     private PersistencyController per;
-    private String usuario ;
+    private String usuario;
     private Bundle bun;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_pedidos);
-            setResources();
-
+        setResources();
         setResourcesFormat();
         setEvents();
     }
 
-    private void setResourcesFormat() {
-
-        lv_lista.setAdapter(adapter);
-        registerForContextMenu(lv_lista);
-    }
 
 
-    private void setResources()  {
+
+    private void setResources() {
         bun = getIntent().getExtras();
         usuario = bun.getString("username");
         btn_Crear = (Button) findViewById(R.id.agp_btn_Crear);
@@ -57,7 +54,11 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
         per = new PersistencyController(this);
         adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido(usuario));
     }
+    private void setResourcesFormat() {
 
+        lv_lista.setAdapter(adapter);
+        registerForContextMenu(lv_lista);
+    }
     private void setEvents() {
         btn_Crear.setOnClickListener(this);
         btn_finish.setOnClickListener(this);
@@ -87,6 +88,13 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido(usuario));
+        lv_lista.setAdapter(adapter);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         switch (v.getId()) {
             case R.id.agp_lv_lista:
@@ -101,26 +109,23 @@ public class UIListaPedidoView extends Activity implements View.OnClickListener,
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mcc_it_borrar:
-                    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                    int listPosition = info.position;
-                    per.removePedido(adapter.getItem(listPosition).getId());
-                    Toast.makeText(this, "Se ha borrado correctamente el registro", Toast.LENGTH_SHORT).show();
-
-                break;
-            /*case R.id.mcc_it_aVisita:
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 int listPosition = info.position;
-                aVisitar.add(adapter.getItem(listPosition).getNif());
-                Toast.makeText(this,"Se ha guardado en la lista de personas a visitar",Toast.LENGTH_SHORT).show();
-                break;*/
+                per.removePedido(adapter.getItem(listPosition).getId());
+                Toast.makeText(this, "Se ha borrado correctamente el registro", Toast.LENGTH_SHORT).show();
+                adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido(usuario));
+                lv_lista.setAdapter(adapter);
+                break;
 
             case R.id.mcc_it_editar:
                 AdapterView.AdapterContextMenuInfo in = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 int position = in.position;
-                if(adapter.getItem(position).getEstado().equals("completada")){
-                    Toast.makeText(this,"No se puede editar esta en estado completada",Toast.LENGTH_SHORT).show();
-                }else {
+                if (adapter.getItem(position).getEstado().equals("completada")) {
+                    Toast.makeText(this, "No se puede editar esta en estado completada", Toast.LENGTH_SHORT).show();
+                } else {
                     editarPedido(adapter.getItem(position).getId());
+                    adapter = new AdapterListPedidos(this, (ArrayList<Pedido>) per.mostrarPedido(usuario));
+                    lv_lista.setAdapter(adapter);
                 }
                 break;
         }

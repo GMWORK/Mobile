@@ -43,7 +43,7 @@ public class DialogPedido extends DialogFragment implements View.OnClickListener
         bun = getArguments();
         cliente = bun.getString("cliente");
         adapter = new AdapterListPedidos(getActivity(), per.ultimaComanda(cliente));
-        builder.setTitle("Ultima Comanda").setView(v);
+        builder.setTitle("Crear Comanda con esta de plantilla?").setView(v);
         btn_si = (Button) v.findViewById(R.id.dp_btn_si);
         btn_no = (Button) v.findViewById(R.id.dp_btn_no);
 

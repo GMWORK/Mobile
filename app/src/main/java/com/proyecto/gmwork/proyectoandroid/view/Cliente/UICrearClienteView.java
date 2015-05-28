@@ -2,6 +2,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 /**
  * Created by mateo on 30/04/15.
  */
-public class UICrearClienteView extends Activity implements View.OnClickListener {
+public class UICrearClienteView extends ActionBarActivity implements View.OnClickListener {
     private PersistencyController per;
     private Bundle bun;
     private String username;

@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 /**
  * Created by Mateo on 24/05/2015.
  */
-public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class MapaseleClientesAVisitar extends ActionBarActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, AdapterView.OnItemSelectedListener, View.OnClickListener {
     private String[] clientes;
     private PersistencyController per;
     private GoogleMap map;
@@ -39,16 +40,9 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_clientes_cercanos);
-
-        //getFragmentManager().beginTransaction().;
-
         setResources();
-
-
         setResourcesFormat();
         setEvents();
-
-        // map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
     }
 
     private void setEvents() {
@@ -57,7 +51,6 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
     }
 
     private void setResourcesFormat() {
-
     }
 
     private void setResources() {
@@ -66,19 +59,7 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
         bun = getIntent().getExtras();
         clientes = bun.getStringArray("clientes");
         btn_finish = (Button) findViewById(R.id.avcc_btn_finish);
-
-
-       /* try {
-            parseXML();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }*/
-
-
         cmbTipusMapa = (Spinner) findViewById(R.id.spinner);
-
         btnCentrar = (Button) findViewById(R.id.btnCentrar);
     }
 
@@ -98,7 +79,6 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
@@ -108,48 +88,13 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
         configurarMapa();
 
 
-            /*  bounds = new LatLngBounds(new LatLng(20, -130.0), new LatLng(55, -70.0));
-
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-        map.addMarker(new MarkerOptions().position(new LatLng(40.801, -96.691)).title("Lincoln, NE"));
-        Marker mark = map.addMarker(new MarkerOptions().position(new LatLng(40.801, -96.691)).title("Lincoln, NE"));
-        map.addPolyline(new PolylineOptions().add(new LatLng(40.801, -96.691)).add(new LatLng(34.020, -118.412)).add(new LatLng(40.703, -73.980)));    // Lincoln, NE      .add(new LatLng(34.020, -118.412))   // Los Angeles, CA      .add(new LatLng(40.703, -73.980))    // New York, NY  );
-        Polyline polly = map.addPolyline(new PolylineOptions().add(new LatLng(40.801, -96.691)).add(new LatLng(34.020, -118.412)).add(new LatLng(40.703, -73.980)));
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (loc == null) {      // fall back to network if GPS is not available      loc = locationManager.getLastKnownLocation(                     LocationManager.NETWORK_PROVIDER);
-            loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,   // provider, min time/distance    new LocationListener() {
-                new LocationListener() {
-
-                    @Override
-                    public void onLocationChanged(Location location) {
-
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                });
-        // SW    new LatLng(55,  -70.0))*/
 
 
     }
 
 
-    private void configurarMapa() {     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
+    private void configurarMapa() {
+     // Fer una comprovaciÃ³ de l'objecte map amb null per confirmar
         // que no l'hÃ gim instanciat prÃ¨viament
         if (map == null) {
             map = ((MapFragment) getFragmentManager().findFragmentById(R.id.ID)).getMap();
@@ -185,6 +130,9 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
             case R.id.btnCentrar:
                 centrar();
                 break;
+            case R.id.avcc_btn_finish:
+                finish();
+                break;
 
         }
 
@@ -207,4 +155,6 @@ public class MapaseleClientesAVisitar extends Activity implements OnMapReadyCall
                 CameraUpdateFactory.newLatLng(per.getMiUbicacion()));
 
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.proyecto.gmwork.proyectoandroid.view.Cliente;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import java.util.Locale;
 /**
  * Created by mateo on 30/04/15.
  */
-public class UIEditarClienteView extends Activity implements  View.OnClickListener, View.OnKeyListener {
+public class UIEditarClienteView extends ActionBarActivity implements  View.OnClickListener, View.OnKeyListener {
     private PersistencyController per;
     private String nif;
 
@@ -109,6 +110,7 @@ public class UIEditarClienteView extends Activity implements  View.OnClickListen
 
         if (nif.length() > 0 && nombre.length() > 0 && apellidos.length() > 0 && poblacion.length() > 0 && calle.length() > 0 && proximaVisita.length() > 0) {
             per.editarCliente(this.nif,et_nif.getText().toString(), et_nombre.getText().toString(), et_apellidos.getText().toString(), et_poblacion.getText().toString(), et_calle.getText().toString(), et_proximaVisita.getText().toString());
+            Toast.makeText(this, "Se han actualizado los datos", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             Toast.makeText(this, "Tienes que rellenar todos los campos", Toast.LENGTH_SHORT).show();

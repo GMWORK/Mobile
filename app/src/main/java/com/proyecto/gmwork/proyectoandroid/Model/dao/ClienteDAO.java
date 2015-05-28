@@ -1,4 +1,4 @@
-package com.proyecto.gmwork.proyectoandroid.controller.dao;
+package com.proyecto.gmwork.proyectoandroid.Model.dao;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,23 +8,20 @@ import com.proyecto.gmwork.proyectoandroid.Model.Cliente;
 import com.proyecto.gmwork.proyectoandroid.Gestor.OpenLiteHelper;
 import com.proyecto.gmwork.proyectoandroid.Model.ClienteLog;
 
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by mateo on 30/04/15.
  */
-public class ClienteDAOController {
+public class ClienteDAO {
 
     private Dao<Cliente, Long> daoCli;
     private Dao<ClienteLog, Long> daoClilog;
     private OpenLiteHelper clidao;
 
-    public ClienteDAOController(Context con) {
+    public ClienteDAO(Context con) {
         clidao = new OpenLiteHelper(con);
         try {
             this.daoCli = clidao.getDAOCliente();
@@ -46,12 +43,34 @@ public class ClienteDAOController {
     }
 
     public void addCliente(Cliente cat) {
+        boolean insert = false;
+        while (insert != true) {
+            try {
+                if (cat.getId() == 0) {
+                    long id = daoCli.queryForAll().get(daoCli.queryForAll().size() - 1).getId();
+                    cat.setId(id);
+                } else {
+                    daoCli.createOrUpdate(cat);
+                    insert = true;
+                }
+            } catch (SQLException ex) {
+                Log.i("errorSQL", ex.getMessage());
+
+            }
+        }
+    }
+
+    public void crearCliente(Cliente cat) {
+
+
         try {
             daoCli.createOrUpdate(cat);
 
-        } catch (SQLException ex) {
-            Log.i("errorSQL", ex.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+
         }
+
     }
 
     public ArrayList<Cliente> getClientes(String usuario) {
@@ -122,7 +141,7 @@ public class ClienteDAOController {
 
     public ArrayList<Cliente> filtrarClienteCampo(String campo, String dato, String username) {
         ArrayList<Cliente> clientes = null;
-        ArrayList<Cliente> filtro =  new ArrayList<Cliente>();
+        ArrayList<Cliente> filtro = new ArrayList<Cliente>();
         try {
             clientes = (ArrayList<Cliente>) daoCli.queryForEq(campo, dato);
             for (int i = 0; i < clientes.size(); i++) {
@@ -170,6 +189,14 @@ public class ClienteDAOController {
             e.printStackTrace();
         }
         return cli;
+    }
+
+    public void removeCliente(int id) {
+        try {
+            daoCli.deleteById((long) id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
   /*  public List<Map<Cliente,ClienteLog>> getVista()  {
